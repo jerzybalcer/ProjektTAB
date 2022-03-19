@@ -6,8 +6,9 @@
         public ExaminationType ExaminationType { get; set; }
         public string Name { get; set; }
 
-        public ExaminationTemplate(ExaminationType examinationType, string name)
+        public ExaminationTemplate(int examinationCode ,ExaminationType examinationType, string name)
         {
+            ExaminationCode = examinationCode;
             ExaminationType = examinationType;
             Name = name;
         }
