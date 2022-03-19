@@ -1,6 +1,6 @@
 ﻿namespace Database.People
 {
-    public class Patient : Person
+    public class Patient : User
     {
         public Address Address { get; set; }
         public string Pesel { get; set; }
@@ -9,6 +9,11 @@
         {
             Address = address;
             Pesel = pesel;
+        }
+
+        protected Patient() : base()
+        {
+
         }
     }
 }

@@ -1,15 +1,19 @@
 ﻿namespace Database.People
 {
-    public abstract class Person
+    public abstract class User
     {
-        public int PersonId { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
 
-        public Person(string name, string surname)
+        public User(string name, string surname)
         {
             Name = name;
             Surname = surname;
+        }
+
+        protected User()
+        {
         }
     }
 }

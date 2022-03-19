@@ -29,5 +29,10 @@ namespace Database
             PhysicalExaminations = new List<PhysicalExamination>();
             LabExaminations = new List<LabExamination>();
         }
+
+        protected Appointment()
+        {
+                
+        }
     }
 }

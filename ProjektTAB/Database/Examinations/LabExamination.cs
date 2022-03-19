@@ -28,5 +28,10 @@ namespace Database.Examinations
 
             Status = LabExaminationStatus.Ordered;
         }
+
+        protected LabExamination()
+        {
+
+        }
     }
 }

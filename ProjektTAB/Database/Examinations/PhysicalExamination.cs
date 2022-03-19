@@ -2,7 +2,7 @@
 {
     public class PhysicalExamination
     {
-        public int ExaminationId { get; set; }
+        public int PhysicalExaminationId { get; set; }
         public Appointment Appointment { get; set; }
         public int ExaminationCode { get; set; }
         public ExaminationTemplate ExaminationTemplate { get; set; }
@@ -14,6 +14,11 @@
             ExaminationTemplate = examinationTemplate;
             ExaminationCode = examinationTemplate.ExaminationCode;
             Result = result;
+        }
+
+        protected PhysicalExamination()
+        {
+
         }
     }
 }

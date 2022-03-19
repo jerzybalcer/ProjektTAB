@@ -1,6 +1,6 @@
 ﻿namespace Database.People
 {
-    public class Doctor : Person
+    public class Doctor : User
     {
         public int LicenseNumber { get; set; }
 
