@@ -1,25 +1,32 @@
-﻿using Database.Enums;
+﻿using Database.People;
 
 namespace Database.Examinations
 {
-    public class LabExamination : Examination
+    public class LabExamination
     {
+        public int LabExaminationId { get; set; }
+        public string? Result { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? ExecutionDate { get; set; }
         public string? DoctorComment { get; set; }
         public string? LabManagerComment { get; set; }
         public DateTime? ClosingDate { get; set; }
         public LabExaminationStatus Status { get; set; }
+        public Appointment Appointment { get; set; }
+        public int ExaminationCode { get; set; }
+        public ExaminationTemplate ExaminationTemplate { get; set; }
+        public LabAssistant? LabAssistant { get; set; }
+        public LabManager? LabManager { get; set; }
 
-        public LabExamination(DateTime orderDate, string? result = null, DateTime? executionDate = null, string? doctorComment = null, string? labManagerComment = null, DateTime? closingDate = null, LabExaminationStatus status = LabExaminationStatus.Ordered)
-            : base(result)
+        public LabExamination(DateTime orderDate, Appointment appointment, ExaminationTemplate examinationTemplate, string? doctorComment = null)
         {
             OrderDate = orderDate;
-            ExecutionDate = executionDate;
+            Appointment = appointment;
+            ExaminationTemplate = examinationTemplate;
+            ExaminationCode = ExaminationTemplate.ExaminationCode;
             DoctorComment = doctorComment;
-            LabManagerComment = labManagerComment;
-            ClosingDate = closingDate;
-            Status = status;
+
+            Status = LabExaminationStatus.Ordered;
         }
     }
 }

@@ -11,10 +11,5 @@
             Name = name;
             Surname = surname;
         }
-
-        public Person()
-        {
-
-        }
     }
 }

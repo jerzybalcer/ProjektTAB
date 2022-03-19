@@ -1,9 +1,10 @@
-﻿namespace Database.Enums
+﻿namespace Database.Appointments
 {
     public enum AppointmentStatus
     {
         Attended,
         Unattended,
-        YetToCome
+        Registered,
+        Failed
     }
 }
