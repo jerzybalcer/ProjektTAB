@@ -26,6 +26,21 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Doctors",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LicenseNumber = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Doctors", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ExaminationTemplates",
                 columns: table => new
                 {
@@ -39,7 +54,7 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "LabAssistants",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -49,65 +64,47 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_LabAssistants", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Doctor",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    LicenseNumber = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Doctor", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_Doctor_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LabAssistant",
+                name: "LabManagers",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LabAssistant", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_LabAssistant_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
+                    table.PrimaryKey("PK_LabManagers", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LabManager",
+                name: "Receptionists",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LabManager", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_LabManager_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
+                    table.PrimaryKey("PK_Receptionists", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     AddressId = table.Column<int>(type: "int", nullable: false),
-                    Pesel = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Pesel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,27 +115,6 @@ namespace Database.Migrations
                         principalTable: "Address",
                         principalColumn: "AddressId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Patients_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Receptionist",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Receptionist", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_Receptionist_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -160,9 +136,9 @@ namespace Database.Migrations
                 {
                     table.PrimaryKey("PK_Appointments", x => x.AppointmentId);
                     table.ForeignKey(
-                        name: "FK_Appointments_Doctor_DoctorUserId",
+                        name: "FK_Appointments_Doctors_DoctorUserId",
                         column: x => x.DoctorUserId,
-                        principalTable: "Doctor",
+                        principalTable: "Doctors",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -172,9 +148,9 @@ namespace Database.Migrations
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointments_Receptionist_ReceptionistUserId",
+                        name: "FK_Appointments_Receptionists_ReceptionistUserId",
                         column: x => x.ReceptionistUserId,
-                        principalTable: "Receptionist",
+                        principalTable: "Receptionists",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -214,14 +190,14 @@ namespace Database.Migrations
                         principalColumn: "ExaminationCode",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LabExaminations_LabAssistant_LabAssistantUserId",
+                        name: "FK_LabExaminations_LabAssistants_LabAssistantUserId",
                         column: x => x.LabAssistantUserId,
-                        principalTable: "LabAssistant",
+                        principalTable: "LabAssistants",
                         principalColumn: "UserId");
                     table.ForeignKey(
-                        name: "FK_LabExaminations_LabManager_LabManagerUserId",
+                        name: "FK_LabExaminations_LabManagers_LabManagerUserId",
                         column: x => x.LabManagerUserId,
-                        principalTable: "LabManager",
+                        principalTable: "LabManagers",
                         principalColumn: "UserId");
                 });
 
@@ -313,10 +289,10 @@ namespace Database.Migrations
                 name: "PhysicalExaminations");
 
             migrationBuilder.DropTable(
-                name: "LabAssistant");
+                name: "LabAssistants");
 
             migrationBuilder.DropTable(
-                name: "LabManager");
+                name: "LabManagers");
 
             migrationBuilder.DropTable(
                 name: "Appointments");
@@ -325,19 +301,16 @@ namespace Database.Migrations
                 name: "ExaminationTemplates");
 
             migrationBuilder.DropTable(
-                name: "Doctor");
+                name: "Doctors");
 
             migrationBuilder.DropTable(
                 name: "Patients");
 
             migrationBuilder.DropTable(
-                name: "Receptionist");
+                name: "Receptionists");
 
             migrationBuilder.DropTable(
                 name: "Address");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

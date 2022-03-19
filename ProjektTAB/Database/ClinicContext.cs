@@ -6,7 +6,6 @@ namespace Database
 {
     public class ClinicContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<ExaminationTemplate> ExaminationTemplates { get; set; }
         public DbSet<PhysicalExamination> PhysicalExaminations { get; set; }
         public DbSet<LabExamination> LabExaminations { get; set; }
@@ -19,12 +18,11 @@ namespace Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Patient>().ToTable("Patients");
-            modelBuilder.Entity<Receptionist>().ToTable("Receptionists");
-            modelBuilder.Entity<Doctor>().ToTable("Doctors");
-            modelBuilder.Entity<LabManager>().ToTable("LabManagers");
-            modelBuilder.Entity<LabAssistant>().ToTable("LabAssistants");
-
+            modelBuilder.Entity<Patient>().ToTable("Patients").HasKey(x=>x.UserId);
+            modelBuilder.Entity<Receptionist>().ToTable("Receptionists").HasKey(x => x.UserId);
+            modelBuilder.Entity<Doctor>().ToTable("Doctors").HasKey(x => x.UserId);
+            modelBuilder.Entity<LabManager>().ToTable("LabManagers").HasKey(x => x.UserId);
+            modelBuilder.Entity<LabAssistant>().ToTable("LabAssistants").HasKey(x => x.UserId);
         }
     }
 }
