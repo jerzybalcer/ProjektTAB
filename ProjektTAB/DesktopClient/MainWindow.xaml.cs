@@ -1,6 +1,7 @@
 ﻿using DesktopClient.Pages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,23 @@ namespace DesktopClient
         {
             InitializeComponent();
             content.Navigate(new Login());
+        }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            switch((sender as Button).Name.ToString())
+            {
+                case "button1":
+                    content.Navigate(new Registration());
+                    break;
+                case "button2":
+                    content.Navigate(new PatientsList());
+                    break;
+                case "button3":
+                    content.Navigate(new AccountInfo());
+                    break;
+            }
+           
         }
     }
 }
