@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -18,10 +20,10 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,39" Grid.RowSpan="2" Background="#FFBDBDBD">
             <Label Foreground="#FF5AA9E6">Dostępne akcje</Label>
             <Separator/>
-            <Button>Opcja 1</Button>
-            <Button>Opcja 2</Button>
-            <Button>Opcja 3</Button>
-            <Button>Opcja 4</Button>
+            <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button1"/>
+            <Button Content="Wyszukaj pacjęta" Click="MenuButton_Click" Name="button2"/>
+            <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button3"/>
+            <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button4"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF8C8C8C">
@@ -29,7 +31,7 @@
         </StackPanel>
 
         <DockPanel Grid.Column="1" Grid.RowSpan="2">
-            <Frame x:Name="content"/>
+            <Frame x:Name="content" NavigationUIVisibility="Hidden"/>
         </DockPanel>
     </Grid>
 </Window>
