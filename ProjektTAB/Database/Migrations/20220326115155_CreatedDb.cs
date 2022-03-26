@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Database.Migrations
 {
-    public partial class CreateClinicDatabase : Migration
+    public partial class CreatedDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,7 +37,7 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Doctors", x => x.UserId);
+                    table.PrimaryKey("DoctorId", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +64,7 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LabAssistants", x => x.UserId);
+                    table.PrimaryKey("LabAssistantId", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,7 +78,7 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LabManagers", x => x.UserId);
+                    table.PrimaryKey("LabManagerId", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,7 +92,7 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Receptionists", x => x.UserId);
+                    table.PrimaryKey("ReceptionistId", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,7 +108,7 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patients", x => x.UserId);
+                    table.PrimaryKey("PatientId", x => x.UserId);
                     table.ForeignKey(
                         name: "FK_Patients_Address_AddressId",
                         column: x => x.AddressId,

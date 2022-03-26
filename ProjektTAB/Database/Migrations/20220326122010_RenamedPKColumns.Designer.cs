@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    [Migration("20220319201523_CreateClinicDatabase")]
-    partial class CreateClinicDatabase
+    [Migration("20220326122010_RenamedPKColumns")]
+    partial class RenamedPKColumns
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -202,7 +202,8 @@ namespace Database.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("DoctorId");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
@@ -217,7 +218,8 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId")
+                        .HasName("DoctorId");
 
                     b.ToTable("Doctors", (string)null);
                 });
@@ -226,7 +228,8 @@ namespace Database.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("LabAssistantId");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
@@ -238,7 +241,8 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId")
+                        .HasName("LabAssistantId");
 
                     b.ToTable("LabAssistants", (string)null);
                 });
@@ -247,7 +251,8 @@ namespace Database.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("LabManagerId");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
@@ -259,7 +264,8 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId")
+                        .HasName("LabManagerId");
 
                     b.ToTable("LabManagers", (string)null);
                 });
@@ -268,7 +274,8 @@ namespace Database.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("PatientId");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
@@ -287,7 +294,8 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId")
+                        .HasName("PatientId");
 
                     b.HasIndex("AddressId");
 
@@ -298,7 +306,8 @@ namespace Database.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ReceptionistId");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
@@ -310,7 +319,8 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId")
+                        .HasName("ReceptionistId");
 
                     b.ToTable("Receptionists", (string)null);
                 });
