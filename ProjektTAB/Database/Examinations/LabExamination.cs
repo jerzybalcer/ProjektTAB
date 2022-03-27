@@ -1,4 +1,5 @@
 ﻿using Database.People;
+using System.ComponentModel.DataAnnotations;
 
 namespace Database.Examinations
 {
@@ -13,7 +14,9 @@ namespace Database.Examinations
         public DateTime? ClosingDate { get; set; }
         public LabExaminationStatus Status { get; set; }
         public Appointment Appointment { get; set; }
-        public int ExaminationCode { get; set; }
+
+        [MaxLength(3)]
+        public string ExaminationCode { get; set; }
         public ExaminationTemplate ExaminationTemplate { get; set; }
         public LabAssistant? LabAssistant { get; set; }
         public LabManager? LabManager { get; set; }

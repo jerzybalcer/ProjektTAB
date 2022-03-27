@@ -1,10 +1,14 @@
-﻿namespace Database.Examinations
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Database.Examinations
 {
     public class PhysicalExamination
     {
         public int PhysicalExaminationId { get; set; }
         public Appointment Appointment { get; set; }
-        public int ExaminationCode { get; set; }
+
+        [MaxLength(3)]
+        public string ExaminationCode { get; set; }
         public ExaminationTemplate ExaminationTemplate { get; set; }
         public string Result { get; set; }
 

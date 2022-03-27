@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Database.Migrations
 {
-    public partial class CreatedDb : Migration
+    public partial class RecreatedDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace Database.Migrations
                 name: "Doctors",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    DoctorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LicenseNumber = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -37,14 +37,14 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("DoctorId", x => x.UserId);
+                    table.PrimaryKey("DoctorId", x => x.DoctorId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ExaminationTemplates",
                 columns: table => new
                 {
-                    ExaminationCode = table.Column<int>(type: "int", nullable: false),
+                    ExaminationCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     ExaminationType = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -57,49 +57,49 @@ namespace Database.Migrations
                 name: "LabAssistants",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    LabAssistantId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("LabAssistantId", x => x.UserId);
+                    table.PrimaryKey("LabAssistantId", x => x.LabAssistantId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "LabManagers",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    LabManagerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("LabManagerId", x => x.UserId);
+                    table.PrimaryKey("LabManagerId", x => x.LabManagerId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Receptionists",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    ReceptionistId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("ReceptionistId", x => x.UserId);
+                    table.PrimaryKey("ReceptionistId", x => x.ReceptionistId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    PatientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AddressId = table.Column<int>(type: "int", nullable: false),
                     Pesel = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -108,7 +108,7 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PatientId", x => x.UserId);
+                    table.PrimaryKey("PatientId", x => x.PatientId);
                     table.ForeignKey(
                         name: "FK_Patients_Address_AddressId",
                         column: x => x.AddressId,
@@ -139,19 +139,19 @@ namespace Database.Migrations
                         name: "FK_Appointments_Doctors_DoctorUserId",
                         column: x => x.DoctorUserId,
                         principalTable: "Doctors",
-                        principalColumn: "UserId",
+                        principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Appointments_Patients_PatientUserId",
                         column: x => x.PatientUserId,
                         principalTable: "Patients",
-                        principalColumn: "UserId",
+                        principalColumn: "PatientId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Appointments_Receptionists_ReceptionistUserId",
                         column: x => x.ReceptionistUserId,
                         principalTable: "Receptionists",
-                        principalColumn: "UserId",
+                        principalColumn: "ReceptionistId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -169,8 +169,8 @@ namespace Database.Migrations
                     ClosingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     AppointmentId = table.Column<int>(type: "int", nullable: false),
-                    ExaminationCode = table.Column<int>(type: "int", nullable: false),
-                    ExaminationTemplateExaminationCode = table.Column<int>(type: "int", nullable: false),
+                    ExaminationCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    ExaminationTemplateExaminationCode = table.Column<string>(type: "nvarchar(3)", nullable: true),
                     LabAssistantUserId = table.Column<int>(type: "int", nullable: true),
                     LabManagerUserId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -187,18 +187,17 @@ namespace Database.Migrations
                         name: "FK_LabExaminations_ExaminationTemplates_ExaminationTemplateExaminationCode",
                         column: x => x.ExaminationTemplateExaminationCode,
                         principalTable: "ExaminationTemplates",
-                        principalColumn: "ExaminationCode",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ExaminationCode");
                     table.ForeignKey(
                         name: "FK_LabExaminations_LabAssistants_LabAssistantUserId",
                         column: x => x.LabAssistantUserId,
                         principalTable: "LabAssistants",
-                        principalColumn: "UserId");
+                        principalColumn: "LabAssistantId");
                     table.ForeignKey(
                         name: "FK_LabExaminations_LabManagers_LabManagerUserId",
                         column: x => x.LabManagerUserId,
                         principalTable: "LabManagers",
-                        principalColumn: "UserId");
+                        principalColumn: "LabManagerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -208,8 +207,8 @@ namespace Database.Migrations
                     PhysicalExaminationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AppointmentId = table.Column<int>(type: "int", nullable: false),
-                    ExaminationCode = table.Column<int>(type: "int", nullable: false),
-                    ExaminationTemplateExaminationCode = table.Column<int>(type: "int", nullable: false),
+                    ExaminationCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    ExaminationTemplateExaminationCode = table.Column<string>(type: "nvarchar(3)", nullable: true),
                     Result = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -225,8 +224,7 @@ namespace Database.Migrations
                         name: "FK_PhysicalExaminations_ExaminationTemplates_ExaminationTemplateExaminationCode",
                         column: x => x.ExaminationTemplateExaminationCode,
                         principalTable: "ExaminationTemplates",
-                        principalColumn: "ExaminationCode",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ExaminationCode");
                 });
 
             migrationBuilder.CreateIndex(

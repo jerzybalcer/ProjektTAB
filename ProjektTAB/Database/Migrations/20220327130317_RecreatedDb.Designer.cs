@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    [Migration("20220326122010_RenamedPKColumns")]
-    partial class RenamedPKColumns
+    [Migration("20220327130317_RecreatedDb")]
+    partial class RecreatedDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,8 +96,9 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.Examinations.ExaminationTemplate", b =>
                 {
-                    b.Property<int>("ExaminationCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ExaminationCode")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<int>("ExaminationType")
                         .HasColumnType("int");
@@ -128,11 +129,13 @@ namespace Database.Migrations
                     b.Property<string>("DoctorComment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ExaminationCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ExaminationCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
-                    b.Property<int>("ExaminationTemplateExaminationCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ExaminationTemplateExaminationCode")
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<DateTime?>("ExecutionDate")
                         .HasColumnType("datetime2");
@@ -179,11 +182,13 @@ namespace Database.Migrations
                     b.Property<int>("AppointmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ExaminationCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ExaminationCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
-                    b.Property<int>("ExaminationTemplateExaminationCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ExaminationTemplateExaminationCode")
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("Result")
                         .IsRequired()
@@ -362,9 +367,7 @@ namespace Database.Migrations
 
                     b.HasOne("Database.Examinations.ExaminationTemplate", "ExaminationTemplate")
                         .WithMany()
-                        .HasForeignKey("ExaminationTemplateExaminationCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ExaminationTemplateExaminationCode");
 
                     b.HasOne("Database.People.LabAssistant", "LabAssistant")
                         .WithMany()
@@ -393,9 +396,7 @@ namespace Database.Migrations
 
                     b.HasOne("Database.Examinations.ExaminationTemplate", "ExaminationTemplate")
                         .WithMany()
-                        .HasForeignKey("ExaminationTemplateExaminationCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ExaminationTemplateExaminationCode");
 
                     b.Navigation("Appointment");
 
