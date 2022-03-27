@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DesktopClient.Pages
 {
     /// <summary>
-    /// Interaction logic for Registration.xaml
+    /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Registration : Page
+    public partial class LoginPage : Page
     {
-        public Registration()
+        public LoginPage()
         {
             InitializeComponent();
         }

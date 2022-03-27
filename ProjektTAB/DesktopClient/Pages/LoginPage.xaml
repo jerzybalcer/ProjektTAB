@@ -1,4 +1,4 @@
-﻿<Page x:Class="DesktopClient.Pages.Login"
+﻿<Page x:Class="DesktopClient.Pages.LoginPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,6 +9,6 @@
       Title="Login">
     
     <Grid HorizontalAlignment="Center">
-        <Label>Zaloguj się</Label>
+        <TextBlock Style="{DynamicResource PageHeader}" Text="Zaloguj się"/>
     </Grid>
 </Page>

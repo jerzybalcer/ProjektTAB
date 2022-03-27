@@ -5,33 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopClient"
         mc:Ignorable="d"
-        Title="Clinic Desktop Client" Height="450" Width="800"
+        Title="Clinic Desktop Client" Height="450" Width="800" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
-    
-    <Grid>
+
+    <Grid Background="#f4f5f0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,39" Grid.RowSpan="2" Background="#FFBDBDBD">
-            <Label Foreground="#FF5AA9E6">Dostępne akcje</Label>
-            <Separator/>
-            <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button1"/>
-            <Button Content="Wyszukaj pacjenta" Click="MenuButton_Click" Name="button2"/>
-            <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button3"/>
-            <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button4"/>
+
+        <StackPanel Grid.RowSpan="2" Background="#d9d6cf" x:Name="SidePanel">
+            <TextBlock Foreground="#23388d" 
+                       Text="Dostępne akcje"
+                       FontSize="18"
+                       FontWeight="DemiBold"
+                       HorizontalAlignment="Center"
+                       Margin="5"/>
+            <Separator Margin="0,0,0,10"/>
+            <Button Content="Rejestruj wizytę" 
+                    Click="MenuButton_Click" x:Name="LoadRegisterPageBtn"
+                    FontSize="14" Margin="5,2,5,2"/>
+            <Button Content="Wyszukaj pacjenta" 
+                    Click="MenuButton_Click" x:Name="LoadPatientsListPageBtn"
+                    FontSize="14" Margin="5,2,5,2"/>
+            <Button Content="Moje konto" 
+                    Click="MenuButton_Click" x:Name="LoadAccountInfoPageBtn"
+                    FontSize="14" Margin="5,2,5,2"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Background="#FF8C8C8C">
-            <Label HorizontalAlignment="Center" >Nie zalogowano</Label>
-        </StackPanel>
+        <Grid Grid.Row="1" Grid.Column="0" Background="#b5b2ac">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="UserLoggedInText" Text="Nie zalogowano"/>
+        </Grid>
 
         <DockPanel Grid.Column="1" Grid.RowSpan="2">
-            <Frame x:Name="content" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="ContentFrame" NavigationUIVisibility="Hidden"/>
         </DockPanel>
     </Grid>
 </Window>

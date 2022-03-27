@@ -19,9 +19,9 @@ namespace DesktopClient.Pages
     /// <summary>
     /// Interaction logic for PatientsList.xaml
     /// </summary>
-    public partial class PatientsList : Page
+    public partial class PatientsListPage : Page
     {
-        public PatientsList()
+        public PatientsListPage()
         {
             InitializeComponent();
         }
@@ -33,7 +33,7 @@ namespace DesktopClient.Pages
 
         private void addNewPatient(object sender, RoutedEventArgs e)
         {
-            InputPatientData win2 = new InputPatientData();
+            InputPatientDataPage win2 = new InputPatientDataPage();
             win2.Show();
         }
 

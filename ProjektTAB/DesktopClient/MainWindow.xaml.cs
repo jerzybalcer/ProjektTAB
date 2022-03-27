@@ -25,24 +25,24 @@ namespace DesktopClient
         public MainWindow()
         {
             InitializeComponent();
-            content.Navigate(new Login());
+            ContentFrame.Navigate(new LoginPage());
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            switch((sender as Button).Name.ToString())
+            switch ((sender as Button).Name.ToString())
             {
-                case "button1":
-                    content.Navigate(new Registration());
+                case "LoadRegisterPageBtn":
+                    ContentFrame.Navigate(new RegistrationPage());
                     break;
-                case "button2":
-                    content.Navigate(new PatientsList());
+                case "LoadPatientsListPageBtn":
+                    ContentFrame.Navigate(new PatientsListPage());
                     break;
-                case "button3":
-                    content.Navigate(new AccountInfo());
+                case "LoadAccountInfoPageBtn":
+                    ContentFrame.Navigate(new AccountInfoPage());
                     break;
             }
-           
+
         }
     }
 }
