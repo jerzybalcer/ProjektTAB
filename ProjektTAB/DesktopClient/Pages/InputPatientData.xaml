@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
-            <Label Content="Wprowadź dane pacjęta" FontSize="24" HorizontalAlignment="Center"/>
+            <Label Content="Wprowadź dane pacjenta" FontSize="24" HorizontalAlignment="Center"/>
             <Label Content="Imię"/>
             <TextBox x:Name="firstname"/>
             <Label Content="Nazwisko"/>

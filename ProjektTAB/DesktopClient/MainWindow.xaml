@@ -21,7 +21,7 @@
             <Label Foreground="#FF5AA9E6">Dostępne akcje</Label>
             <Separator/>
             <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button1"/>
-            <Button Content="Wyszukaj pacjęta" Click="MenuButton_Click" Name="button2"/>
+            <Button Content="Wyszukaj pacjenta" Click="MenuButton_Click" Name="button2"/>
             <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button3"/>
             <Button Content="Rejestruj wizytę" Click="MenuButton_Click" Name="button4"/>
         </StackPanel>

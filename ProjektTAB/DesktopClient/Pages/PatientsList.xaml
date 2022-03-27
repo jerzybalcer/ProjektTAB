@@ -10,7 +10,7 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <Label Content="Wyszukaj pacjęta" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+            <Label Content="Wyszukaj pacjenta" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,20"/>
             <WrapPanel HorizontalAlignment="Center">
                 <TextBox x:Name="pessel" Width="200" PreviewTextInput="NumberValidationTextBox" MaxLength="11"/>
                 <Button Content="Wyszukaj" Click="serchPatientButton" Margin="20,0,0,0"/>
