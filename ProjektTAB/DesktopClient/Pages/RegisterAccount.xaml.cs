@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,25 +17,24 @@ using System.Windows.Shapes;
 namespace DesktopClient.Pages
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for RegisterAccount.xaml
     /// </summary>
-    public partial class Login : Page
+    public partial class RegisterAccount : Page
     {
-        public Login()
+        public RegisterAccount()
         {
             InitializeComponent();
         }
 
-        private void loginButtonClick(object sender, RoutedEventArgs e)
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Debug.WriteLine("test1");
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        private void registerButtonClick(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("test2");
-            MainWindow mainWindowObj = (MainWindow)Window.GetWindow(this);
-            mainWindowObj.content.Navigate(new RegisterAccount());
+
         }
     }
 }

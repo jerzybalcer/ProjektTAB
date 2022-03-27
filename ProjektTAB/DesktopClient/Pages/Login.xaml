@@ -9,6 +9,18 @@
       Title="Login">
     
     <Grid HorizontalAlignment="Center">
-        <Label>Zaloguj się</Label>
+        <StackPanel>
+            <Label Content="Zaloguj się" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        
+            <Label Content="Login:"/>
+            <TextBox x:Name="login"/>
+            <Label Content="Hasło:"/>
+            <PasswordBox x:Name="password"/>
+            <Button Content="Zaloguj" Click="loginButtonClick" Margin="0,10,0,0"/>
+            <TextBlock>
+                Jeśli nie posiadasz jeszcze konta zarejestruj się <Hyperlink Click="Hyperlink_Click">tutaj</Hyperlink>.
+            </TextBlock>
+
+        </StackPanel>
     </Grid>
 </Page>
