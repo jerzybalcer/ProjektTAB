@@ -5,13 +5,13 @@
         public Address Address { get; set; }
         public string Pesel { get; set; }
 
-        public Patient(string name, string surname, Address address, string pesel) : base(name, surname)
+        public Patient(string name, string surname, UserAccount userAccount, Address address, string pesel) : base(name, surname, userAccount)
         {
             Address = address;
             Pesel = pesel;
         }
 
-        protected Patient() : base()
+        private Patient() : base()
         {
 
         }

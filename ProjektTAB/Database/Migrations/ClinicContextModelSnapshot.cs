@@ -201,17 +201,13 @@ namespace Database.Migrations
                     b.ToTable("PhysicalExaminations");
                 });
 
-            modelBuilder.Entity("Database.People.Doctor", b =>
+            modelBuilder.Entity("Database.People.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("DoctorId");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
-
-                    b.Property<int>("LicenseNumber")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -221,84 +217,72 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId")
-                        .HasName("DoctorId");
+                    b.Property<int>("UserAccountId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("UserAccountId")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Database.People.UserAccount", b =>
+                {
+                    b.Property<int>("UserAccountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserAccountId"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserAccountId");
+
+                    b.ToTable("UserAccount");
+                });
+
+            modelBuilder.Entity("Database.People.Doctor", b =>
+                {
+                    b.HasBaseType("Database.People.User");
+
+                    b.Property<int>("LicenseNumber")
+                        .HasColumnType("int");
 
                     b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("Database.People.LabAssistant", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("LabAssistantId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId")
-                        .HasName("LabAssistantId");
+                    b.HasBaseType("Database.People.User");
 
                     b.ToTable("LabAssistants", (string)null);
                 });
 
             modelBuilder.Entity("Database.People.LabManager", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("LabManagerId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId")
-                        .HasName("LabManagerId");
+                    b.HasBaseType("Database.People.User");
 
                     b.ToTable("LabManagers", (string)null);
                 });
 
             modelBuilder.Entity("Database.People.Patient", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("PatientId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+                    b.HasBaseType("Database.People.User");
 
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Pesel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId")
-                        .HasName("PatientId");
 
                     b.HasIndex("AddressId");
 
@@ -307,23 +291,7 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.People.Receptionist", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ReceptionistId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId")
-                        .HasName("ReceptionistId");
+                    b.HasBaseType("Database.People.User");
 
                     b.ToTable("Receptionists", (string)null);
                 });
@@ -401,6 +369,44 @@ namespace Database.Migrations
                     b.Navigation("ExaminationTemplate");
                 });
 
+            modelBuilder.Entity("Database.People.User", b =>
+                {
+                    b.HasOne("Database.People.UserAccount", "UserAccount")
+                        .WithOne("User")
+                        .HasForeignKey("Database.People.User", "UserAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserAccount");
+                });
+
+            modelBuilder.Entity("Database.People.Doctor", b =>
+                {
+                    b.HasOne("Database.People.User", null)
+                        .WithOne()
+                        .HasForeignKey("Database.People.Doctor", "UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Database.People.LabAssistant", b =>
+                {
+                    b.HasOne("Database.People.User", null)
+                        .WithOne()
+                        .HasForeignKey("Database.People.LabAssistant", "UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Database.People.LabManager", b =>
+                {
+                    b.HasOne("Database.People.User", null)
+                        .WithOne()
+                        .HasForeignKey("Database.People.LabManager", "UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Database.People.Patient", b =>
                 {
                     b.HasOne("Database.Address", "Address")
@@ -409,7 +415,22 @@ namespace Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Database.People.User", null)
+                        .WithOne()
+                        .HasForeignKey("Database.People.Patient", "UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("Database.People.Receptionist", b =>
+                {
+                    b.HasOne("Database.People.User", null)
+                        .WithOne()
+                        .HasForeignKey("Database.People.Receptionist", "UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Database.Appointment", b =>
@@ -417,6 +438,12 @@ namespace Database.Migrations
                     b.Navigation("LabExaminations");
 
                     b.Navigation("PhysicalExaminations");
+                });
+
+            modelBuilder.Entity("Database.People.UserAccount", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

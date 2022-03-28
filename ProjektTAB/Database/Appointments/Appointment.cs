@@ -32,7 +32,7 @@ namespace Database
 
         protected Appointment()
         {
-                
+
         }
     }
 }
