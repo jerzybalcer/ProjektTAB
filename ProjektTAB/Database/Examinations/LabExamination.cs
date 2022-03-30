@@ -1,5 +1,4 @@
-﻿using Database.People;
-using System.ComponentModel.DataAnnotations;
+﻿using Database.Users;
 
 namespace Database.Examinations
 {

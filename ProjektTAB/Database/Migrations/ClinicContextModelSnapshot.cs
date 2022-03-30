@@ -49,7 +49,7 @@ namespace Database.Migrations
 
                     b.HasKey("AddressId");
 
-                    b.ToTable("Address");
+                    b.ToTable("Address", (string)null);
                 });
 
             modelBuilder.Entity("Database.Appointment", b =>
@@ -92,7 +92,7 @@ namespace Database.Migrations
 
                     b.HasIndex("ReceptionistUserId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("Database.Examinations.ExaminationTemplate", b =>
@@ -110,7 +110,7 @@ namespace Database.Migrations
 
                     b.HasKey("ExaminationCode");
 
-                    b.ToTable("ExaminationTemplates");
+                    b.ToTable("ExaminationTemplates", (string)null);
                 });
 
             modelBuilder.Entity("Database.Examinations.LabExamination", b =>
@@ -164,7 +164,7 @@ namespace Database.Migrations
 
                     b.HasIndex("LabManagerUserId");
 
-                    b.ToTable("LabExaminations");
+                    b.ToTable("LabExaminations", (string)null);
                 });
 
             modelBuilder.Entity("Database.Examinations.PhysicalExamination", b =>
@@ -191,7 +191,7 @@ namespace Database.Migrations
 
                     b.HasIndex("ExaminationTemplateExaminationCode");
 
-                    b.ToTable("PhysicalExaminations");
+                    b.ToTable("PhysicalExaminations", (string)null);
                 });
 
             modelBuilder.Entity("Database.People.Patient", b =>
@@ -222,7 +222,7 @@ namespace Database.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("Database.People.User", b =>
@@ -249,7 +249,7 @@ namespace Database.Migrations
                     b.HasIndex("UserAccountId")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Database.People.UserAccount", b =>
@@ -273,7 +273,7 @@ namespace Database.Migrations
 
                     b.HasKey("UserAccountId");
 
-                    b.ToTable("UserAccount");
+                    b.ToTable("UserAccount", (string)null);
                 });
 
             modelBuilder.Entity("Database.People.Doctor", b =>

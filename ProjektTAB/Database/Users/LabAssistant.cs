@@ -1,4 +1,4 @@
-﻿namespace Database.People
+﻿namespace Database.Users
 {
     public class LabAssistant : User
     {

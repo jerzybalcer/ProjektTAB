@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Database.Examinations
+﻿namespace Database.Examinations
 {
     public class PhysicalExamination
     {

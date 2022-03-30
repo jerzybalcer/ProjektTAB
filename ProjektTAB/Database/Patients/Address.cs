@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Database
+namespace Database.Patients
 {
     public class Address
     {

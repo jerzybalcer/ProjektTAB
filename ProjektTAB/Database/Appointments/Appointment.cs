@@ -1,6 +1,7 @@
 ﻿using Database.Appointments;
 using Database.Examinations;
-using Database.People;
+using Database.Patients;
+using Database.Users;
 
 namespace Database
 {

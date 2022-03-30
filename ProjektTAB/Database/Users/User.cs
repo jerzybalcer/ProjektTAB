@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Database.People
+﻿namespace Database.Users
 {
     public abstract class User
     {

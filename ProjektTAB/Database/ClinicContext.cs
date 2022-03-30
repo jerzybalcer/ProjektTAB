@@ -1,5 +1,6 @@
 ﻿using Database.Examinations;
-using Database.People;
+using Database.Patients;
+using Database.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database
@@ -23,7 +24,7 @@ namespace Database
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {   
+        {
             modelBuilder.Entity<Doctor>().ToTable("Doctors");
             modelBuilder.Entity<Receptionist>().ToTable("Receptionists");
             modelBuilder.Entity<LabAssistant>().ToTable("LabAssistants");
