@@ -1,17 +1,26 @@
-﻿namespace Database.People
-{
-    public class Patient : User
-    {
-        public Address Address { get; set; }
-        public string Pesel { get; set; }
+﻿using System.ComponentModel.DataAnnotations;
 
-        public Patient(string name, string surname, UserAccount userAccount, Address address, string pesel) : base(name, surname, userAccount)
+namespace Database.People
+{
+    public class Patient
+    {
+        public string Name { get; set; }
+        public string Surname { get; set; }
+
+        [MaxLength(11)]
+        public string Pesel { get; set; }
+        public Address Address { get; set; }
+
+
+        public Patient(string name, string surname, string pesel, Address address)
         {
+            Name = name;
+            Surname = surname;
             Address = address;
             Pesel = pesel;
         }
 
-        private Patient() : base()
+        private Patient()
         {
 
         }

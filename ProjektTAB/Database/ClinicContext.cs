@@ -23,8 +23,7 @@ namespace Database
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Patient>().ToTable("Patients");
+        {   
             modelBuilder.Entity<Doctor>().ToTable("Doctors");
             modelBuilder.Entity<Receptionist>().ToTable("Receptionists");
             modelBuilder.Entity<LabAssistant>().ToTable("LabAssistants");
