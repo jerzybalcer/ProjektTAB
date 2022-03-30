@@ -14,9 +14,6 @@ namespace Database.Examinations
         public DateTime? ClosingDate { get; set; }
         public LabExaminationStatus Status { get; set; }
         public Appointment Appointment { get; set; }
-
-        [MaxLength(3)]
-        public string ExaminationCode { get; set; }
         public ExaminationTemplate ExaminationTemplate { get; set; }
         public LabAssistant? LabAssistant { get; set; }
         public LabManager? LabManager { get; set; }
@@ -26,7 +23,6 @@ namespace Database.Examinations
             OrderDate = orderDate;
             Appointment = appointment;
             ExaminationTemplate = examinationTemplate;
-            ExaminationCode = ExaminationTemplate.ExaminationCode;
             DoctorComment = doctorComment;
 
             Status = LabExaminationStatus.Ordered;

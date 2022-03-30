@@ -6,9 +6,6 @@ namespace Database.Examinations
     {
         public int PhysicalExaminationId { get; set; }
         public Appointment Appointment { get; set; }
-
-        [MaxLength(3)]
-        public string ExaminationCode { get; set; }
         public ExaminationTemplate ExaminationTemplate { get; set; }
         public string Result { get; set; }
 
@@ -16,7 +13,6 @@ namespace Database.Examinations
         {
             Appointment = appointment;
             ExaminationTemplate = examinationTemplate;
-            ExaminationCode = examinationTemplate.ExaminationCode;
             Result = result;
         }
 
