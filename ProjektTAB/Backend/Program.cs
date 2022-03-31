@@ -1,5 +1,5 @@
-using Backend.Services.Repositories;
-using Database.Repositories;
+
+using Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Unit of work used to work with database (can be injected)
-builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddDbContext<ClinicContext>();
 
 var app = builder.Build();
 
