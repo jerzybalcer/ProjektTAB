@@ -33,7 +33,7 @@ namespace DesktopClient
             switch ((sender as Button).Name.ToString())
             {
                 case "LoadRegisterPageBtn":
-                    ContentFrame.Navigate(new RegistrationPage());
+                    ContentFrame.Navigate(new DoctorChoosePage());
                     break;
                 case "LoadPatientsListPageBtn":
                     ContentFrame.Navigate(new PatientsListPage());

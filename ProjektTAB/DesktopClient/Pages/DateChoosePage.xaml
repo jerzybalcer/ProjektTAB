@@ -1,4 +1,4 @@
-﻿<Page x:Class="DesktopClient.Pages.DoctorChoosePage"
+﻿<Page x:Class="DesktopClient.Pages.DateChoosePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:DesktopClient.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DoctorChoosePage" Loaded="Page_Loaded">
+      Title="DateChoosePage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,23 +20,42 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Wybór lekarza" 
+        <TextBlock Text="Wybór terminu" 
                    Grid.Row="0" Grid.ColumnSpan="2"
                    Style="{StaticResource PageHeader}"/>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-            <TextBlock Text="Dostępni lekarze:" HorizontalAlignment="Center"
+            <TextBlock Text="Data wizyty" HorizontalAlignment="Center"
                        FontSize="16" Margin="10"/>
-            <ComboBox x:Name="DoctorsList"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Top" 
-                  Margin="60,0,60,0" SelectionChanged="DoctorsList_SelectionChanged"/>
+            <DatePicker HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                        Margin="60,0,60,20" x:Name="DatePicker"
+                        SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+
+            <TextBlock Text="Wolne godziny" HorizontalAlignment="Center"
+                       FontSize="16" Margin="10"/>
+            <ListView x:Name="FreeDates"  Margin="60,0,60,0" 
+                      SelectionMode="Single" SelectionChanged="FreeDates_SelectionChanged"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical"  Grid.Row="1" Grid.Column="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Wybrany lekarz: " 
                        FontSize="16" Margin="10" HorizontalAlignment="Right"/>
-                <TextBlock x:Name="SelectedDoctorName" 
+                <TextBlock x:Name="ChosenDoctorName" 
+                           Text="nie wybrano" HorizontalAlignment="Left"
+                       FontSize="16" Margin="10"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Wybrana data: " 
+                       FontSize="16" Margin="10" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="ChosenDate" 
+                           Text="nie wybrano" HorizontalAlignment="Left"
+                       FontSize="16" Margin="10"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Wybrana godzina: " 
+                       FontSize="16" Margin="10" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="ChosenHour" 
                            Text="nie wybrano" HorizontalAlignment="Left"
                        FontSize="16" Margin="10"/>
             </StackPanel>
@@ -46,5 +65,7 @@
                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                 Padding="10" FontSize="24" IsEnabled="False"
                 Margin="30" Click="NextBtn_Click"/>
+
+
     </Grid>
 </Page>

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:DesktopClient.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AccountInfo">
+      Title="PatientInfo">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,7 +14,7 @@
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Dane użytkownika" 
+        <TextBlock Text="Dane pacjenta" 
                    Style="{StaticResource PageHeader}"
                    Grid.Row="0"/>
 
