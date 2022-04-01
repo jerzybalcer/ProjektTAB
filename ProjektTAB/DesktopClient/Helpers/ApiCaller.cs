@@ -6,11 +6,6 @@ namespace DesktopClient.Helpers
     {
         private static HttpClient _httpClient;
 
-        public ApiCaller()
-        {
-            _httpClient = new HttpClient();
-        }
-
         public static async void Get()
         {
 
