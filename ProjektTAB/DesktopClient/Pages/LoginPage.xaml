@@ -9,6 +9,27 @@
       Title="Login">
     
     <Grid HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
         <TextBlock Style="{DynamicResource PageHeader}" Text="Zaloguj się"/>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+
+            <StackPanel Orientation="Vertical" Margin="15">
+                <TextBlock Text="Email" HorizontalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="Email" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="15,0,15,25">
+                <TextBlock Text="Password" HorizontalAlignment="Center" Margin="5"/>
+                <PasswordBox x:Name="Password" />
+            </StackPanel>
+
+            <Button x:Name="LoginBtn" Content="Zaloguj"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Padding="10" FontSize="18" Click="LoginBtn_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

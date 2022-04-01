@@ -25,6 +25,9 @@ namespace DesktopClient
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void Main_Loaded(object sender, RoutedEventArgs e)
+        {
             ContentFrame.Navigate(new LoginPage());
         }
 
@@ -43,6 +46,11 @@ namespace DesktopClient
                     break;
             }
 
+        }
+
+        public void ChangeMenuButtonVisibility(Visibility visibility)
+        {
+            MenuButtons.Visibility = visibility;
         }
     }
 }

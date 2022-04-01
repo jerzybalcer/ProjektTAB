@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DesktopClient"
         mc:Ignorable="d"
         Title="Clinic Desktop Client" Height="450" Width="800" ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Loaded="Main_Loaded">
 
     <Grid Background="#f4f5f0">
         <Grid.ColumnDefinitions>
@@ -26,15 +26,15 @@
                        HorizontalAlignment="Center"
                        Margin="5"/>
             <Separator Margin="0,0,0,10"/>
-            <Button Content="Rejestruj wizytę" 
+
+            <StackPanel x:Name="MenuButtons" Visibility="Hidden">
+                <Button Content="Rejestruj wizytę" 
                     Click="MenuButton_Click" x:Name="LoadRegisterPageBtn"
                     FontSize="14" Margin="5,2,5,2"/>
-            <Button Content="Wyszukaj pacjenta" 
-                    Click="MenuButton_Click" x:Name="LoadPatientsListPageBtn"
+                <Button Content="Wyszukaj wizytę" 
+                    Click="MenuButton_Click" x:Name="LoadSearchAppointmentPage"
                     FontSize="14" Margin="5,2,5,2"/>
-            <Button Content="Moje konto" 
-                    Click="MenuButton_Click" x:Name="LoadAccountInfoPageBtn"
-                    FontSize="14" Margin="5,2,5,2"/>
+            </StackPanel>
         </StackPanel>
 
         <Grid Grid.Row="1" Grid.Column="0" Background="#b5b2ac">
