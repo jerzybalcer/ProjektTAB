@@ -1,10 +1,13 @@
-﻿using DesktopClient.Authentication;
+﻿using Database.Users;
+using DesktopClient.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Security;
+using Newtonsoft.Json;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace DesktopClient.Pages
 {
@@ -27,23 +31,28 @@ namespace DesktopClient.Pages
             InitializeComponent();
         }
 
-        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
             CurrentAccount.IsLoggedIn = true;
 
             // retrieve data from the form
             string email = Email.Text;
-            SecureString password = Password.SecurePassword;
+            email = email.Replace("@","%40");
+            SecureString securePassword = Password.SecurePassword;
+            string password = new System.Net.NetworkCredential(string.Empty, securePassword).Password;
             // call authentication api
-
-            MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
-            mainWindow.ChangeMenuButtonVisibility(Visibility.Visible);
-
-            // uncomment after api call implementation
-            // mainWindow.UserLoggedInText.Text = LoggedUser.Name + " " + LoggedUser.Surname;
-
-            // pass logged user object into page ctor
-            this.NavigationService.Navigate(new LoggedAsPage());
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7062");
+            HttpResponseMessage response = await client.GetAsync("Login/"+email+"/"+password);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var responseObject = JsonConvert.DeserializeObject<Receptionist>(responseString);
+                MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
+                mainWindow.ChangeMenuButtonVisibility(Visibility.Visible);
+                mainWindow.UserLoggedInText.Text = responseObject.Name + " " + responseObject.Surname;
+                this.NavigationService.Navigate(new LoggedAsPage());
+            }
         }
     }
 }

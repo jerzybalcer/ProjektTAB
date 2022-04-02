@@ -16,7 +16,7 @@
             UserAccountId = UserAccount.UserAccountId;
         }
 
-        protected User()
+        public User()
         {
         }
     }
