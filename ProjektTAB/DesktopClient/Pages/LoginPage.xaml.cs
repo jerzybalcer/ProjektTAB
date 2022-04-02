@@ -51,7 +51,7 @@ namespace DesktopClient.Pages
                 MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
                 mainWindow.ChangeMenuButtonVisibility(Visibility.Visible);
                 mainWindow.UserLoggedInText.Text = responseObject.Name + " " + responseObject.Surname;
-                this.NavigationService.Navigate(new LoggedAsPage());
+                this.NavigationService.Navigate(new LoggedAsPage(responseObject));
             }
         }
     }
