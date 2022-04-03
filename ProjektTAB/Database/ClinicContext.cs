@@ -17,7 +17,7 @@ namespace Database
         public DbSet<LabAssistant> LabAssistants { get; set; }
         public DbSet<LabManager> LabManagers { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserAccount> UserAccount { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
 
         public ClinicContext(DbContextOptions<ClinicContext> options) : base(options)
         {
