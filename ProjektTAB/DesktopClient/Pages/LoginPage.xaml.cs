@@ -52,6 +52,10 @@ namespace DesktopClient.Pages
                 CurrentAccount.Login(responseObject);
                 this.NavigationService.Navigate(new LoggedAsPage(responseObject));
             }
+            else
+            {
+                MessageBox.Show("Nieprawidłowe dane logowania!");
+            }
         }
     }
 }
