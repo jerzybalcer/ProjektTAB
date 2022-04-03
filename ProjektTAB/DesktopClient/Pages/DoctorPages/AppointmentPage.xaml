@@ -1,0 +1,93 @@
+﻿<Page x:Class="DesktopClient.Pages.DoctorPages.AppointmentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DesktopClient.Pages.DoctorPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AppointmentPage" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Obsługa Wizyty" 
+                   Grid.Row="0" Grid.ColumnSpan="2"
+                   Style="{StaticResource PageHeader}"/>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Pacjent: " FontSize="14"
+                       HorizontalAlignment="Center"
+                       Grid.Row="0" Grid.Column="0"/>
+            <TextBlock Text="imie nazwisko" x:Name="PatientText" FontSize="14"
+                        Grid.Row="0" Grid.Column="1"/>
+
+            <TextBlock Text="Status: " FontSize="14"
+                       HorizontalAlignment="Center"
+                        Grid.Row="1" Grid.Column="0"/>
+            <TextBlock Text="status" x:Name="StatusText" FontSize="14"
+                        Grid.Row="1" Grid.Column="1"/>
+
+            <TextBlock Text="Opis wizyty: " FontSize="14"
+                       HorizontalAlignment="Center"
+                        Grid.Row="2" Grid.Column="0"/>
+            <TextBox x:Name="DescriptionText" FontSize="14"
+                      Margin="0,0,10,10"
+                      Grid.Row="2" Grid.Column="1"/>
+
+            <TextBlock Text="Diagnoza: " FontSize="14"
+                       HorizontalAlignment="Center"
+                        Grid.Row="3" Grid.Column="0"/>
+            <TextBox x:Name="DiagnosisText" FontSize="14"
+                      Margin="0,0,10,10"
+                      Grid.Row="3" Grid.Column="1"/>
+
+            <TextBlock Text="Badania: " FontSize="14"
+                       HorizontalAlignment="Center"
+                       Grid.Row="4" Grid.Column="0"/>
+            <Button x:Name="ShowExaminationsBtn" FontSize="14"
+                      Margin="0,5,5,5" Content="Zobacz badania"
+                      Grid.Row="4" Grid.Column="1"
+                      Padding="5" HorizontalAlignment="Left"
+                      Click="ShowExaminationsBtn_Click"/>
+            <Button x:Name="OrderExaminationsBtn" FontSize="14"
+                      Margin="130,5,5,5" Content="Zleć badania"
+                      Grid.Row="4" Grid.Column="1"
+                      Padding="5" HorizontalAlignment="Left"
+                      Click="OrderExaminationsBtn_Click"/>
+           
+        </Grid>
+
+        <StackPanel Grid.Column="1" Grid.Row="1"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <TextBlock Text="Nowy status:" HorizontalAlignment="Center" 
+                       FontSize="14" Margin="5"/>
+            <ComboBox x:Name="AppointmentStatusSelection">
+                <ComboBoxItem Tag="Finished" Content="Zakończona"/>
+                <ComboBoxItem Tag="Failed" Content="Niepowodzenie"/>
+            </ComboBox>
+            <Button Content="Zapisz i wyjdź" Margin="15" FontSize="16" Padding="5"/>
+        </StackPanel>
+    </Grid>
+</Page>
