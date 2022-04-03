@@ -23,7 +23,7 @@ namespace Backend.Controllers
             {
                 var userType = _context.Users.FirstOrDefault(p => p.UserAccountId == user.UserAccountId);
                 var jsonSettings = JsonConfiguration.GetJsonSettings();
-                var json = JsonConvert.SerializeObject(userType, jsonSettings);
+                var json = JsonConvert.SerializeObject(userType,userType.GetType(), jsonSettings);
                 return Ok(json);
             }
             else

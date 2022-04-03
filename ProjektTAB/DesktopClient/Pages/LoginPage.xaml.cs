@@ -46,14 +46,10 @@ namespace DesktopClient.Pages
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-
                 var jsonSettings = JsonConfiguration.GetJsonSettings();
                 dynamic responseObject = JsonConvert.DeserializeObject(responseString, jsonSettings);
-                CurrentAccount.IsLoggedIn = true;
-                CurrentAccount.CurrentUser = responseObject;
                 MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
                 mainWindow.ChangeMenuButtonVisibility(Visibility.Visible);
-                mainWindow.UserLoggedInText.Text = responseObject.Name + " " + responseObject.Surname;
                 CurrentAccount.Login(responseObject);
                 this.NavigationService.Navigate(new LoggedAsPage(responseObject));
             }

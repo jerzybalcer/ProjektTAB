@@ -29,6 +29,7 @@ namespace Database
                 .RegisterSubtype<Receptionist>(UserType.Receptionist)
                 .SerializeDiscriminatorProperty() 
                 .Build());
+            settings.TypeNameHandling = TypeNameHandling.All;
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             return settings;
         }
