@@ -47,9 +47,8 @@ namespace DesktopClient.Pages
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsonSettings = JsonConfiguration.GetJsonSettings();
-                dynamic responseObject = JsonConvert.DeserializeObject(responseString, jsonSettings);
-                MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
-                mainWindow.ChangeMenuButtonVisibility(Visibility.Visible);
+                User responseObject = (User)JsonConvert.DeserializeObject(responseString, jsonSettings);
+
                 CurrentAccount.Login(responseObject);
                 this.NavigationService.Navigate(new LoggedAsPage(responseObject));
             }
