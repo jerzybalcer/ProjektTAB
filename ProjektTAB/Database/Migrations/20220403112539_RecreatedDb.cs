@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -38,7 +39,7 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAccount",
+                name: "UserAccounts",
                 columns: table => new
                 {
                     UserAccountId = table.Column<int>(type: "int", nullable: false)
@@ -49,7 +50,7 @@ namespace Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAccount", x => x.UserAccountId);
+                    table.PrimaryKey("PK_UserAccounts", x => x.UserAccountId);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,9 +89,9 @@ namespace Database.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Users_UserAccount_UserAccountId",
+                        name: "FK_Users_UserAccounts_UserAccountId",
                         column: x => x.UserAccountId,
-                        principalTable: "UserAccount",
+                        principalTable: "UserAccounts",
                         principalColumn: "UserAccountId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -212,7 +213,6 @@ namespace Database.Migrations
                     ClosingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     AppointmentId = table.Column<int>(type: "int", nullable: false),
-                    ExaminationCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     ExaminationTemplateExaminationCode = table.Column<string>(type: "nvarchar(3)", nullable: true),
                     LabAssistantUserId = table.Column<int>(type: "int", nullable: true),
                     LabManagerUserId = table.Column<int>(type: "int", nullable: true)
@@ -250,7 +250,6 @@ namespace Database.Migrations
                     PhysicalExaminationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AppointmentId = table.Column<int>(type: "int", nullable: false),
-                    ExaminationCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     ExaminationTemplateExaminationCode = table.Column<string>(type: "nvarchar(3)", nullable: true),
                     Result = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -363,7 +362,7 @@ namespace Database.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "UserAccount");
+                name: "UserAccounts");
         }
     }
 }

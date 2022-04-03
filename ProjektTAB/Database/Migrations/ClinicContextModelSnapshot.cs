@@ -22,36 +22,6 @@ namespace Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Database.Address", b =>
-                {
-                    b.Property<int>("AddressId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"), 1L, 1);
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HouseNumber")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("RoomNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AddressId");
-
-                    b.ToTable("Address", (string)null);
-                });
-
             modelBuilder.Entity("Database.Appointment", b =>
                 {
                     b.Property<int>("AppointmentId")
@@ -92,7 +62,7 @@ namespace Database.Migrations
 
                     b.HasIndex("ReceptionistUserId");
 
-                    b.ToTable("Appointments", (string)null);
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("Database.Examinations.ExaminationTemplate", b =>
@@ -110,7 +80,7 @@ namespace Database.Migrations
 
                     b.HasKey("ExaminationCode");
 
-                    b.ToTable("ExaminationTemplates", (string)null);
+                    b.ToTable("ExaminationTemplates");
                 });
 
             modelBuilder.Entity("Database.Examinations.LabExamination", b =>
@@ -164,7 +134,7 @@ namespace Database.Migrations
 
                     b.HasIndex("LabManagerUserId");
 
-                    b.ToTable("LabExaminations", (string)null);
+                    b.ToTable("LabExaminations");
                 });
 
             modelBuilder.Entity("Database.Examinations.PhysicalExamination", b =>
@@ -191,10 +161,40 @@ namespace Database.Migrations
 
                     b.HasIndex("ExaminationTemplateExaminationCode");
 
-                    b.ToTable("PhysicalExaminations", (string)null);
+                    b.ToTable("PhysicalExaminations");
                 });
 
-            modelBuilder.Entity("Database.People.Patient", b =>
+            modelBuilder.Entity("Database.Patients.Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"), 1L, 1);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HouseNumber")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("RoomNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AddressId");
+
+                    b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("Database.Patients.Patient", b =>
                 {
                     b.Property<int>("PatientId")
                         .ValueGeneratedOnAdd()
@@ -222,10 +222,10 @@ namespace Database.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Patients", (string)null);
+                    b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Database.People.User", b =>
+            modelBuilder.Entity("Database.Users.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -249,10 +249,10 @@ namespace Database.Migrations
                     b.HasIndex("UserAccountId")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Database.People.UserAccount", b =>
+            modelBuilder.Entity("Database.Users.UserAccount", b =>
                 {
                     b.Property<int>("UserAccountId")
                         .ValueGeneratedOnAdd()
@@ -273,12 +273,12 @@ namespace Database.Migrations
 
                     b.HasKey("UserAccountId");
 
-                    b.ToTable("UserAccount", (string)null);
+                    b.ToTable("UserAccounts");
                 });
 
-            modelBuilder.Entity("Database.People.Doctor", b =>
+            modelBuilder.Entity("Database.Users.Doctor", b =>
                 {
-                    b.HasBaseType("Database.People.User");
+                    b.HasBaseType("Database.Users.User");
 
                     b.Property<int>("LicenseNumber")
                         .HasMaxLength(7)
@@ -287,42 +287,42 @@ namespace Database.Migrations
                     b.ToTable("Doctors", (string)null);
                 });
 
-            modelBuilder.Entity("Database.People.LabAssistant", b =>
+            modelBuilder.Entity("Database.Users.LabAssistant", b =>
                 {
-                    b.HasBaseType("Database.People.User");
+                    b.HasBaseType("Database.Users.User");
 
                     b.ToTable("LabAssistants", (string)null);
                 });
 
-            modelBuilder.Entity("Database.People.LabManager", b =>
+            modelBuilder.Entity("Database.Users.LabManager", b =>
                 {
-                    b.HasBaseType("Database.People.User");
+                    b.HasBaseType("Database.Users.User");
 
                     b.ToTable("LabManagers", (string)null);
                 });
 
-            modelBuilder.Entity("Database.People.Receptionist", b =>
+            modelBuilder.Entity("Database.Users.Receptionist", b =>
                 {
-                    b.HasBaseType("Database.People.User");
+                    b.HasBaseType("Database.Users.User");
 
                     b.ToTable("Receptionists", (string)null);
                 });
 
             modelBuilder.Entity("Database.Appointment", b =>
                 {
-                    b.HasOne("Database.People.Doctor", "Doctor")
+                    b.HasOne("Database.Users.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Database.People.Patient", "Patient")
+                    b.HasOne("Database.Patients.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Database.People.Receptionist", "Receptionist")
+                    b.HasOne("Database.Users.Receptionist", "Receptionist")
                         .WithMany()
                         .HasForeignKey("ReceptionistUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,11 +347,11 @@ namespace Database.Migrations
                         .WithMany()
                         .HasForeignKey("ExaminationTemplateExaminationCode");
 
-                    b.HasOne("Database.People.LabAssistant", "LabAssistant")
+                    b.HasOne("Database.Users.LabAssistant", "LabAssistant")
                         .WithMany()
                         .HasForeignKey("LabAssistantUserId");
 
-                    b.HasOne("Database.People.LabManager", "LabManager")
+                    b.HasOne("Database.Users.LabManager", "LabManager")
                         .WithMany()
                         .HasForeignKey("LabManagerUserId");
 
@@ -381,9 +381,9 @@ namespace Database.Migrations
                     b.Navigation("ExaminationTemplate");
                 });
 
-            modelBuilder.Entity("Database.People.Patient", b =>
+            modelBuilder.Entity("Database.Patients.Patient", b =>
                 {
-                    b.HasOne("Database.Address", "Address")
+                    b.HasOne("Database.Patients.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -392,49 +392,49 @@ namespace Database.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("Database.People.User", b =>
+            modelBuilder.Entity("Database.Users.User", b =>
                 {
-                    b.HasOne("Database.People.UserAccount", "UserAccount")
+                    b.HasOne("Database.Users.UserAccount", "UserAccount")
                         .WithOne("User")
-                        .HasForeignKey("Database.People.User", "UserAccountId")
+                        .HasForeignKey("Database.Users.User", "UserAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UserAccount");
                 });
 
-            modelBuilder.Entity("Database.People.Doctor", b =>
+            modelBuilder.Entity("Database.Users.Doctor", b =>
                 {
-                    b.HasOne("Database.People.User", null)
+                    b.HasOne("Database.Users.User", null)
                         .WithOne()
-                        .HasForeignKey("Database.People.Doctor", "UserId")
+                        .HasForeignKey("Database.Users.Doctor", "UserId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Database.People.LabAssistant", b =>
+            modelBuilder.Entity("Database.Users.LabAssistant", b =>
                 {
-                    b.HasOne("Database.People.User", null)
+                    b.HasOne("Database.Users.User", null)
                         .WithOne()
-                        .HasForeignKey("Database.People.LabAssistant", "UserId")
+                        .HasForeignKey("Database.Users.LabAssistant", "UserId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Database.People.LabManager", b =>
+            modelBuilder.Entity("Database.Users.LabManager", b =>
                 {
-                    b.HasOne("Database.People.User", null)
+                    b.HasOne("Database.Users.User", null)
                         .WithOne()
-                        .HasForeignKey("Database.People.LabManager", "UserId")
+                        .HasForeignKey("Database.Users.LabManager", "UserId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Database.People.Receptionist", b =>
+            modelBuilder.Entity("Database.Users.Receptionist", b =>
                 {
-                    b.HasOne("Database.People.User", null)
+                    b.HasOne("Database.Users.User", null)
                         .WithOne()
-                        .HasForeignKey("Database.People.Receptionist", "UserId")
+                        .HasForeignKey("Database.Users.Receptionist", "UserId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
@@ -446,7 +446,7 @@ namespace Database.Migrations
                     b.Navigation("PhysicalExaminations");
                 });
 
-            modelBuilder.Entity("Database.People.UserAccount", b =>
+            modelBuilder.Entity("Database.Users.UserAccount", b =>
                 {
                     b.Navigation("User")
                         .IsRequired();

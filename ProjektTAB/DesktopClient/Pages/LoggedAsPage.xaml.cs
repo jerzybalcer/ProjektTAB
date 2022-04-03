@@ -1,4 +1,5 @@
 ﻿using Database.Users;
+using DesktopClient.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace DesktopClient.Pages
 
         public LoggedAsPage(User loggedUser)
         {
+            InitializeComponent();
             _loggedUser = loggedUser;
         }
 
@@ -43,6 +45,13 @@ namespace DesktopClient.Pages
             {
                 LoggedUserName.Text = "nie zalogowano";
             }
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentAccount.Logout();
+
+            this.NavigationService.Navigate(new LoginPage());
         }
     }
 }

@@ -27,19 +27,23 @@
                        Margin="5"/>
             <Separator Margin="0,0,0,10"/>
 
-            <StackPanel x:Name="MenuButtons" Visibility="Hidden">
+            <StackPanel x:Name="MenuButtons" Visibility="Collapsed">
                 <Button Content="Rejestruj wizytę" 
                     Click="MenuButton_Click" x:Name="LoadRegisterPageBtn"
                     FontSize="14" Margin="5,2,5,2"/>
-                <Button Content="Wyszukaj wizytę" 
-                    Click="MenuButton_Click" x:Name="LoadSearchAppointmentPage"
+                <Button Content="Dodaj pacjenta" 
+                    Click="MenuButton_Click" x:Name="AddPatientPageBtn"
+                    FontSize="14" Margin="5,2,5,2"/>
+                <Button Content="Dodaj badanie" 
+                    Click="MenuButton_Click" x:Name="AddExaminationPage"
                     FontSize="14" Margin="5,2,5,2"/>
             </StackPanel>
         </StackPanel>
 
         <Grid Grid.Row="1" Grid.Column="0" Background="#b5b2ac">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                       x:Name="UserLoggedInText" Text="Nie zalogowano"/>
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="UserLoggedIn" Content="Nie zalogowano"
+                    Padding="5" IsEnabled="False" Click="UserLoggedIn_Click"/>
         </Grid>
 
         <DockPanel Grid.Column="1" Grid.RowSpan="2">

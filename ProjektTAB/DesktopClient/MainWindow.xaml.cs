@@ -1,4 +1,5 @@
-﻿using DesktopClient.Pages;
+﻿using DesktopClient.Authentication;
+using DesktopClient.Pages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,19 +39,23 @@ namespace DesktopClient
                 case "LoadRegisterPageBtn":
                     ContentFrame.Navigate(new DoctorChoosePage());
                     break;
-                case "LoadPatientsListPageBtn":
-                    ContentFrame.Navigate(new PatientsListPage());
+                case "AddPatientPageBtn":
+                    ContentFrame.Navigate(new AddPatientPage());
                     break;
-                case "LoadAccountInfoPageBtn":
-                    ContentFrame.Navigate(new AccountInfoPage());
+                case "AddExaminationPage":
+                    ContentFrame.Navigate(new AddExaminationPage());
                     break;
             }
-
         }
 
         public void ChangeMenuButtonVisibility(Visibility visibility)
         {
             MenuButtons.Visibility = visibility;
+        }
+
+        private void UserLoggedIn_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new LoggedAsPage(CurrentAccount.CurrentUser));
         }
     }
 }

@@ -23,6 +23,10 @@ namespace Database
         {
 
         }
+        public ClinicContext() : base()
+        {
+
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

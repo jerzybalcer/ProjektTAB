@@ -1,13 +1,14 @@
-﻿<Window x:Class="DesktopClient.Pages.InputPatientDataPage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DesktopClient.Pages"
-        mc:Ignorable="d"
-        Title="InputPatientData" Height="400" Width="400"
-        WindowStartupLocation="CenterScreen">
-    <Grid>
+﻿<Page x:Class="DesktopClient.Pages.AddPatientPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DesktopClient.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddPatientPage">
+
+    <Grid HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="4*"/>
@@ -30,9 +31,9 @@
                 <RadioButton GroupName="sex" x:Name="famale" Content="Kobieta" Margin="0,0,5,0"/>
                 <RadioButton GroupName="sex" x:Name="male" Content="Mężczyzna"/>
             </WrapPanel>
-            <Button Content="Dodaj" FontSize="18" 
-                    Click="Button_Click" HorizontalAlignment="Center"
+            <Button Content="Dodaj" FontSize="18" x:Name="AddPatientBtn"
+                    Click="AddPatientBtn_Click" HorizontalAlignment="Center"
                     Padding="5" Margin="0,10,0,0"/>
         </StackPanel>
     </Grid>
-</Window>
+</Page>

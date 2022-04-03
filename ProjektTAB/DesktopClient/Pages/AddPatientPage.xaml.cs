@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,13 +17,23 @@ using System.Windows.Shapes;
 namespace DesktopClient.Pages
 {
     /// <summary>
-    /// Interaction logic for AppointmentInfoPage.xaml
+    /// Interaction logic for AddPatientPage.xaml
     /// </summary>
-    public partial class AppointmentInfoPage : Page
+    public partial class AddPatientPage : Page
     {
-        public AppointmentInfoPage()
+        public AddPatientPage()
         {
             InitializeComponent();
+        }
+
+        private void AddPatientBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
