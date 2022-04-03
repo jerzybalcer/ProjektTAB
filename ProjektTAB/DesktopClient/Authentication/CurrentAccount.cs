@@ -19,7 +19,7 @@ namespace DesktopClient.Authentication
             mainWindow.ChangeMenuButtonVisibility(System.Windows.Visibility.Collapsed);
         }
 
-        public static void Login(User user)
+        public static void Login(dynamic user)
         {
             CurrentUser = user;
             IsLoggedIn = true;
