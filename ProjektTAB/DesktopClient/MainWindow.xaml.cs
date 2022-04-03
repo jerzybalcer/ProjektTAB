@@ -38,14 +38,13 @@ namespace DesktopClient
                 case "LoadRegisterPageBtn":
                     ContentFrame.Navigate(new DoctorChoosePage());
                     break;
-                case "LoadPatientsListPageBtn":
-                    ContentFrame.Navigate(new PatientsListPage());
+                case "AddPatientPageBtn":
+                    ContentFrame.Navigate(new AddPatientPage());
                     break;
-                case "LoadAccountInfoPageBtn":
-                    ContentFrame.Navigate(new AccountInfoPage());
+                case "AddExaminationPage":
+                    ContentFrame.Navigate(new AddExaminationPage());
                     break;
             }
-
         }
 
         public void ChangeMenuButtonVisibility(Visibility visibility)

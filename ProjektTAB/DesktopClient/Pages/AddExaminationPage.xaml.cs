@@ -16,13 +16,18 @@ using System.Windows.Shapes;
 namespace DesktopClient.Pages
 {
     /// <summary>
-    /// Interaction logic for AccountInfo.xaml
+    /// Interaction logic for AddExaminationPage.xaml
     /// </summary>
-    public partial class AccountInfoPage : Page
+    public partial class AddExaminationPage : Page
     {
-        public AccountInfoPage()
+        public AddExaminationPage()
         {
             InitializeComponent();
+        }
+
+        private void AddExaminationBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
