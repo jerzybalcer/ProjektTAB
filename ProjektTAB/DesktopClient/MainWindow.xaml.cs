@@ -1,4 +1,5 @@
-﻿using DesktopClient.Pages;
+﻿using DesktopClient.Authentication;
+using DesktopClient.Pages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -50,6 +51,11 @@ namespace DesktopClient
         public void ChangeMenuButtonVisibility(Visibility visibility)
         {
             MenuButtons.Visibility = visibility;
+        }
+
+        private void UserLoggedIn_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new LoggedAsPage(CurrentAccount.CurrentUser));
         }
     }
 }

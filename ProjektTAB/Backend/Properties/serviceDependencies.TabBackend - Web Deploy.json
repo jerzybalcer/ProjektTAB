@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "type": "mssql.onprem",
+      "connectionId": "ConnectionStrings:tab"
+    },
+    "apis1": {
+      "apiEndpoint": "https://clinicapi.azure-api.net/",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/ClinicApi/apis/ClinicApi",
+      "type": "apis.azure"
+    }
+  }
+}

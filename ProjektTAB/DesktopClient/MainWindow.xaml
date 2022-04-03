@@ -41,8 +41,9 @@
         </StackPanel>
 
         <Grid Grid.Row="1" Grid.Column="0" Background="#b5b2ac">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                       x:Name="UserLoggedInText" Text="Nie zalogowano"/>
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+                       x:Name="UserLoggedIn" Content="Nie zalogowano"
+                    Padding="5" IsEnabled="False" Click="UserLoggedIn_Click"/>
         </Grid>
 
         <DockPanel Grid.Column="1" Grid.RowSpan="2">
