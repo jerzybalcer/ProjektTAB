@@ -96,11 +96,11 @@
               "type": "Microsoft.ApiManagement/service/apis",
               "name": "ClinicApi/ClinicApi",
               "properties": {
-                "displayName": "ClinicApi",
+                "displayName": "Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "apiRevision": "1",
                 "description": null,
                 "subscriptionRequired": true,
-                "serviceUrl": null,
+                "serviceUrl": "https://tabbackend.azurewebsites.net",
                 "path": "",
                 "protocols": [
                   "https"
