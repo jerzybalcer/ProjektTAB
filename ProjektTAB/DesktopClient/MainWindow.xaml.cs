@@ -48,9 +48,32 @@ namespace DesktopClient
             }
         }
 
-        public void ChangeMenuButtonVisibility(Visibility visibility)
+        public void HideMenuButtons()
         {
-            MenuButtons.Visibility = visibility;
+            ReceptionistMenu.Visibility = System.Windows.Visibility.Collapsed;
+            DoctorMenu.Visibility = System.Windows.Visibility.Collapsed;
+            LabAssistantMenu.Visibility = System.Windows.Visibility.Collapsed;
+            LabManagerMenu.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        public void ShowMenuButtons(string type)
+        {
+            switch (type)
+            {
+                case "Receptionist":
+                    ReceptionistMenu.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case "Doctor":
+                    DoctorMenu.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case "LabAssistant":
+                    LabAssistantMenu.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case "LabManager":
+                    LabManagerMenu.Visibility = System.Windows.Visibility.Visible;
+                    break;
+            }
+            //MenuButtons.Visibility = visibility;
         }
 
         private void UserLoggedIn_Click(object sender, RoutedEventArgs e)

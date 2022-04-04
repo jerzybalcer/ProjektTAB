@@ -16,7 +16,7 @@ namespace DesktopClient.Authentication
             MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
             mainWindow.UserLoggedIn.Content = "Nie zalogowano";
             mainWindow.UserLoggedIn.IsEnabled = false;
-            mainWindow.ChangeMenuButtonVisibility(System.Windows.Visibility.Collapsed);
+            mainWindow.HideMenuButtons();
         }
 
         public static void Login(dynamic user)
@@ -26,7 +26,23 @@ namespace DesktopClient.Authentication
             MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
             mainWindow.UserLoggedIn.Content = user.Name + " " + user.Surname;
             mainWindow.UserLoggedIn.IsEnabled = true;
-            mainWindow.ChangeMenuButtonVisibility(System.Windows.Visibility.Visible);
+
+            if (user is Receptionist)
+            {
+                mainWindow.ShowMenuButtons("Receptionist");
+            }
+            else if (user is Doctor)
+            {
+                mainWindow.ShowMenuButtons("Doctor");
+            }
+            else if (user is LabAssistant)
+            {
+                mainWindow.ShowMenuButtons("LabAssistant");
+            }
+            else if (user is LabManager)
+            {
+                mainWindow.ShowMenuButtons("LabManager");
+            }
         }
     }
 }
