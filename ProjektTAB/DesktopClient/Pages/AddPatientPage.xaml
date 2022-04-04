@@ -24,13 +24,23 @@
             <TextBox x:Name="lastname"/>
             <Label Content="PESEL"/>
             <TextBox x:Name="pesel" PreviewTextInput="NumberValidationTextBox" MaxLength="11"/>
-            <Label Content="Data Urodzenia"/>
-            <DatePicker/>
-            <Label Content="Płeć"/>
-            <WrapPanel>
-                <RadioButton GroupName="sex" x:Name="famale" Content="Kobieta" Margin="0,0,5,0"/>
-                <RadioButton GroupName="sex" x:Name="male" Content="Mężczyzna"/>
-            </WrapPanel>
+            <Label Content="Adres"/>
+           
+            <TabPanel Margin="0,0,0,7">
+                <Label Content="Miasto:" />
+                <TextBox x:Name="city" Width="210" />
+            </TabPanel>
+            <TabPanel Margin="0,0,0,7">
+                <Label Content="Ulica:"/>
+                <TextBox x:Name="street" Width="221" />
+            </TabPanel>
+            <TabPanel>
+                <Label Content="Nr budynku:"/>
+                <TextBox x:Name="house" Width="30"/>
+                <Label Content="Nr mieszkania:" Margin="0,0,0,0"/>
+                <TextBox x:Name="apartment" Width="30"/>
+            </TabPanel>
+
             <Button Content="Dodaj" FontSize="18" x:Name="AddPatientBtn"
                     Click="AddPatientBtn_Click" HorizontalAlignment="Center"
                     Padding="5" Margin="0,10,0,0"/>
