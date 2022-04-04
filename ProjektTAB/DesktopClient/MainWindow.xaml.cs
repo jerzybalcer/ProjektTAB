@@ -1,5 +1,6 @@
 ﻿using DesktopClient.Authentication;
 using DesktopClient.Pages;
+using DesktopClient.Pages.DoctorPages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,6 +45,9 @@ namespace DesktopClient
                     break;
                 case "AddExaminationPage":
                     ContentFrame.Navigate(new AddExaminationPage());
+                    break;
+                case "AppointmentsListPageBtn":
+                    ContentFrame.Navigate(new AppointmentsListPage());
                     break;
             }
         }

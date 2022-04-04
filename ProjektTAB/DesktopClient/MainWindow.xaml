@@ -39,6 +39,9 @@
                     FontSize="14" Margin="5,2,5,2"/>
             </StackPanel>
             <StackPanel x:Name="DoctorMenu" Visibility="Collapsed">
+                <Button Content="Moje wizyty" 
+                    Click="MenuButton_Click" x:Name="AppointmentsListPageBtn"
+                    FontSize="14" Margin="5,2,5,2"/>
             </StackPanel>
             <StackPanel x:Name="LabAssistantMenu" Visibility="Collapsed">
             </StackPanel>
