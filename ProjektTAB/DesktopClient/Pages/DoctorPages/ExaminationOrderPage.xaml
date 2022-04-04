@@ -9,6 +9,51 @@
       Title="ExaminationOrderPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Nowe badanie" 
+                   Grid.Row="0" Grid.ColumnSpan="2"
+                   Style="{StaticResource PageHeader}"/>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+
+            <TextBlock Text="Zleć badanie laboratoryjne" 
+                   Grid.Row="0" Grid.Column="0"
+                   Style="{StaticResource PageHeader}" FontSize="20"/>
+
+            <ComboBox x:Name="LabExaminationCodes" Margin="40,50,40,20" 
+                      SelectionChanged="LabExaminationCodes_SelectionChanged"/>
+
+            <Button x:Name="OrderLabExaminationBtn" Content="Zleć" IsEnabled="False"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Padding="10" FontSize="18" Margin="0,40,0,0"
+                Click="OrderLabExaminationBtn_Click"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+
+            <TextBlock Text="Wykonaj badanie fizykalne" 
+                   Grid.Row="0" Grid.Column="0"
+                   Style="{StaticResource PageHeader}" FontSize="20"/>
+
+            <ComboBox x:Name="PhysicalExaminationCodes" Margin="40,50,40,20" 
+                      SelectionChanged="PhysicalExaminationCodes_SelectionChanged"/>
+
+            <TextBox x:Name="PhysicalExaminationResult" Margin="50"/>
+
+            <Button x:Name="AddPhysicalExaminationBtn" Content="Dodaj" 
+                    IsEnabled="False"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Padding="10" FontSize="18" Margin="0,0,0,0"
+                Click="AddPhysicalExaminationBtn_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

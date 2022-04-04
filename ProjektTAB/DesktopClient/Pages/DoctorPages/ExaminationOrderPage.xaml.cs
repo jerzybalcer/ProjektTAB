@@ -27,5 +27,25 @@ namespace DesktopClient.Pages.DoctorPages
             InitializeComponent();
             _appointment = appointment;
         }
+
+        private void OrderLabExaminationBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LabExaminationCodes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void AddPhysicalExaminationBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PhysicalExaminationCodes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
