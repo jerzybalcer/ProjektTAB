@@ -32,6 +32,7 @@ namespace DesktopClient.Pages
 
         public SearchPatientPage(Doctor chosenDoctor, DateTime chosenDate)
         {
+            InitializeComponent();
             _chosenDoctor = chosenDoctor;
             _chosenDate = chosenDate;
         }

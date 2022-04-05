@@ -7,7 +7,6 @@
         public string Surname { get; set; }
         public UserAccount UserAccount { get; set; }
         public int UserAccountId { get; set; }
-
         public User(string name, string surname, UserAccount userAccount)
         {
             Name = name;

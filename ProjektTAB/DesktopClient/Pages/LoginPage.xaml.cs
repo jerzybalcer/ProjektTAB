@@ -47,7 +47,7 @@ namespace DesktopClient.Pages
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsonSettings = JsonConfiguration.GetJsonSettings();
-                User responseObject = (User)JsonConvert.DeserializeObject(responseString, jsonSettings);
+                User responseObject = JsonConvert.DeserializeObject<User>(responseString, jsonSettings);
 
                 CurrentAccount.Login(responseObject);
                 this.NavigationService.Navigate(new LoggedAsPage(responseObject));

@@ -28,6 +28,7 @@
             <TextBlock Text="Dostępni lekarze:" HorizontalAlignment="Center"
                        FontSize="16" Margin="10"/>
             <ComboBox x:Name="DoctorsList"
+                  DisplayMemberPath="Surname"
                   HorizontalAlignment="Stretch" VerticalAlignment="Top" 
                   Margin="60,0,60,0" SelectionChanged="DoctorsList_SelectionChanged"/>
         </StackPanel>
