@@ -1,5 +1,7 @@
-﻿using Database;
+﻿using Backend.Services;
+using Database;
 using Database.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
@@ -11,10 +13,14 @@ namespace Backend.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ClinicContext _context;
-        public LoginController(ClinicContext context)
+        private readonly ITokenService _tokenService;
+
+        public LoginController(ClinicContext context, ITokenService tokenService)
         {
             _context = context;
+            _tokenService = tokenService;
         }
+
         [HttpGet("/Login/{email}/{password}")]
         public async Task<ActionResult<User>> CheckLoginData(string email, string password)
         {
@@ -28,6 +34,25 @@ namespace Backend.Controllers
             }
             else
                 return NotFound();
+        }
+
+        [HttpPost("/Login")]
+        [AllowAnonymous]
+        public IActionResult Login(UserLogin userLogin)
+        {
+            UserAccount? matchingAccount = _context.UserAccounts
+                .Where(acc => acc.Email == userLogin.Email && acc.Password == userLogin.Password)
+                .FirstOrDefault();
+
+            if(matchingAccount == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var token = _tokenService.GenerateToken(matchingAccount);
+                return Ok(token);
+            }
         }
     }
 }
