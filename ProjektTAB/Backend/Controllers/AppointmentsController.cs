@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Database;
 using Database.Users;
+using Database.Patients;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
@@ -39,10 +41,25 @@ namespace Backend.Controllers
             }
             return Ok(availableDates);
         }
-        [HttpPost("/AddAppointment")]
-        public async Task<ActionResult> AddAppointment()
+        [HttpGet("/SearchPatients/{data}",Name ="GetPatients")]
+        public async Task<ActionResult<List<Patient>>> GetPatients(string data)
         {
-        return Ok();
+            var patients = _context.Patients.Where(p => 
+            EF.Functions.Like(p.Pesel, "%" + data+"%")||
+            EF.Functions.Like(p.Surname, "%" + data + "%")||
+            EF.Functions.Like(p.Name, "%" + data + "%")
+            );
+            if (patients.Count() != 0)
+                return Ok(patients);
+            else
+                return NotFound();
+        }
+        [HttpPost("/AddAppointment")]
+        public async Task<ActionResult> AddAppointment(Appointment appointment)
+        {
+        _context.Appointments.Add(appointment);
+        await _context.SaveChangesAsync();
+        return CreatedAtRoute(nameof(GetPatients), new {id = appointment.AppointmentId},appointment);
         }
     }
 }

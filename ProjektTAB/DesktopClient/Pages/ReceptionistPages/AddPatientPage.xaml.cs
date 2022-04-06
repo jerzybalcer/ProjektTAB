@@ -25,10 +25,9 @@ namespace DesktopClient.Pages.ReceptionistPages
             var response = await ApiCaller.Post("api/Patients/Add", newPatient);
 
             if (response.IsSuccessStatusCode)
-            {
-                var responseString = await response.Content.ReadAsStringAsync();
-                var jsonSettings = JsonConfiguration.GetJsonSettings();
-            }
+                MessageBox.Show("Poprawnie dodano pacjenta");
+            else
+                MessageBox.Show("Nie dodano pacjenta");
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

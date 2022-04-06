@@ -29,7 +29,8 @@
                     Grid.Row="1" Width="200" Orientation="Vertical">
 
             <TextBox x:Name="SearchPhrase" Height="25"
-                     PreviewTextInput="NumberValidationTextBox"/>
+                     PreviewTextInput="NumberValidationTextBox"
+                     />
 
             <Button x:Name="SearchPatientButton" Click="SearchPatientBtn_Click"
                     Content="Wyszukaj" Margin="10" Padding="5" 
@@ -51,8 +52,22 @@
                 Click="RegisterBtn_Click"/>
 
 
-        <ListView x:Name="Patients" Margin="20" Grid.Row="2"
+        <ListView x:Name="Patients" ItemsSource="{Binding Patients}" Margin="20" Grid.Row="2"
                   VerticalAlignment="Top" SelectionMode="Single"
-                  Grid.ColumnSpan="2" SelectionChanged="Patients_SelectionChanged"/>
+                  Grid.ColumnSpan="2" SelectionChanged="Patients_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1} PESEL: {2}">
+                                <Binding Path="Name"/>
+                                <Binding Path="Surname"/>
+                                <Binding Path="Pesel"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

@@ -9,7 +9,7 @@ namespace DesktopClient.Helpers
     public static class ApiCaller
     {
         private static readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri(BaseAddress) };
-        private const string BaseAddress = "https://tabbackend.azurewebsites.net/";
+        private const string BaseAddress = "https://localhost:7062/";
 
         public static async Task<HttpResponseMessage> Get(string requestUri)
         {

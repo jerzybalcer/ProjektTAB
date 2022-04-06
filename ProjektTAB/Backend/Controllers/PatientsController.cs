@@ -24,7 +24,7 @@ namespace Backend.Controllers
         }
 
         // GET api/<PatientsController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}",Name ="Get")]
         public string Get(int id)
         {
             return "value";
@@ -43,7 +43,7 @@ namespace Backend.Controllers
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
-            return CreatedAtAction(nameof(patient), new { id = patient.PatientId }, patient);
+            return CreatedAtRoute(nameof(Get), new { id = patient.PatientId }, patient);
         }
 
         // PUT api/<PatientsController>/5
