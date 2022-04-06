@@ -1,4 +1,5 @@
 ﻿using Database.Users;
+using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -50,10 +51,7 @@ namespace DesktopClient.Pages.ReceptionistPages
                 NextBtn.IsEnabled = true;
             }
             // get all free dates from api
-            HttpClient client = new HttpClient();
-
-            client.BaseAddress = new Uri("https://tabbackend.azurewebsites.net/");
-            HttpResponseMessage response = await client.GetAsync("/GetAllAvailablesDates/" + _chosenDoctor.UserId + "/" + DatePicker.SelectedDate);
+            HttpResponseMessage response = await ApiCaller.Get("GetAllAvailablesDates/" + _chosenDoctor.UserId + "/" + DatePicker.SelectedDate);
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
