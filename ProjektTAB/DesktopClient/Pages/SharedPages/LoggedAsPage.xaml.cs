@@ -1,21 +1,9 @@
 ﻿using Database.Users;
 using DesktopClient.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace DesktopClient.Pages
+namespace DesktopClient.Pages.SharedPages
 {
     /// <summary>
     /// Interaction logic for LoggedAsPage.xaml
@@ -37,7 +25,7 @@ namespace DesktopClient.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if(_loggedUser is not null)
+            if (_loggedUser is not null)
             {
                 LoggedUserName.Text = _loggedUser.Name + " " + _loggedUser.Surname;
             }
@@ -51,7 +39,7 @@ namespace DesktopClient.Pages
         {
             CurrentAccount.Logout();
 
-            this.NavigationService.Navigate(new LoginPage());
+            NavigationService.Navigate(new LoginPage());
         }
     }
 }

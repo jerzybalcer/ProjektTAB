@@ -2,21 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace DesktopClient.Pages
+namespace DesktopClient.Pages.ReceptionistPages
 {
     /// <summary>
     /// Interaction logic for DoctorChoosePage.xaml
@@ -45,7 +35,7 @@ namespace DesktopClient.Pages
                 MessageBox.Show("Brak dostępnych doktorów w bazie");
             }
         }
-        private  void DoctorsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DoctorsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var item = (Doctor)DoctorsList.SelectedItem;
             SelectedDoctorName.Text = item.Surname;
@@ -55,7 +45,7 @@ namespace DesktopClient.Pages
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
             // pass doctor object from combobox to page construtor
-            this.NavigationService.Navigate(new DateChoosePage((Doctor)DoctorsList.SelectedItem));
+            NavigationService.Navigate(new DateChoosePage((Doctor)DoctorsList.SelectedItem));
         }
     }
 }

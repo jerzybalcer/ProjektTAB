@@ -1,27 +1,14 @@
-﻿using Database.Users;
+﻿using Database;
+using Database.Users;
 using DesktopClient.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Security;
+using DesktopClient.Helpers;
 using Newtonsoft.Json;
-using System.Text;
+using System.Net.Http;
+using System.Security;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
-using Database;
-using DesktopClient.Helpers;
 
-namespace DesktopClient.Pages
+namespace DesktopClient.Pages.SharedPages
 {
     /// <summary>
     /// Interaction logic for Login.xaml
@@ -37,12 +24,12 @@ namespace DesktopClient.Pages
         {
             // retrieve data from the form
             string email = Email.Text;
-            email = email.Replace("@","%40");
+            email = email.Replace("@", "%40");
             SecureString securePassword = Password.SecurePassword;
             string password = new System.Net.NetworkCredential(string.Empty, securePassword).Password;
 
             // call authentication api
-            HttpResponseMessage response = await ApiCaller.Get("Login/"+email+"/"+password);
+            HttpResponseMessage response = await ApiCaller.Get("Login/" + email + "/" + password);
 
             if (response.IsSuccessStatusCode)
             {
@@ -50,10 +37,10 @@ namespace DesktopClient.Pages
                 var jsonSettings = JsonConfiguration.GetJsonSettings();
                 User? responseObject = JsonConvert.DeserializeObject<User>(responseString, jsonSettings);
 
-                if(responseObject is not null)
+                if (responseObject is not null)
                 {
                     CurrentAccount.Login(responseObject);
-                    this.NavigationService.Navigate(new LoggedAsPage(responseObject));
+                    NavigationService.Navigate(new LoggedAsPage(responseObject));
                 }
                 else
                 {
