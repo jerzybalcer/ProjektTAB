@@ -31,7 +31,7 @@ namespace DesktopClient.Pages.ReceptionistPages
         {
             if (_chosenDoctor is not null)
             {
-                ChosenDoctorName.Text = _chosenDoctor.Name;
+                ChosenDoctorName.Text = _chosenDoctor.Name + " " + _chosenDoctor.Surname;
             }
             else
             {
@@ -43,6 +43,7 @@ namespace DesktopClient.Pages.ReceptionistPages
         {
             ChosenDate.Text = DatePicker.SelectedDate.ToString();
             _isDatePicked = true;
+            FreeDates.IsEnabled = true;
 
             if (_isHourPicked && _isDatePicked)
             {

@@ -33,8 +33,11 @@
 
             <TextBlock Text="Wolne godziny" HorizontalAlignment="Center"
                        FontSize="16" Margin="10"/>
-            <ListView x:Name="FreeDates"  Margin="60,0,60,0" 
-                      SelectionMode="Single" SelectionChanged="FreeDates_SelectionChanged"/>
+            <Grid>
+                <ComboBox x:Name="FreeDates" Margin="60,0,60,0"
+                      SelectionChanged="FreeDates_SelectionChanged"
+                      IsEnabled="False"/>
+            </Grid>
         </StackPanel>
 
         <StackPanel Orientation="Vertical"  Grid.Row="1" Grid.Column="1">
