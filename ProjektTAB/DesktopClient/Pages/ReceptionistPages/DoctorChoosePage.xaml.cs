@@ -1,4 +1,5 @@
 ﻿using Database.Users;
+using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,7 @@ namespace DesktopClient.Pages.ReceptionistPages
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // get all doctors from api
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://tabbackend.azurewebsites.net/");
-            HttpResponseMessage response = await client.GetAsync("GetListOfDoctors");
+            HttpResponseMessage response = await ApiCaller.Get("GetListOfDoctors");
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
@@ -37,8 +36,8 @@ namespace DesktopClient.Pages.ReceptionistPages
         }
         private void DoctorsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = (Doctor)DoctorsList.SelectedItem;
-            SelectedDoctorName.Text = item.Surname;
+            var doctor = (Doctor)DoctorsList.SelectedItem;
+            SelectedDoctorName.Text = doctor.Name + " " + doctor.Surname;
             NextBtn.IsEnabled = true;
         }
 

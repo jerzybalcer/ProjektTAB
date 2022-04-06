@@ -28,9 +28,18 @@
             <TextBlock Text="Dostępni lekarze:" HorizontalAlignment="Center"
                        FontSize="16" Margin="10"/>
             <ComboBox x:Name="DoctorsList"
-                  DisplayMemberPath="Surname"
+                  ItemsSource="{Binding}"
                   HorizontalAlignment="Stretch" VerticalAlignment="Top" 
-                  Margin="60,0,60,0" SelectionChanged="DoctorsList_SelectionChanged"/>
+                  Margin="60,0,60,0" SelectionChanged="DoctorsList_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="2" Text="{Binding Name}" Name="DoctorName"/>
+                            <TextBlock Margin="2" Text="{Binding Surname}" Name="DoctorSurname"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
 
         <StackPanel Orientation="Vertical"  Grid.Row="1" Grid.Column="1">
