@@ -48,10 +48,17 @@ namespace DesktopClient.Pages
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsonSettings = JsonConfiguration.GetJsonSettings();
-                User responseObject = JsonConvert.DeserializeObject<User>(responseString, jsonSettings);
+                User? responseObject = JsonConvert.DeserializeObject<User>(responseString, jsonSettings);
 
-                CurrentAccount.Login(responseObject);
-                this.NavigationService.Navigate(new LoggedAsPage(responseObject));
+                if(responseObject is not null)
+                {
+                    CurrentAccount.Login(responseObject);
+                    this.NavigationService.Navigate(new LoggedAsPage(responseObject));
+                }
+                else
+                {
+                    MessageBox.Show("Błąd podczas pobierania użytkownika z serwera!");
+                }
             }
             else
             {
