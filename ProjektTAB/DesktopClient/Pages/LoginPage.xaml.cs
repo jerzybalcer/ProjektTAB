@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Database;
+using DesktopClient.Helpers;
 
 namespace DesktopClient.Pages
 {
@@ -39,10 +40,10 @@ namespace DesktopClient.Pages
             email = email.Replace("@","%40");
             SecureString securePassword = Password.SecurePassword;
             string password = new System.Net.NetworkCredential(string.Empty, securePassword).Password;
+
             // call authentication api
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://tabbackend.azurewebsites.net/");
-            HttpResponseMessage response = await client.GetAsync("Login/"+email+"/"+password);
+            HttpResponseMessage response = await ApiCaller.Get("Login/"+email+"/"+password);
+
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();

@@ -1,4 +1,6 @@
 ﻿using Database;
+using Database.Patients;
+using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,31 +33,14 @@ namespace DesktopClient.Pages
 
         private async void AddPatientBtn_Click(object sender, RoutedEventArgs e)
         {
-            // call authentication api
-            HttpClient client = new HttpClient();
+            Patient newPatient = new Patient(firstname.Text, lastname.Text, pesel.Text, new Address(city.Text, street.Text, house.Text, apartment.Text));
 
-
-            var values = new Dictionary<string, string>
-            {
-                { "name", firstname.Text },
-                { "surname", lastname.Text },
-                { "pesel", pesel.Text },
-                { "city", city.Text },
-                { "street", street.Text },
-                { "houseNumber", house.Text },
-                { "roomNumber", apartment.Text }
-            };
-
-            //string content = JsonConvert.SerializeObject(values);
-            var content = new FormUrlEncodedContent(values);
-
-            var response = await client.PostAsync("https://tabbackend.azurewebsites.net/", content);
+            var response = await ApiCaller.Post("api/Patients/Add", newPatient);
 
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsonSettings = JsonConfiguration.GetJsonSettings();
-
             }
         }
 
