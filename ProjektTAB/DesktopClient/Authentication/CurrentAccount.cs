@@ -1,10 +1,11 @@
 ﻿using Database.Users;
+using Database.Users.Simplified;
 
 namespace DesktopClient.Authentication
 {
     public static class CurrentAccount
     {
-        public static User? CurrentUser { get; private set; }
+        public static UserSimplified? CurrentUser { get; private set; }
 
         // temporary property for testing purposes
         public static bool IsLoggedIn { get; private set; } = false;
@@ -19,7 +20,7 @@ namespace DesktopClient.Authentication
             mainWindow.HideMenuButtons();
         }
 
-        public static void Login(dynamic user)
+        public static void Login(UserSimplified user)
         {
             CurrentUser = user;
             IsLoggedIn = true;
@@ -27,19 +28,19 @@ namespace DesktopClient.Authentication
             mainWindow.UserLoggedIn.Content = user.Name + " " + user.Surname;
             mainWindow.UserLoggedIn.IsEnabled = true;
 
-            if (user is Receptionist)
+            if (user.Role == Role.Receptionist)
             {
                 mainWindow.ShowMenuButtons("Receptionist");
             }
-            else if (user is Doctor)
+            else if (user.Role == Role.Doctor)
             {
                 mainWindow.ShowMenuButtons("Doctor");
             }
-            else if (user is LabAssistant)
+            else if (user.Role == Role.LabAssistant)
             {
                 mainWindow.ShowMenuButtons("LabAssistant");
             }
-            else if (user is LabManager)
+            else if (user.Role == Role.LabManager)
             {
                 mainWindow.ShowMenuButtons("LabManager");
             }

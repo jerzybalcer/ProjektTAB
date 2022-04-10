@@ -1,7 +1,9 @@
 ﻿using Database;
 using Database.Users;
+using Database.Users.Simplified;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Security;
 
@@ -16,18 +18,40 @@ namespace Backend.Controllers
             _context = context;
         }
         [HttpGet("/Login/{email}/{password}")]
-        public async Task<ActionResult<User>> CheckLoginData(string email, string password)
+        public async Task<ActionResult<UserSimplified>> CheckLoginData(string email, string password)
         {
-            var user = _context.UserAccounts.FirstOrDefault(p => p.Email == email && p.Password == password);
-            if (user != null)
+            var simpleUser = await _context.UserAccounts
+                .Include(u => u.User)
+                .Where(u => u.Email == email && u.Password == password)
+                .Select(u => new UserSimplified()
+                {
+                    UserId = u.User.UserId,
+                    Name = u.User.Name,
+                    Surname = u.User.Surname,
+                    Email = u.Email,
+                    AccountId = u.UserAccountId,
+                    IsActive = u.IsActive,
+                }).FirstOrDefaultAsync();
+
+            User? user = await _context.Users
+                .Where(u => u.UserId == simpleUser.UserId).FirstOrDefaultAsync();
+
+            if(user is not null)
             {
-                var userType = _context.Users.FirstOrDefault(p => p.UserAccountId == user.UserAccountId);
-                var jsonSettings = JsonConfiguration.GetJsonSettings();
-                var json = JsonConvert.SerializeObject(userType,userType.GetType(), jsonSettings);
-                return Ok(json);
+                Enum.TryParse(user.GetType().Name, out Role role);
+                simpleUser.Role = role;
+
+                if(role == Role.Doctor)
+                {
+                    simpleUser.LicenseNumber = (user as Doctor).LicenseNumber;
+                }
+
+                return Ok(simpleUser);
             }
             else
+            {
                 return NotFound();
+            }
         }
     }
 }

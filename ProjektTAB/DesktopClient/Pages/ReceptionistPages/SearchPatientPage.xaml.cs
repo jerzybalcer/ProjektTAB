@@ -1,17 +1,17 @@
-﻿using Database.Patients;
-using Database.Users;
-using Database.Appointments;
+﻿using Database.Appointments.Simplified;
+using Database.Patients;
+using Database.Users.Simplified;
+using DesktopClient.Authentication;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Database;
-using DesktopClient.Authentication;
 
 namespace DesktopClient.Pages.ReceptionistPages
 {
@@ -20,7 +20,7 @@ namespace DesktopClient.Pages.ReceptionistPages
     /// </summary>
     public partial class SearchPatientPage : Page
     {
-        private readonly Doctor? _chosenDoctor;
+        private readonly UserSimplified _chosenDoctor;
         private readonly DateTime? _chosenDate; 
         private Regex actualRegex = null;
 
@@ -29,7 +29,7 @@ namespace DesktopClient.Pages.ReceptionistPages
             InitializeComponent();
         }
 
-        public SearchPatientPage(Doctor chosenDoctor, DateTime chosenDate)
+        public SearchPatientPage(UserSimplified chosenDoctor, DateTime chosenDate)
         {
             InitializeComponent();
             _chosenDoctor = chosenDoctor;
@@ -72,27 +72,28 @@ namespace DesktopClient.Pages.ReceptionistPages
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 List<Patient> patients = JsonConvert.DeserializeObject<List<Patient>>(responseString);
-                this.DataContext = patients;
                 Patients.ItemsSource = patients;
             }
             else
             {
                 MessageBox.Show("Brak dostępnych pacjentów w bazie");
                 Patients.ItemsSource = null;
-                this.DataContext = null;
             }
         }
 
         private async void RegisterBtn_Click(object sender, RoutedEventArgs e)
         {
             var patient = (Patient)Patients.SelectedItem;
-            Appointment appointment = new Appointment((DateTime)_chosenDate, (Receptionist)CurrentAccount.CurrentUser, _chosenDoctor, patient);
+            AppointmentSimplified appointment = new AppointmentSimplified((DateTime)_chosenDate, CurrentAccount.CurrentUser, _chosenDoctor, patient);
             // there is some problem probably with appointment model
-            HttpResponseMessage response = await ApiCaller.Post("AddAppointment", appointment);
-            if(response.IsSuccessStatusCode)   
-                MessageBox.Show("Pomyslnie dodano wizyte");
+            HttpResponseMessage response = await ApiCaller.Post("api/Appointments/Add", appointment);
+
+            if (response.IsSuccessStatusCode)   
+                MessageBox.Show("Pomyslnie zarejestrowano wizytę!");
             else
-                MessageBox.Show(await response.Content.ReadAsStringAsync());
+            {
+                MessageBox.Show("Wystąpił błąd podczas rejestracji wizyty!");
+            }
         }
         private void Patients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

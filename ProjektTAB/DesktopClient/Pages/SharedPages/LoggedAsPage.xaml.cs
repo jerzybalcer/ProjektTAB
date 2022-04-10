@@ -1,4 +1,5 @@
 ﻿using Database.Users;
+using Database.Users.Simplified;
 using DesktopClient.Authentication;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,14 +11,14 @@ namespace DesktopClient.Pages.SharedPages
     /// </summary>
     public partial class LoggedAsPage : Page
     {
-        private readonly User? _loggedUser = null;
+        private readonly UserSimplified? _loggedUser = null;
 
         public LoggedAsPage()
         {
             InitializeComponent();
         }
 
-        public LoggedAsPage(User loggedUser)
+        public LoggedAsPage(UserSimplified loggedUser)
         {
             InitializeComponent();
             _loggedUser = loggedUser;

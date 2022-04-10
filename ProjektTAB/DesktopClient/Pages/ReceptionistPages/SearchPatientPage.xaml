@@ -52,22 +52,16 @@
                 Click="RegisterBtn_Click"/>
 
 
-        <ListView x:Name="Patients" ItemsSource="{Binding Patients}" Margin="20" Grid.Row="2"
+        <ListView x:Name="Patients" Margin="20" Grid.Row="2"
                   VerticalAlignment="Top" SelectionMode="Single"
                   Grid.ColumnSpan="2" SelectionChanged="Patients_SelectionChanged">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} {1} PESEL: {2}">
-                                <Binding Path="Name"/>
-                                <Binding Path="Surname"/>
-                                <Binding Path="Pesel"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Imię" Width="200" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Nazwisko" Width="200" DisplayMemberBinding="{Binding Surname}" />
+                    <GridViewColumn Header="Pesel" Width="200" DisplayMemberBinding="{Binding Pesel}" />
+                </GridView>
+            </ListView.View>
         </ListView>
     </Grid>
 </Page>
