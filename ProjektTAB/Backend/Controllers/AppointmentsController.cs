@@ -121,13 +121,9 @@ namespace Backend.Controllers
             var appointment = await _context.Appointments.Where(p => p.AppointmentId == id).FirstOrDefaultAsync();
 
             if (appointment == null)
-            {
                 return NotFound();
-            }
             else
-            {
                 return Ok(appointment);
-            }
         }
     }
 }
