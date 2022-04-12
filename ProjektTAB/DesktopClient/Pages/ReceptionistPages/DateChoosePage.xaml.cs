@@ -47,7 +47,8 @@ namespace DesktopClient.Pages.ReceptionistPages
                 NextBtn.IsEnabled = true;
             }
             // get all free dates from api
-            HttpResponseMessage response = await ApiCaller.Get("GetAllAvailablesDates/" + _chosenDoctor.UserId + "/" + DatePicker.SelectedDate);
+            DateTime date = (DateTime)DatePicker.SelectedDate;
+            HttpResponseMessage response = await ApiCaller.Get("/GetAllAvailablesDates/" + _chosenDoctor.UserId + "/" + date.Day +"/"+date.Month +"/"+date.Year);
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();

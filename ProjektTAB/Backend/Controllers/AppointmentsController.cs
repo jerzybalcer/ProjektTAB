@@ -38,16 +38,44 @@ namespace Backend.Controllers
         }
 
 
-        [HttpGet("/GetAllAvailablesDates/{idDoctor}/{day}")]
-        public async Task<ActionResult<List<string>>> GetAllAvailableDates(int idDoctor, DateTime day)
+        [HttpGet("/GetAllAvailablesDates/{idDoctor}/{day}/{month}/{year}")]
+        public async Task<ActionResult<List<string>>> GetAllAvailableDates(int idDoctor, int day,int month, int year)
         {
-            List<string> availableDates = new List<string>() { "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "15:00", "15:30" };
-            List<Appointment> allAppointments = _context.Appointments.Where(p => p.Doctor.UserId == idDoctor && p.RegistrationDate.Day == day.Day && p.RegistrationDate.Month == day.Month && p.RegistrationDate.Year == day.Year).ToList();
-            if (allAppointments.Count==0)
+            List<string> availableDatesString = new List<string>();
+            DateTime simple = new DateTime(year,month,day,8,0,0);
+            if (simple.DayOfWeek == DayOfWeek.Sunday || simple.DayOfWeek == DayOfWeek.Saturday)
+                return NotFound();
+            if (DateTime.Compare(simple, DateTime.Now) < 0)
+                return NotFound();
+            List<DateTime> availableDates = new List<DateTime>();
+            for (int i = 0; i < 16; i++)
+                availableDates.Add(simple.AddMinutes(i*30));
+            List<Appointment> allAppointments = _context.Appointments
+           .Where(p => p.Doctor.UserId == idDoctor 
+            && p.RegistrationDate.Day == day 
+            && p.RegistrationDate.Month == month 
+            && p.RegistrationDate.Year == year)
+            .ToList();
+           foreach(var appointment in allAppointments)
+           {
+                var itemToRemove = availableDates.Single
+                (p =>
+                p.Hour == appointment.RegistrationDate.Hour &&
+                p.Minute == appointment.RegistrationDate.Minute
+                );
+                DateTime dateToRemove = new DateTime(year, month, day, itemToRemove.Hour,itemToRemove.Minute, 0);
+                availableDates.Remove(dateToRemove);
+           }
+            availableDates.ForEach(p =>
             {
-                return Ok(availableDates);
-            }
-            return Ok(availableDates);
+                if(p.Minute ==0)
+                    availableDatesString.Add(p.Hour + ":" + p.Minute+"0");
+                else
+                    availableDatesString.Add(p.Hour + ":" + p.Minute);
+            });
+            if (availableDatesString.Count == 0)
+                return NotFound();
+            return Ok(availableDatesString);
         }
         [HttpGet("/SearchPatients/{data}", Name = "GetPatients")]
         public async Task<ActionResult<List<Patient>>> GetPatients(string data)
@@ -87,7 +115,7 @@ namespace Backend.Controllers
             return CreatedAtRoute(nameof(GetById), new { id = newAppointment.AppointmentId }, newAppointment);
         }
 
-        [HttpGet("/GetById/{id}")]
+        [HttpGet("/GetById/{id}",Name ="GetById")]
         public async Task<ActionResult<Appointment>> GetById(int id)
         {
             var appointment = await _context.Appointments.Where(p => p.AppointmentId == id).FirstOrDefaultAsync();

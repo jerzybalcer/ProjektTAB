@@ -85,14 +85,17 @@ namespace DesktopClient.Pages.ReceptionistPages
         {
             var patient = (Patient)Patients.SelectedItem;
             AppointmentSimplified appointment = new AppointmentSimplified((DateTime)_chosenDate, CurrentAccount.CurrentUser, _chosenDoctor, patient);
-            // there is some problem probably with appointment model
             HttpResponseMessage response = await ApiCaller.Post("api/Appointments/Add", appointment);
 
-            if (response.IsSuccessStatusCode)   
+            if (response.IsSuccessStatusCode)
+            {
                 MessageBox.Show("Pomyslnie zarejestrowano wizytę!");
+                NavigationService.Navigate(new DoctorChoosePage());
+            }
             else
             {
                 MessageBox.Show("Wystąpił błąd podczas rejestracji wizyty!");
+                NavigationService.Navigate(new DoctorChoosePage());
             }
         }
         private void Patients_SelectionChanged(object sender, SelectionChangedEventArgs e)
