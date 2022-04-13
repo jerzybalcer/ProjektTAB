@@ -1,5 +1,6 @@
 ﻿using DesktopClient.Authentication;
 using DesktopClient.Pages.DoctorPages;
+using DesktopClient.Pages.LabWorkersPages;
 using DesktopClient.Pages.ReceptionistPages;
 using DesktopClient.Pages.SharedPages;
 using System.Windows;
@@ -37,15 +38,17 @@ namespace DesktopClient
                 case "AppointmentsListPageBtn":
                     ContentFrame.Navigate(new AppointmentsListPage());
                     break;
+                case "ExaminationsListPageBtn":
+                    ContentFrame.Navigate(new ExaminationsToDoPage(CurrentAccount.CurrentUser));
+                    break;
             }
         }
 
         public void HideMenuButtons()
         {
-            ReceptionistMenu.Visibility = System.Windows.Visibility.Collapsed;
-            DoctorMenu.Visibility = System.Windows.Visibility.Collapsed;
-            LabAssistantMenu.Visibility = System.Windows.Visibility.Collapsed;
-            LabManagerMenu.Visibility = System.Windows.Visibility.Collapsed;
+            ReceptionistMenu.Visibility = Visibility.Collapsed;
+            DoctorMenu.Visibility = Visibility.Collapsed;
+            LabWorkerMenu.Visibility = Visibility.Collapsed;
         }
 
         public void ShowMenuButtons(string type)
@@ -53,19 +56,18 @@ namespace DesktopClient
             switch (type)
             {
                 case "Receptionist":
-                    ReceptionistMenu.Visibility = System.Windows.Visibility.Visible;
+                    ReceptionistMenu.Visibility = Visibility.Visible;
                     break;
                 case "Doctor":
-                    DoctorMenu.Visibility = System.Windows.Visibility.Visible;
+                    DoctorMenu.Visibility = Visibility.Visible;
                     break;
                 case "LabAssistant":
-                    LabAssistantMenu.Visibility = System.Windows.Visibility.Visible;
+                    LabWorkerMenu.Visibility = Visibility.Visible;
                     break;
                 case "LabManager":
-                    LabManagerMenu.Visibility = System.Windows.Visibility.Visible;
+                    LabWorkerMenu.Visibility = Visibility.Visible;
                     break;
             }
-            //MenuButtons.Visibility = visibility;
         }
 
         private void UserLoggedIn_Click(object sender, RoutedEventArgs e)
