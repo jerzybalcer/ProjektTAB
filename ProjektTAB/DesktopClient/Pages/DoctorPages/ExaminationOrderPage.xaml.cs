@@ -36,5 +36,10 @@ namespace DesktopClient.Pages.DoctorPages
         {
 
         }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.GoBack();
+        }
     }
 }
