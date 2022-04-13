@@ -1,4 +1,5 @@
-﻿using Database.Users.Simplified;
+﻿using Database.Examinations;
+using Database.Users.Simplified;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,59 @@ namespace DesktopClient.Pages.LabWorkersPages
     public partial class ExaminationModifyPage : Page
     {
         private readonly UserSimplified _labWorker;
+        private readonly LabExamination _examination;
 
-        public ExaminationModifyPage(UserSimplified labWorker)
+        public ExaminationModifyPage(UserSimplified labWorker, LabExamination examination)
         {
             InitializeComponent();
             _labWorker = labWorker;
+            _examination = examination;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(_labWorker.Role == Role.LabAssistant)
+            {
+                LabAssistantPanel.Visibility = Visibility.Visible;
+                LabManagerPanel.Visibility = Visibility.Collapsed;
+            }
+            else if(_labWorker.Role == Role.LabManager)
+            {
+                LabAssistantPanel.Visibility = Visibility.Collapsed;
+                LabManagerPanel.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void SaveExaminationBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // get status from combobox and then save
+        }
+
+        private void ExaminationStatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ExaminationDescriptionTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (ExaminationDescriptionTextBox.Text.Length > 0)
+            {
+                SaveExaminationBtn.IsEnabled = true;
+            }
+            else
+            {
+                SaveExaminationBtn.IsEnabled = false;
+            }
+        }
+
+        private void ExaminationManagerCommentTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void SaveExaminationManagerBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
