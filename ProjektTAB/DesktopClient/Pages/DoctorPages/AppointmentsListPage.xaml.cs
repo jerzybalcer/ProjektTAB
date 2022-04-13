@@ -8,9 +8,17 @@ namespace DesktopClient.Pages.DoctorPages
     /// </summary>
     public partial class AppointmentsListPage : Page
     {
+        // this doctor -> CurrentAccount.CurrentUser
         public AppointmentsListPage()
         {
             InitializeComponent();
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            // 1. load all appointments registered for this doctor 
+            // (include started)
+            // 2. sort by date - sooner first
+            // 3. Appointments.ItemsSource = appointmentsFromApi;
         }
 
         private void Appointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -24,5 +32,6 @@ namespace DesktopClient.Pages.DoctorPages
             // pass appointment object
             //this.NavigationService.Navigate(new AppointmentPage());
         }
+        
     }
 }
