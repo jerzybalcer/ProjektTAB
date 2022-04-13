@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Examinations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace Backend.Controllers
@@ -12,6 +13,8 @@ namespace Backend.Controllers
         {
             _context = context;
         }
+
+        [Authorize]
         [HttpGet("/GetExaminationTemplateById/{id}", Name ="GetExaminationTemplateById")]
         public async Task<ActionResult<ExaminationTemplate>> GetExaminationTemplateById(string id)
         {
@@ -21,6 +24,8 @@ namespace Backend.Controllers
             else
                 return Ok(examinationTemplate);
         }
+
+        [Authorize]
         [HttpPost("/AddExaminationTemplate")]
         public async Task<ActionResult> AddExaminationTemplate(ExaminationTemplate template)
         {
