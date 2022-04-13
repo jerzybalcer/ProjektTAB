@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Users;
+using Database.Users.Simplified;
 using DesktopClient.Authentication;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
@@ -22,6 +23,8 @@ namespace DesktopClient.Pages.SharedPages
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
+            WaitingText.Visibility = Visibility.Visible;
+
             // retrieve data from the form
             string email = Email.Text;
             email = email.Replace("@", "%40");
@@ -35,7 +38,7 @@ namespace DesktopClient.Pages.SharedPages
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsonSettings = JsonConfiguration.GetJsonSettings();
-                User? responseObject = JsonConvert.DeserializeObject<User>(responseString, jsonSettings);
+                UserSimplified? responseObject = JsonConvert.DeserializeObject<UserSimplified>(responseString, jsonSettings);
 
                 if (responseObject is not null)
                 {
@@ -51,6 +54,8 @@ namespace DesktopClient.Pages.SharedPages
             {
                 MessageBox.Show("Nieprawidłowe dane logowania!");
             }
+
+            WaitingText.Visibility = Visibility.Hidden;
         }
     }
 }

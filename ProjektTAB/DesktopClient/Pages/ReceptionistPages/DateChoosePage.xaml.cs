@@ -1,4 +1,5 @@
 ﻿using Database.Users;
+using Database.Users.Simplified;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
@@ -14,16 +15,11 @@ namespace DesktopClient.Pages.ReceptionistPages
     /// </summary>
     public partial class DateChoosePage : Page
     {
-        private readonly Doctor? _chosenDoctor = null;
+        private readonly UserSimplified _chosenDoctor;
         private bool _isDatePicked = false;
         private bool _isHourPicked = false;
 
-        public DateChoosePage()
-        {
-            InitializeComponent();
-        }
-
-        public DateChoosePage(Doctor chosenDoctor)
+        public DateChoosePage(UserSimplified chosenDoctor)
         {
             InitializeComponent();
             _chosenDoctor = chosenDoctor;
@@ -51,7 +47,8 @@ namespace DesktopClient.Pages.ReceptionistPages
                 NextBtn.IsEnabled = true;
             }
             // get all free dates from api
-            HttpResponseMessage response = await ApiCaller.Get("GetAllAvailablesDates/" + _chosenDoctor.UserId + "/" + DatePicker.SelectedDate);
+            DateTime date = (DateTime)DatePicker.SelectedDate;
+            HttpResponseMessage response = await ApiCaller.Get("/GetAllAvailablesDates/" + _chosenDoctor.UserId + "/" + date.Day +"/"+date.Month +"/"+date.Year);
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();

@@ -20,18 +20,18 @@
 
             <StackPanel Orientation="Vertical" Margin="10">
                 <TextBlock Text="Typ" HorizontalAlignment="Center" Margin="5"/>
-                <ComboBox x:Name="ExaminationType">
+                <ComboBox x:Name="ExaminationTypeItem">
                     <ComboBoxItem Tag="Fizykalne" Content="Fizykalne" IsSelected="True"/>
                     <ComboBoxItem Tag="Laboratoryjne" Content="Laboratoryjne"/>
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="10">
                 <TextBlock Text="Kod" HorizontalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="ExaminationCode" MaxLength="3"/>
+                <TextBox x:Name="ExaminationCode" MaxLength="3" TextChanged="ExaminationCode_TextChanged"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="10">
                 <TextBlock Text="Nazwa" HorizontalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="ExaminationName" />
+                <TextBox x:Name="ExaminationName" TextChanged="ExaminationName_TextChanged" />
             </StackPanel>
 
             <Button x:Name="AddExaminationBtn" Content="Dodaj" IsEnabled="False"

@@ -1,4 +1,5 @@
 ﻿using Database.Users;
+using Database.Users.Simplified;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
@@ -26,7 +27,7 @@ namespace DesktopClient.Pages.ReceptionistPages
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                List<Doctor> doctors = JsonConvert.DeserializeObject<List<Doctor>>(responseString);
+                List<UserSimplified> doctors = JsonConvert.DeserializeObject<List<UserSimplified>>(responseString);
                 DoctorsList.ItemsSource = doctors;
             }
             else
@@ -36,7 +37,7 @@ namespace DesktopClient.Pages.ReceptionistPages
         }
         private void DoctorsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var doctor = (Doctor)DoctorsList.SelectedItem;
+            var doctor = (UserSimplified)DoctorsList.SelectedItem;
             SelectedDoctorName.Text = doctor.Name + " " + doctor.Surname;
             NextBtn.IsEnabled = true;
         }
@@ -44,7 +45,7 @@ namespace DesktopClient.Pages.ReceptionistPages
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
             // pass doctor object from combobox to page construtor
-            NavigationService.Navigate(new DateChoosePage((Doctor)DoctorsList.SelectedItem));
+            NavigationService.Navigate(new DateChoosePage((UserSimplified)DoctorsList.SelectedItem));
         }
     }
 }

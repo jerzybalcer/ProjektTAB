@@ -1,4 +1,5 @@
 ﻿using Database;
+using Database.Appointments.Simplified;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,8 +10,8 @@ namespace DesktopClient.Pages.DoctorPages
     /// </summary>
     public partial class ExaminationOrderPage : Page
     {
-        private readonly Appointment? _appointment;
-        public ExaminationOrderPage(Appointment appointment)
+        private readonly AppointmentSimplified _appointment;
+        public ExaminationOrderPage(AppointmentSimplified appointment)
         {
             InitializeComponent();
             _appointment = appointment;
@@ -34,6 +35,11 @@ namespace DesktopClient.Pages.DoctorPages
         private void PhysicalExaminationCodes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.GoBack();
         }
     }
 }

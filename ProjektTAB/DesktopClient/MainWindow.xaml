@@ -43,9 +43,10 @@
                     Click="MenuButton_Click" x:Name="AppointmentsListPageBtn"
                     FontSize="14" Margin="5,2,5,2"/>
             </StackPanel>
-            <StackPanel x:Name="LabAssistantMenu" Visibility="Collapsed">
-            </StackPanel>
-            <StackPanel x:Name="LabManagerMenu" Visibility="Collapsed">
+            <StackPanel x:Name="LabWorkerMenu" Visibility="Collapsed">
+                <Button Content="Lista badań" 
+                    Click="MenuButton_Click" x:Name="ExaminationsListPageBtn"
+                    FontSize="14" Margin="5,2,5,2"/>
             </StackPanel>
         </StackPanel>
 

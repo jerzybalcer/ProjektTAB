@@ -1,0 +1,94 @@
+﻿<Page x:Class="DesktopClient.Pages.LabWorkersPages.ExaminationModifyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DesktopClient.Pages.LabWorkersPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ExaminationModifyPage" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Modyfikuj stan badania" 
+                   Grid.Row="0"
+                   Style="{StaticResource PageHeader}"/>
+
+        <Grid x:Name="LabAssistantPanel" Visibility="Collapsed" Grid.Row="1">
+            <TextBlock Text="Wynik badania: " FontSize="18" Margin="20,0,0,0"/>
+            <TextBox Margin="20,30,20,50" x:Name="ExaminationDescriptionTextBox"
+                         TextChanged="ExaminationDescriptionTextBox_TextChanged"/>
+            <Button Content="Zapisz" HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom" FontSize="18" 
+                    Padding="10" x:Name="SaveExaminationBtn"
+                    Click="SaveExaminationBtn_Click"
+                    IsEnabled="False" Margin="120,0,0,0"/>
+            <ComboBox x:Name="ExaminationStatusComboBox" 
+                      SelectionChanged="ExaminationStatusComboBox_SelectionChanged"
+                      HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                      Margin="0,0,120,10">
+                <ComboBoxItem Tag="Success" Content="Poprawnie wykonano" IsSelected="True"/>
+                <ComboBoxItem Tag="Canceled" Content="Anulowano"/>
+            </ComboBox>
+        </Grid>
+
+        <Grid x:Name="LabManagerPanel" Visibility="Collapsed" Grid.Row="1">
+
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <TextBlock Text="Wynik badania: " FontSize="20"
+                           HorizontalAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                           x:Name="ExaminationDescriptionText"
+                           Text="wynik badania" FontSize="16"
+                           Margin="10"/>
+
+                <TextBlock Text="Wykonał: " FontSize="20"
+                           HorizontalAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                           x:Name="ExaminationAssistantName"
+                           Text="imię laboranta" FontSize="16"
+                           Margin="10"/>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Komentarz kierownika: " FontSize="20"
+                           HorizontalAlignment="Center"/>
+                <TextBox x:Name="ExaminationManagerCommentTextBox"
+                          Margin="10" Height="200"
+                         TextChanged="ExaminationManagerCommentTextBox_TextChanged"/>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1"
+                        Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <ComboBox x:Name="ManagerExaminationStatusComboBox" 
+                      HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                      Margin="120,0,10,10">
+                    <ComboBoxItem Tag="Accepted" Content="Zaakceptowano" IsSelected="True"/>
+                    <ComboBoxItem Tag="Rejected" Content="Odrzucono"/>
+                </ComboBox>
+                <Button Content="Zapisz" HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom" FontSize="18" 
+                    Padding="10" x:Name="SaveExaminationManagerBtn"
+                    Click="SaveExaminationManagerBtn_Click"
+                    IsEnabled="False" Margin="0,0,120,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

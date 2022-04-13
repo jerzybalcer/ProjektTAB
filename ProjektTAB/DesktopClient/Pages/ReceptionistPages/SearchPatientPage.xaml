@@ -29,7 +29,8 @@
                     Grid.Row="1" Width="200" Orientation="Vertical">
 
             <TextBox x:Name="SearchPhrase" Height="25"
-                     PreviewTextInput="NumberValidationTextBox"/>
+                     PreviewTextInput="NumberValidationTextBox"
+                     />
 
             <Button x:Name="SearchPatientButton" Click="SearchPatientBtn_Click"
                     Content="Wyszukaj" Margin="10" Padding="5" 
@@ -53,6 +54,14 @@
 
         <ListView x:Name="Patients" Margin="20" Grid.Row="2"
                   VerticalAlignment="Top" SelectionMode="Single"
-                  Grid.ColumnSpan="2" SelectionChanged="Patients_SelectionChanged"/>
+                  Grid.ColumnSpan="2" SelectionChanged="Patients_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Imię" Width="200" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Nazwisko" Width="200" DisplayMemberBinding="{Binding Surname}" />
+                    <GridViewColumn Header="Pesel" Width="200" DisplayMemberBinding="{Binding Pesel}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>

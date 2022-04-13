@@ -1,4 +1,5 @@
 ﻿using Database;
+using Database.Appointments.Simplified;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,9 +10,9 @@ namespace DesktopClient.Pages.DoctorPages
     /// </summary>
     public partial class AppointmentPage : Page
     {
-        private readonly Appointment? _appointment;
+        private readonly AppointmentSimplified _appointment;
 
-        public AppointmentPage(Appointment appointment)
+        public AppointmentPage(AppointmentSimplified appointment)
         {
             InitializeComponent();
             _appointment = appointment;

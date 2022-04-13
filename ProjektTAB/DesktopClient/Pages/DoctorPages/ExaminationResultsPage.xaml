@@ -6,9 +6,151 @@
       xmlns:local="clr-namespace:DesktopClient.Pages.DoctorPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ExaminationResultsPage">
+      Title="ExaminationResultsPage" Loaded="Page_Loaded">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Wyniki badań" 
+                   Grid.Row="0" Grid.ColumnSpan="2"
+                   Style="{StaticResource PageHeader}"/>
+
+        <Button x:Name="BackBtn" Content="Powrót" Grid.Column="1"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                Padding="10" FontSize="18" Margin="10"
+                Click="BackBtn_Click"/>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Margin="30,0,30,30">
+
+            <StackPanel Margin="10">
+                <RadioButton Content="Badania Fizykalne" IsChecked="True" 
+                             x:Name="PhysicalExaminationsBtn" Checked="PhysicalExaminationsBtn_Checked"/>
+                <RadioButton Content="Badania Laboratoryjne" 
+                             x:Name="LabExaminationsBtn" Checked="LabExaminationsBtn_Checked"/>
+            </StackPanel>
+
+            <ListView x:Name="Examinations" ScrollViewer.CanContentScroll="True"
+                  SelectionMode="Single" SelectionChanged="Examinations_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Kod" Width="50" DisplayMemberBinding="{Binding ExaminationTemplate.ExaminationCode}" />
+                        <GridViewColumn Header="Badanie" Width="180" DisplayMemberBinding="{Binding ExaminationTemplate.Name}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <Grid>
+                <Grid x:Name="LabExaminationDetails" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Nazwa badania:" Grid.Row="0" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Status:" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Zlecił:" Grid.Row="2" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Wykonał:" Grid.Row="3" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Zatwierdził:" Grid.Row="4" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Data zlecenia:" Grid.Row="5" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Data wykonania:" Grid.Row="6" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Data zatwierdzenia:" Grid.Row="7" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Wynik:" Grid.Row="8" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Komentarz kierownika lab.:" Grid.Row="9" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Komentarz lekarza:" Grid.Row="10" Grid.Column="0"/>
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="0" Grid.Column="1" x:Name="LabExaminationName"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="1" Grid.Column="1" x:Name="LabExaminationStatus"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="2" Grid.Column="1" x:Name="LabExaminationDoctorName"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="3" Grid.Column="1" x:Name="LabExaminationLabAssistantName"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="4" Grid.Column="1" x:Name="LabExaminationManagerName"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="5" Grid.Column="1" x:Name="LabExaminationOrderDate"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="6" Grid.Column="1" x:Name="LabExaminationExecutionDate"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="7" Grid.Column="1" x:Name="LabExaminationClosingDate"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="8" Grid.Column="1" x:Name="LabExaminationResult"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="9" Grid.Column="1" x:Name="LabExaminationManagerComment"/>
+                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                             VerticalContentAlignment="Center" x:Name="LabExaminationDoctorComment"
+                       FontSize="16" Grid.Row="10" Grid.Column="1"/>
+                </Grid>
+
+                <Grid x:Name="PhysicalExaminationDetails" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Nazwa badania:" Grid.Row="0" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Wykonał:" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Data wykonania:" Grid.Row="2" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Text="Wynik:" Grid.Row="3" Grid.Column="0"/>
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="0" Grid.Column="1" x:Name="PhysicalExaminationName"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="1" Grid.Column="1" x:Name="PhysicalExaminationDoctorName"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="2" Grid.Column="1" x:Name="PhysicalExaminationDate"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="16" Grid.Row="3" Grid.Column="1" x:Name="PhysicalExaminationResult"/>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>
