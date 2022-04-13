@@ -31,23 +31,32 @@ namespace DesktopClient.Pages.SharedPages
             SecureString securePassword = Password.SecurePassword;
             string password = new System.Net.NetworkCredential(string.Empty, securePassword).Password;
 
-            // call authentication api
-            HttpResponseMessage response = await ApiCaller.Get("Login/" + email + "/" + password);
+            // call authentication api to get token
+            var tokenResponse = await ApiCaller.Post("Login", new UserLogin(email, password));
 
-            if (response.IsSuccessStatusCode)
+            if (tokenResponse.IsSuccessStatusCode)
             {
-                var responseString = await response.Content.ReadAsStringAsync();
-                var jsonSettings = JsonConfiguration.GetJsonSettings();
-                UserSimplified? responseObject = JsonConvert.DeserializeObject<UserSimplified>(responseString, jsonSettings);
+                var token = await tokenResponse.Content.ReadAsStringAsync();
+                ApiCaller.SetToken(token);
 
-                if (responseObject is not null)
+                // use token to get logged user
+                var loginResponse = await ApiCaller.Get("GetUser/" + email + "/" + password);
+
+                if (loginResponse.IsSuccessStatusCode)
                 {
-                    CurrentAccount.Login(responseObject);
-                    NavigationService.Navigate(new LoggedAsPage(responseObject));
-                }
-                else
-                {
-                    MessageBox.Show("Błąd podczas pobierania użytkownika z serwera!");
+                    var loginResponseString = await loginResponse.Content.ReadAsStringAsync();
+                    var jsonSettings = JsonConfiguration.GetJsonSettings();
+                    UserSimplified? responseUser = JsonConvert.DeserializeObject<UserSimplified>(loginResponseString, jsonSettings);
+
+                    if (responseUser is not null)
+                    {
+                        CurrentAccount.Login(responseUser);
+                        NavigationService.Navigate(new LoggedAsPage(responseUser));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Błąd podczas pobierania użytkownika z serwera!");
+                    }
                 }
             }
             else

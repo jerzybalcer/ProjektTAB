@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +24,11 @@ namespace DesktopClient.Helpers
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             return await _httpClient.PostAsync(requestUri, stringContent);
+        }
+
+        public static void SetToken(string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
     }
 }

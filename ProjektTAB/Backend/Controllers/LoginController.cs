@@ -1,11 +1,9 @@
 ﻿using Backend.Services;
 using Database;
 using Database.Users;
-<<<<<<< HEAD
-using Microsoft.AspNetCore.Authorization;
-=======
 using Database.Users.Simplified;
->>>>>>> origin/main
+using Microsoft.AspNetCore.Authorization;
+using Database.Users.Simplified;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +24,9 @@ namespace Backend.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpGet("/Login/{email}/{password}")]
-        public async Task<ActionResult<UserSimplified>> CheckLoginData(string email, string password)
+        [Authorize]
+        [HttpGet("/GetUser/{email}/{password}")]
+        public async Task<ActionResult<UserSimplified>> GetUser(string email, string password)
         {
             var simpleUser = await _context.UserAccounts
                 .Include(u => u.User)
@@ -65,8 +64,10 @@ namespace Backend.Controllers
 
         [HttpPost("/Login")]
         [AllowAnonymous]
-        public IActionResult Login(UserLogin userLogin)
+        public ActionResult<string> Login(UserLogin userLogin)
         {
+            userLogin.Email = userLogin.Email.Replace("%40", "@");
+
             UserAccount? matchingAccount = _context.UserAccounts
                 .Where(acc => acc.Email == userLogin.Email && acc.Password == userLogin.Password)
                 .FirstOrDefault();

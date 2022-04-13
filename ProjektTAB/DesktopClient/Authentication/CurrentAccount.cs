@@ -1,5 +1,6 @@
 ﻿using Database.Users;
 using Database.Users.Simplified;
+using DesktopClient.Helpers;
 
 namespace DesktopClient.Authentication
 {
@@ -12,6 +13,7 @@ namespace DesktopClient.Authentication
 
         public static void Logout()
         {
+            ApiCaller.SetToken("");
             CurrentUser = null;
             IsLoggedIn = false;
             MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
