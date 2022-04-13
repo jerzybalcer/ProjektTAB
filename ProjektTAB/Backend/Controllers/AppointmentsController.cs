@@ -5,6 +5,7 @@ using Database.Patients;
 using Microsoft.EntityFrameworkCore;
 using Database.Users.Simplified;
 using Database.Appointments.Simplified;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
@@ -17,6 +18,8 @@ namespace Backend.Controllers
         {
             _context = context;
         }
+
+        [Authorize]
         [HttpGet("/GetListOfDoctors")]
         public async Task<ActionResult<List<Doctor>>> GetAllDoctors()
         {
@@ -37,7 +40,7 @@ namespace Backend.Controllers
             return Ok(doctors);
         }
 
-
+        [Authorize]
         [HttpGet("/GetAllAvailablesDates/{idDoctor}/{day}/{month}/{year}")]
         public async Task<ActionResult<List<string>>> GetAllAvailableDates(int idDoctor, int day,int month, int year)
         {
@@ -77,6 +80,8 @@ namespace Backend.Controllers
                 return NotFound();
             return Ok(availableDatesString);
         }
+
+        [Authorize]
         [HttpGet("/SearchPatients/{data}", Name = "GetPatients")]
         public async Task<ActionResult<List<Patient>>> GetPatients(string data)
         {
@@ -91,6 +96,8 @@ namespace Backend.Controllers
             else
                 return NotFound();
         }
+
+        [Authorize]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAppointment(AppointmentSimplified simpleAppointment)
         {
@@ -115,6 +122,7 @@ namespace Backend.Controllers
             return CreatedAtRoute(nameof(GetById), new { id = newAppointment.AppointmentId }, newAppointment);
         }
 
+        [Authorize]
         [HttpGet("/GetById/{id}",Name ="GetById")]
         public async Task<ActionResult<Appointment>> GetById(int id)
         {

@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Patients;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,6 +18,7 @@ namespace Backend.Controllers
         }
 
         // GET: api/<PatientsController>
+        [Authorize]
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -24,6 +26,7 @@ namespace Backend.Controllers
         }
 
         // GET api/<PatientsController>/5
+        [Authorize]
         [HttpGet("{id}",Name ="Get")]
         public string Get(int id)
         {
@@ -31,11 +34,13 @@ namespace Backend.Controllers
         }
 
         // POST api/<PatientsController>
+        [Authorize]
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
+        [Authorize]
         [HttpPost("Add")]
         public async Task<ActionResult<Patient>> PostTodoItem(Patient patient)
         {
@@ -47,12 +52,14 @@ namespace Backend.Controllers
         }
 
         // PUT api/<PatientsController>/5
+        [Authorize]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/<PatientsController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

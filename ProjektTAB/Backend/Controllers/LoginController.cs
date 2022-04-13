@@ -1,5 +1,8 @@
-﻿using Database;
+﻿using Backend.Services;
+using Database;
 using Database.Users;
+using Database.Users.Simplified;
+using Microsoft.AspNetCore.Authorization;
 using Database.Users.Simplified;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
@@ -13,12 +16,17 @@ namespace Backend.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ClinicContext _context;
-        public LoginController(ClinicContext context)
+        private readonly ITokenService _tokenService;
+
+        public LoginController(ClinicContext context, ITokenService tokenService)
         {
             _context = context;
+            _tokenService = tokenService;
         }
-        [HttpGet("/Login/{email}/{password}")]
-        public async Task<ActionResult<UserSimplified>> CheckLoginData(string email, string password)
+
+        [Authorize]
+        [HttpGet("/GetUser/{email}/{password}")]
+        public async Task<ActionResult<UserSimplified>> GetUser(string email, string password)
         {
             var simpleUser = await _context.UserAccounts
                 .Include(u => u.User)
@@ -51,6 +59,27 @@ namespace Backend.Controllers
             else
             {
                 return NotFound();
+            }
+        }
+
+        [HttpPost("/Login")]
+        [AllowAnonymous]
+        public ActionResult<string> Login(UserLogin userLogin)
+        {
+            userLogin.Email = userLogin.Email.Replace("%40", "@");
+
+            UserAccount? matchingAccount = _context.UserAccounts
+                .Where(acc => acc.Email == userLogin.Email && acc.Password == userLogin.Password)
+                .FirstOrDefault();
+
+            if(matchingAccount == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var token = _tokenService.GenerateToken(matchingAccount);
+                return Ok(token);
             }
         }
     }
