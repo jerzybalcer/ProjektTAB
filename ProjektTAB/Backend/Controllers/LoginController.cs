@@ -1,6 +1,11 @@
 ﻿using Backend.Services;
 using Database;
 using Database.Users;
+<<<<<<< HEAD
+using Microsoft.AspNetCore.Authorization;
+=======
+using Database.Users.Simplified;
+>>>>>>> origin/main
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +60,26 @@ namespace Backend.Controllers
             else
             {
                 return NotFound();
+            }
+        }
+
+        [HttpPost("/Login")]
+        [AllowAnonymous]
+        public IActionResult Login(UserLogin userLogin)
+        {
+            UserAccount? matchingAccount = _context.UserAccounts
+                .Where(acc => acc.Email == userLogin.Email && acc.Password == userLogin.Password)
+                .FirstOrDefault();
+
+            if(matchingAccount == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var token = _tokenService.GenerateToken(matchingAccount);
+                return Ok(token);
+            }
         }
     }
 }
