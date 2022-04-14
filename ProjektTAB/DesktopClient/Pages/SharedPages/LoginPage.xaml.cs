@@ -4,8 +4,9 @@ using Database.Users.Simplified;
 using DesktopClient.Authentication;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
-using System.Net.Http;
+using System.Net;
 using System.Security;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -30,9 +31,11 @@ namespace DesktopClient.Pages.SharedPages
             email = email.Replace("@", "%40");
             SecureString securePassword = Password.SecurePassword;
             string password = new System.Net.NetworkCredential(string.Empty, securePassword).Password;
-
+            string encryptedPassword = password.Encrypt();
+            encryptedPassword = HttpUtility.HtmlEncode(encryptedPassword);
+            encryptedPassword = encryptedPassword.Replace("/", "%2F");
             // call authentication api to get token
-            var tokenResponse = await ApiCaller.Post("Login", new UserLogin(email, password));
+            var tokenResponse = await ApiCaller.Post("Login", new UserLogin(email, encryptedPassword));
 
             if (tokenResponse.IsSuccessStatusCode)
             {
@@ -40,7 +43,7 @@ namespace DesktopClient.Pages.SharedPages
                 ApiCaller.SetToken(token);
 
                 // use token to get logged user
-                var loginResponse = await ApiCaller.Get("GetUser/" + email + "/" + password);
+                var loginResponse = await ApiCaller.Get("GetUser/" + email + "/" + encryptedPassword);
 
                 if (loginResponse.IsSuccessStatusCode)
                 {
