@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopClient", "DesktopClient\DesktopClient.csproj", "{2C54C21D-50DE-412F-8461-A394D0FB0361}"
 	ProjectSection(ProjectDependencies) = postProject
 		{78E3DB2A-9ECE-43CA-A508-9D7CAB3219D2} = {78E3DB2A-9ECE-43CA-A508-9D7CAB3219D2}
+		{FE5B26F7-7033-418E-95F0-123DD78E3A45} = {FE5B26F7-7033-418E-95F0-123DD78E3A45}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{78E3DB2A-9ECE-43CA-A508-9D7CAB3219D2}"
