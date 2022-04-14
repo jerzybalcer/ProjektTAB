@@ -19,7 +19,7 @@ namespace Backend.Controllers
             _context = context;
         }
 
-        [Authorize]
+        [Authorize(Roles = nameof(Role.Receptionist))]
         [HttpGet("/GetListOfDoctors")]
         public async Task<ActionResult<List<Doctor>>> GetAllDoctors()
         {
@@ -40,7 +40,7 @@ namespace Backend.Controllers
             return Ok(doctors);
         }
 
-        [Authorize]
+        [Authorize(Roles = nameof(Role.Receptionist))]
         [HttpGet("/GetAllAvailablesDates/{idDoctor}/{day}/{month}/{year}")]
         public async Task<ActionResult<List<string>>> GetAllAvailableDates(int idDoctor, int day,int month, int year)
         {
@@ -81,7 +81,7 @@ namespace Backend.Controllers
             return Ok(availableDatesString);
         }
 
-        [Authorize]
+        [Authorize(Roles = nameof(Role.Receptionist))]
         [HttpGet("/SearchPatients/{data}", Name = "GetPatients")]
         public async Task<ActionResult<List<Patient>>> GetPatients(string data)
         {
@@ -97,7 +97,7 @@ namespace Backend.Controllers
                 return NotFound();
         }
 
-        [Authorize]
+        [Authorize(Roles = nameof(Role.Receptionist))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAppointment(AppointmentSimplified simpleAppointment)
         {
@@ -122,7 +122,7 @@ namespace Backend.Controllers
             return CreatedAtRoute(nameof(GetById), new { id = newAppointment.AppointmentId }, newAppointment);
         }
 
-        [Authorize]
+        [Authorize(Roles = nameof(Role.Receptionist))]
         [HttpGet("/GetById/{id}",Name ="GetById")]
         public async Task<ActionResult<Appointment>> GetById(int id)
         {

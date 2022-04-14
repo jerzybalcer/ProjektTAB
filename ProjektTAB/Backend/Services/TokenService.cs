@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Users;
+using Database.Users.Simplified;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -23,8 +24,11 @@ namespace Backend.Services
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
+            Enum.TryParse(userAccount.User.GetType().Name, out Role role);
+
             var claims = new[] {
-                new Claim(ClaimTypes.Email, userAccount.Email)
+                new Claim(ClaimTypes.Email, userAccount.Email),
+                new Claim(ClaimTypes.Role, role.ToString())
             };
 
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],

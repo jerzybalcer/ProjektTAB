@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Examinations;
+using Database.Users.Simplified;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace Backend.Controllers
                 return Ok(examinationTemplate);
         }
 
-        [Authorize]
+        [Authorize(Roles = nameof(Role.Receptionist))]
         [HttpPost("/AddExaminationTemplate")]
         public async Task<ActionResult> AddExaminationTemplate(ExaminationTemplate template)
         {

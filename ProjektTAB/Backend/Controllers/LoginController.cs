@@ -71,9 +71,10 @@ namespace Backend.Controllers
             string decryptedPassword = userLogin.Password.Replace("%2F", "/");
             decryptedPassword = decryptedPassword.Decrypt();
             userLogin.Email = userLogin.Email.Replace("%40", "@");
-            UserAccount? matchingAccount = _context.UserAccounts
+            var matchingAccount = _context.UserAccounts.Include(u => u.User)
                 .Where(acc => acc.Email == userLogin.Email && acc.Password == decryptedPassword)
                 .FirstOrDefault();
+
             if(matchingAccount == null || !matchingAccount.IsActive)
             {
                 return NotFound();

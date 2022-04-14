@@ -1,7 +1,9 @@
 ﻿using Database;
 using Database.Patients;
+using Database.Users.Simplified;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,52 +19,32 @@ namespace Backend.Controllers
             _context = context;
         }
 
-        // GET: api/<PatientsController>
-        [Authorize]
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET api/<PatientsController>/5
         [Authorize]
-        [HttpGet("{id}",Name ="Get")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetPatient")]
+        public async Task<ActionResult<Patient>> GetPatient(int id)
         {
-            return "value";
+            var patient = await _context.Patients.Where(p => p.PatientId == id).FirstOrDefaultAsync();
+
+            if (patient is null)
+            {
+                return NotFound();
+            }
+            else
+            { 
+                return Ok(patient);
+            }
         }
 
-        // POST api/<PatientsController>
-        [Authorize]
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        [Authorize]
+        [Authorize(Roles = nameof(Role.Receptionist))]
         [HttpPost("Add")]
-        public async Task<ActionResult<Patient>> PostTodoItem(Patient patient)
+        public async Task<ActionResult<Patient>> AddPatient(Patient patient)
         {
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
 
-            //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
-            return CreatedAtRoute(nameof(Get), new { id = patient.PatientId }, patient);
+            return CreatedAtRoute(nameof(GetPatient), new { id = patient.PatientId }, patient);
         }
 
-        // PUT api/<PatientsController>/5
-        [Authorize]
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PatientsController>/5
-        [Authorize]
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
