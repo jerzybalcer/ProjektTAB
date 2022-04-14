@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:DesktopClient.Pages.SharedPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="LoggedAsPage" Loaded="Page_Loaded">
+      Title="LoggedAsPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,6 +21,31 @@
             <TextBlock Text="username" x:Name="LoggedUserName" Style="{StaticResource PageHeader}" Margin="0,5,0,0"/>
 
             <TextBlock Text="!" Style="{StaticResource PageHeader}" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="20,0,0,0">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <TextBlock Text="Dziś jest " FontSize="20"/>
+                <TextBlock x:Name="WeekDay" FontSize="20" FontWeight="Medium"/>
+                <TextBlock Text="-" FontSize="20" Margin="5,0,0,0"/>
+                <TextBlock x:Name="Day" FontSize="20" Margin="5,0,0,0"/>
+                <TextBlock x:Name="Month" FontSize="20" Margin="5,0,0,0"/>
+                <TextBlock x:Name="Year" FontSize="20" Margin="5,0,0,0"/>
+                <TextBlock Text="roku." FontSize="20" Margin="5,0,0,0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <TextBlock Text="Aktualny czas: " FontSize="20"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="ClockHours" FontSize="20"/>
+                    <TextBlock Text=":" FontSize="20"/>
+                    <TextBlock x:Name="ClockMinutes" FontSize="20"/>
+                    <TextBlock Text=":" FontSize="20"/>
+                    <TextBlock x:Name="ClockSeconds" FontSize="20"/>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Text="Życzymy miłej pracy!" FontSize="20"/>
         </StackPanel>
 
         <Button x:Name="LogoutButton" Content="Wyloguj się" Grid.Row="1" 
