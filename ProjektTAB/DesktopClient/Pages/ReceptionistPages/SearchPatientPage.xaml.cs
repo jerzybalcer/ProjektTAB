@@ -100,9 +100,17 @@ namespace DesktopClient.Pages.ReceptionistPages
         }
         private void Patients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var patient = (Patient)Patients.SelectedItem;
-            ChosenPatient.Text = patient.Name +" "+ patient.Surname;
-            RegisterBtn.IsEnabled = true;
+            if(Patients.SelectedItem is Patient)
+            {
+                var patient = (Patient)Patients.SelectedItem;
+                ChosenPatient.Text = patient.Name + " " + patient.Surname;
+                RegisterBtn.IsEnabled = true;
+            }
+            else
+            {
+                ChosenPatient.Text = "nie wybrano";
+                RegisterBtn.IsEnabled = false;
+            }
         }
     }
 }
