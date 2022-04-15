@@ -4,7 +4,6 @@ using Database.Users.Simplified;
 using DesktopClient.Authentication;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
-using System.Net;
 using System.Security;
 using System.Web;
 using System.Windows;
@@ -39,8 +38,11 @@ namespace DesktopClient.Pages.SharedPages
 
             if (tokenResponse.IsSuccessStatusCode)
             {
-                var token = await tokenResponse.Content.ReadAsStringAsync();
-                ApiCaller.SetToken(token);
+                var tokenStringRes = await tokenResponse.Content.ReadAsStringAsync();
+                var tokenObject = JsonConvert.DeserializeObject<TokensPair>(tokenStringRes);
+
+                ApiCaller.SetToken(tokenObject.Token);
+                CurrentAccount.RefreshToken = tokenObject.RefreshToken;
 
                 // use token to get logged user
                 var loginResponse = await ApiCaller.Get("GetUser/" + email + "/" + encryptedPassword);

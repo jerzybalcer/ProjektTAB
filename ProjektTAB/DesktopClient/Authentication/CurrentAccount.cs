@@ -1,5 +1,4 @@
-﻿using Database.Users;
-using Database.Users.Simplified;
+﻿using Database.Users.Simplified;
 using DesktopClient.Helpers;
 
 namespace DesktopClient.Authentication
@@ -10,10 +9,12 @@ namespace DesktopClient.Authentication
 
         // temporary property for testing purposes
         public static bool IsLoggedIn { get; private set; } = false;
+        public static string RefreshToken { get; set; } = "";
 
         public static void Logout()
         {
             ApiCaller.SetToken("");
+            RefreshToken = "";
             CurrentUser = null;
             IsLoggedIn = false;
             MainWindow mainWindow = (MainWindow)App.Current.MainWindow;

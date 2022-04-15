@@ -3,12 +3,9 @@ using Database;
 using Database.Users;
 using Database.Users.Simplified;
 using Microsoft.AspNetCore.Authorization;
-using Database.Users.Simplified;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System.Security;
+using System.Security.Claims;
 
 namespace Backend.Controllers
 {
@@ -46,12 +43,12 @@ namespace Backend.Controllers
             User? user = await _context.Users
                 .Where(u => u.UserId == simpleUser.UserId).FirstOrDefaultAsync();
 
-            if(user is not null)
+            if (user is not null)
             {
                 Enum.TryParse(user.GetType().Name, out Role role);
                 simpleUser.Role = role;
 
-                if(role == Role.Doctor)
+                if (role == Role.Doctor)
                 {
                     simpleUser.LicenseNumber = (user as Doctor).LicenseNumber;
                 }
@@ -66,24 +63,74 @@ namespace Backend.Controllers
 
         [HttpPost("/Login")]
         [AllowAnonymous]
-        public ActionResult<string> Login(UserLogin userLogin)
+        public async Task<ActionResult<TokensPair>> Login(UserLogin userLogin)
         {
             string decryptedPassword = userLogin.Password.Replace("%2F", "/");
             decryptedPassword = decryptedPassword.Decrypt();
-            userLogin.Email = userLogin.Email.Replace("%40", "@");
-            var matchingAccount = _context.UserAccounts.Include(u => u.User)
-                .Where(acc => acc.Email == userLogin.Email && acc.Password == decryptedPassword)
-                .FirstOrDefault();
 
-            if(matchingAccount == null || !matchingAccount.IsActive)
+            userLogin.Email = userLogin.Email.Replace("%40", "@");
+
+            var matchingAccount = await _context.UserAccounts.Include(u => u.User)
+                .Where(acc => acc.Email == userLogin.Email && acc.Password == decryptedPassword)
+                .FirstOrDefaultAsync();
+
+            if (matchingAccount == null || !matchingAccount.IsActive)
             {
                 return NotFound();
             }
             else
             {
                 var token = _tokenService.GenerateToken(matchingAccount);
-                return Ok(token);
+
+                matchingAccount.RefreshToken = _tokenService.GenerateRefreshToken();
+                matchingAccount.RefreshTokenExpiries = DateTime.Now.AddHours(9);
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new TokensPair
+                {
+                    Token = token,
+                    RefreshToken = matchingAccount.RefreshToken
+                });
             }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("RefreshToken")]
+        public async Task<ActionResult<TokensPair>> RefreshToken(TokensPair tokensPair)
+        {
+            if (tokensPair is null)
+            {
+                return BadRequest("Invalid tokens pair object");
+            }
+
+            var principal = _tokenService.GetPrincipalFromExpiredToken(tokensPair.Token);
+
+            var userEmail = principal.FindFirst(x => x.Type == ClaimTypes.Email)?.Value;
+
+            var userAccount = await _context.UserAccounts.Include(u => u.User)
+                .Where(u => u.Email == userEmail).FirstOrDefaultAsync();
+
+            if (userAccount == null)
+            {
+                return NotFound("User not found");
+            }
+            else if (userAccount.RefreshToken != tokensPair.RefreshToken || userAccount.RefreshTokenExpiries <= DateTime.Now)
+            {
+                return Unauthorized("Refresh token not valid");
+            }
+
+            var newToken = _tokenService.GenerateToken(userAccount);
+
+            userAccount.RefreshToken = _tokenService.GenerateRefreshToken();
+            userAccount.RefreshTokenExpiries = DateTime.Now.AddHours(9);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new TokensPair {
+                Token = newToken,
+                RefreshToken = userAccount.RefreshToken
+            });
         }
     }
 }
