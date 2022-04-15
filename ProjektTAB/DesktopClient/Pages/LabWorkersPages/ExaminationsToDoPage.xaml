@@ -28,9 +28,10 @@
                   SelectionMode="Single" SelectionChanged="Examinations_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Kod" Width="50" DisplayMemberBinding="{Binding ExaminationCode}" />
-                    <GridViewColumn Header="Nazwisko" Width="200" DisplayMemberBinding="{Binding Surname}" />
-                    <GridViewColumn Header="Pesel" Width="200" DisplayMemberBinding="{Binding Pesel}" />
+                    <GridViewColumn Header="Kod" Width="50" DisplayMemberBinding="{Binding ExaminationTemplate.ExaminationCode}" />
+                    <GridViewColumn Header="Data Zlecenia" Width="150" DisplayMemberBinding="{Binding OrderDate}" />
+                    <GridViewColumn Header="Nazwisko" Width="100" DisplayMemberBinding="{Binding Appointment.Patient.Surname}" />
+                    <GridViewColumn Header="Pesel" Width="100" DisplayMemberBinding="{Binding Appointment.Patient.Pesel}" />
                 </GridView>
             </ListView.View>
         </ListView>

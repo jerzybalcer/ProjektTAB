@@ -3,12 +3,8 @@ using Database;
 using Database.Users;
 using Database.Users.Simplified;
 using Microsoft.AspNetCore.Authorization;
-using Database.Users.Simplified;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System.Security;
 
 namespace Backend.Controllers
 {

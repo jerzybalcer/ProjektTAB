@@ -1,11 +1,6 @@
 ﻿using Database.Examinations;
 using Database.Patients;
 using Database.Users.Simplified;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database.Appointments.Simplified
 {
