@@ -1,19 +1,11 @@
 ﻿using Database.Examinations;
+using Database.Examinations.Simplified;
 using Database.Users.Simplified;
+using DesktopClient.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DesktopClient.Pages.LabWorkersPages
 {
@@ -24,12 +16,14 @@ namespace DesktopClient.Pages.LabWorkersPages
     {
         private readonly UserSimplified _labWorker;
         private readonly LabExamination _examination;
+        private readonly DateTime _executionTime;
 
         public ExaminationModifyPage(UserSimplified labWorker, LabExamination examination)
         {
-            InitializeComponent();
+            _executionTime = DateTime.Now;
             _labWorker = labWorker;
             _examination = examination;
+            InitializeComponent();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -46,14 +40,25 @@ namespace DesktopClient.Pages.LabWorkersPages
             }
         }
 
-        private void SaveExaminationBtn_Click(object sender, RoutedEventArgs e)
+        private async void SaveExaminationBtn_Click(object sender, RoutedEventArgs e)
         {
-            // get status from combobox and then save
+            _examination.Result = ExaminationDescriptionTextBox.Text;
+            LabExaminationSimplified examination = new LabExaminationSimplified(_labWorker,_examination,_executionTime);
+            HttpResponseMessage response = await ApiCaller.Post("/ChangeLabExaminationStatus",examination);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Pomyślnie zmieniono status badania");
+                NavigationService.Navigate(new ExaminationsToDoPage(_labWorker));
+            }
+            else
+                MessageBox.Show(await response.Content.ReadAsStringAsync());
         }
 
         private void ExaminationStatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            var comboBoxItem = (ComboBoxItem)ExaminationStatusComboBox.SelectedItem;
+            Enum.TryParse(comboBoxItem.Tag.ToString(), out LabExaminationStatus status);
+            _examination.Status = status;
         }
 
         private void ExaminationDescriptionTextBox_TextChanged(object sender, TextChangedEventArgs e)

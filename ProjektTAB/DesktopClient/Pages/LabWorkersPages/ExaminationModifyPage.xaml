@@ -31,14 +31,12 @@
                       SelectionChanged="ExaminationStatusComboBox_SelectionChanged"
                       HorizontalAlignment="Center" VerticalAlignment="Bottom"
                       Margin="0,0,120,10">
-                <ComboBoxItem Tag="Success" Content="Poprawnie wykonano" IsSelected="True"/>
-                <ComboBoxItem Tag="Canceled" Content="Anulowano"/>
+                <ComboBoxItem Tag="SuccessfullyExecuted" Content="Poprawnie wykonano" IsSelected="True"/>
+                <ComboBoxItem Tag="CancelledByAssistant" Content="Anulowano"/>
             </ComboBox>
         </Grid>
 
         <Grid x:Name="LabManagerPanel" Visibility="Collapsed" Grid.Row="1">
-
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
