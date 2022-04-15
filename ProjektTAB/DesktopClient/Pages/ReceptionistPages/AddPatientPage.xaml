@@ -17,33 +17,28 @@
         <TextBlock Text="Wprowadź dane pacjenta" Grid.Row="0"
                    Style="{StaticResource PageHeader}"/>
 
-        <StackPanel Grid.Row="1" Margin="10,0,10,0">
+        <StackPanel Grid.Row="1" Margin="10,0,10,0" x:Name="InputPanel">
             <Label Content="Imię"/>
-            <TextBox x:Name="firstname"/>
+            <TextBox x:Name="firstname" TextChanged="TextBox_TextChanged"/>
             <Label Content="Nazwisko"/>
-            <TextBox x:Name="lastname"/>
+            <TextBox x:Name="lastname" TextChanged="TextBox_TextChanged"/>
             <Label Content="PESEL"/>
-            <TextBox x:Name="pesel" PreviewTextInput="NumberValidationTextBox" MaxLength="11"/>
-            <Label Content="Adres" Margin="0,5,0,0"/>
-           
-            <TabPanel Margin="0,0,0,7">
-                <Label Content="Miasto:" />
-                <TextBox x:Name="city" Width="210" />
-            </TabPanel>
-            <TabPanel Margin="0,0,0,7">
-                <Label Content="Ulica:"/>
-                <TextBox x:Name="street" Width="221" />
-            </TabPanel>
-            <TabPanel>
-                <Label Content="Nr budynku:"/>
-                <TextBox x:Name="house" Width="30"/>
-                <Label Content="Nr mieszkania:" Margin="0,0,0,0"/>
-                <TextBox x:Name="apartment" Width="30"/>
-            </TabPanel>
+            <TextBox x:Name="pesel" PreviewTextInput="NumberValidationTextBox" MaxLength="11" TextChanged="TextBox_TextChanged"/>
 
-            <Button Content="Dodaj" FontSize="18" x:Name="AddPatientBtn"
-                    Click="AddPatientBtn_Click" HorizontalAlignment="Center"
-                    Padding="10" Margin="0,20,0,0"/>
+            <Label Content="Miasto:" />
+            <TextBox x:Name="city" TextChanged="TextBox_TextChanged"/>
+
+            <Label Content="Ulica:"/>
+            <TextBox x:Name="street" TextChanged="TextBox_TextChanged"/>
+            <Label Content="Nr budynku:"/>
+            <TextBox x:Name="house" Width="50" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged"/>
+            <Label Content="Nr mieszkania:" Margin="0,0,0,0" />
+            <TextBox x:Name="apartment" Width="50" HorizontalAlignment="Left"/>
         </StackPanel>
+
+        <Button Content="Dodaj" FontSize="18" x:Name="AddPatientBtn"
+                    Click="AddPatientBtn_Click" HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom" Grid.Row="1"
+                    Padding="10" Margin="0,0,0,30" IsEnabled="False"/>
     </Grid>
 </Page>
