@@ -41,8 +41,7 @@ namespace DesktopClient.Pages.SharedPages
                 var tokenStringRes = await tokenResponse.Content.ReadAsStringAsync();
                 var tokenObject = JsonConvert.DeserializeObject<TokensPair>(tokenStringRes);
 
-                ApiCaller.SetToken(tokenObject.Token);
-                CurrentAccount.RefreshToken = tokenObject.RefreshToken;
+                CurrentAccount.TokensPair = tokenObject;
 
                 // use token to get logged user
                 var loginResponse = await ApiCaller.Get("GetUser/" + email + "/" + encryptedPassword);

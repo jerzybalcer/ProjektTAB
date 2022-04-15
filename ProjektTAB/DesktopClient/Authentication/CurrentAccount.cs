@@ -1,5 +1,9 @@
-﻿using Database.Users.Simplified;
+﻿using Database;
+using Database.Users.Simplified;
 using DesktopClient.Helpers;
+using Newtonsoft.Json;
+using System;
+using System.Windows.Threading;
 
 namespace DesktopClient.Authentication
 {
@@ -9,12 +13,14 @@ namespace DesktopClient.Authentication
 
         // temporary property for testing purposes
         public static bool IsLoggedIn { get; private set; } = false;
-        public static string RefreshToken { get; set; } = "";
+        public static TokensPair TokensPair { get; set; } = new TokensPair("", "");
+
+        private static readonly DispatcherTimer _refreshTimer = new DispatcherTimer();
 
         public static void Logout()
         {
-            ApiCaller.SetToken("");
-            RefreshToken = "";
+            TokensPair.RefreshToken = "";
+            TokensPair.Token = "";
             CurrentUser = null;
             IsLoggedIn = false;
             MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
@@ -25,6 +31,10 @@ namespace DesktopClient.Authentication
 
         public static void Login(UserSimplified user)
         {
+            _refreshTimer.Interval = TimeSpan.FromMinutes(14);
+            _refreshTimer.Tick += TryRefreshToken;
+            _refreshTimer.Start();
+
             CurrentUser = user;
             IsLoggedIn = true;
             MainWindow mainWindow = (MainWindow)App.Current.MainWindow;
@@ -46,6 +56,17 @@ namespace DesktopClient.Authentication
             else if (user.Role == Role.LabManager)
             {
                 mainWindow.ShowMenuButtons("LabManager");
+            }
+        }
+
+        private async static void TryRefreshToken(object? sender, EventArgs e)
+        {
+            var newTokensResponse = await ApiCaller.Post("RefreshToken", TokensPair);
+
+            if (newTokensResponse.IsSuccessStatusCode)
+            {
+                var newTokensString = await newTokensResponse.Content.ReadAsStringAsync();
+                TokensPair = JsonConvert.DeserializeObject<TokensPair>(newTokensString);
             }
         }
     }

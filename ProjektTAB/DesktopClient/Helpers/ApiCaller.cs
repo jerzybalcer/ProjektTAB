@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DesktopClient.Authentication;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,6 +16,7 @@ namespace DesktopClient.Helpers
 
         public static async Task<HttpResponseMessage> Get(string requestUri)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RetrieveToken());
             return await _httpClient.GetAsync(requestUri);
         }
 
@@ -23,12 +25,22 @@ namespace DesktopClient.Helpers
             string json = JsonConvert.SerializeObject(content);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RetrieveToken());
             return await _httpClient.PostAsync(requestUri, stringContent);
         }
 
-        public static void SetToken(string token)
+        private static string RetrieveToken()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var token = CurrentAccount.TokensPair.Token;
+
+            if(token is null)
+            {
+                return "";
+            }
+            else
+            {
+                return token;
+            }
         }
     }
 }
