@@ -36,7 +36,7 @@ namespace DesktopClient.Pages.ReceptionistPages
 
         private void ExaminationName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (ExaminationName.Text != "" && ExaminationCode.Text.Length == 3)
+            if (ExaminationName.Text != "" && ExaminationCode.Text.Length > 0)
                 AddExaminationBtn.IsEnabled = true;
             else
                 AddExaminationBtn.IsEnabled = false;
@@ -44,7 +44,7 @@ namespace DesktopClient.Pages.ReceptionistPages
 
         private void ExaminationCode_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (ExaminationName.Text != "" && ExaminationCode.Text.Length == 3)
+            if (ExaminationName.Text != "" && ExaminationCode.Text.Length > 0)
                 AddExaminationBtn.IsEnabled = true;
             else
                 AddExaminationBtn.IsEnabled = false;
