@@ -58,8 +58,6 @@ namespace DesktopClient.Pages.SharedPages
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             CurrentAccount.Logout();
-
-            NavigationService.Navigate(new LoginPage());
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

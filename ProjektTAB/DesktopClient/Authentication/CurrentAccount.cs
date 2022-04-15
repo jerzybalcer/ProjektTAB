@@ -1,8 +1,10 @@
 ﻿using Database;
 using Database.Users.Simplified;
 using DesktopClient.Helpers;
+using DesktopClient.Pages.SharedPages;
 using Newtonsoft.Json;
 using System;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace DesktopClient.Authentication
@@ -27,6 +29,8 @@ namespace DesktopClient.Authentication
             mainWindow.UserLoggedIn.Content = "Nie zalogowano";
             mainWindow.UserLoggedIn.IsEnabled = false;
             mainWindow.HideMenuButtons();
+
+            mainWindow.ContentFrame.Navigate(new LoginPage());
         }
 
         public static void Login(UserSimplified user)
@@ -67,6 +71,11 @@ namespace DesktopClient.Authentication
             {
                 var newTokensString = await newTokensResponse.Content.ReadAsStringAsync();
                 TokensPair = JsonConvert.DeserializeObject<TokensPair>(newTokensString);
+            }
+            else
+            {
+                MessageBox.Show("Nie udało się odnowić sesji. Zaloguj się ponownie.");
+                Logout();
             }
         }
     }
