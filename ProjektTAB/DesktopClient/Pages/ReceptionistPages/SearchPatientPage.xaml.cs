@@ -85,7 +85,7 @@ namespace DesktopClient.Pages.ReceptionistPages
         {
             var patient = (Patient)Patients.SelectedItem;
             AppointmentSimplified appointment = new AppointmentSimplified((DateTime)_chosenDate, CurrentAccount.CurrentUser, _chosenDoctor, patient);
-            HttpResponseMessage response = await ApiCaller.Post("api/Appointments/Add", appointment);
+            HttpResponseMessage response = await ApiCaller.Post("AddAppointment", appointment);
 
             if (response.IsSuccessStatusCode)
             {

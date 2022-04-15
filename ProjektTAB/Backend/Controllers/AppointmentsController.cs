@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
@@ -98,7 +97,7 @@ namespace Backend.Controllers
         }
 
         [Authorize(Roles = nameof(Role.Receptionist))]
-        [HttpPost("Add")]
+        [HttpPost("AddAppointment")]
         public async Task<IActionResult> AddAppointment(AppointmentSimplified simpleAppointment)
         {
 
@@ -119,12 +118,12 @@ namespace Backend.Controllers
             _context.Appointments.Add(newAppointment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtRoute(nameof(GetById), new { id = newAppointment.AppointmentId }, newAppointment);
+            return CreatedAtRoute(nameof(GetByAppointmentId), new { id = newAppointment.AppointmentId }, newAppointment);
         }
 
         [Authorize(Roles = nameof(Role.Receptionist))]
-        [HttpGet("/GetById/{id}",Name ="GetById")]
-        public async Task<ActionResult<Appointment>> GetById(int id)
+        [HttpGet("/GetAppointmentById/{id}",Name ="GetByAppointmentId")]
+        public async Task<ActionResult<Appointment>> GetByAppointmentId(int id)
         {
             var appointment = await _context.Appointments.Where(p => p.AppointmentId == id).FirstOrDefaultAsync();
 

@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class PatientsController : ControllerBase
     {
@@ -21,8 +20,8 @@ namespace Backend.Controllers
 
         // GET api/<PatientsController>/5
         [Authorize]
-        [HttpGet("{id}", Name = "GetPatient")]
-        public async Task<ActionResult<Patient>> GetPatient(int id)
+        [HttpGet("GetPatientById/{id}", Name = "GetPatientById")]
+        public async Task<ActionResult<Patient>> GetPatientById(int id)
         {
             var patient = await _context.Patients.Where(p => p.PatientId == id).FirstOrDefaultAsync();
 
@@ -37,13 +36,13 @@ namespace Backend.Controllers
         }
 
         [Authorize(Roles = nameof(Role.Receptionist))]
-        [HttpPost("Add")]
+        [HttpPost("AddPatient")]
         public async Task<ActionResult<Patient>> AddPatient(Patient patient)
         {
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
 
-            return CreatedAtRoute(nameof(GetPatient), new { id = patient.PatientId }, patient);
+            return CreatedAtRoute(nameof(GetPatientById), new { id = patient.PatientId }, patient);
         }
 
     }

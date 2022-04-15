@@ -22,7 +22,7 @@ namespace DesktopClient.Pages.ReceptionistPages
         {
             Patient newPatient = new Patient(firstname.Text, lastname.Text, pesel.Text, new Address(city.Text, street.Text, house.Text, apartment.Text));
 
-            var response = await ApiCaller.Post("api/Patients/Add", newPatient);
+            var response = await ApiCaller.Post("AddPatient", newPatient);
 
             if (response.IsSuccessStatusCode)
                 MessageBox.Show("Poprawnie dodano pacjenta");
