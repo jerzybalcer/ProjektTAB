@@ -16,14 +16,14 @@
 
         <TextBlock Style="{DynamicResource PageHeader}" Text="Zaloguj się"/>
 
-        <StackPanel Orientation="Vertical" Grid.Row="1">
+        <StackPanel Orientation="Vertical" Grid.Row="1" MinWidth="150">
 
             <StackPanel Orientation="Vertical" Margin="15">
                 <TextBlock Text="Email" HorizontalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="Email" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,15,25">
-                <TextBlock Text="Password" HorizontalAlignment="Center" Margin="5"/>
+                <TextBlock Text="Hasło" HorizontalAlignment="Center" Margin="5"/>
                 <PasswordBox x:Name="Password" />
             </StackPanel>
 
