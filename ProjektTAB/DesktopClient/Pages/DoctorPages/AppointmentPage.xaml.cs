@@ -32,8 +32,10 @@ namespace DesktopClient.Pages.DoctorPages
         {
             PatientText.Text = _appointment.Patient.Name + " " + _appointment.Patient.Surname;
             StatusText.Text = _appointment.Status.ToString();
-            DescriptionText.Text = _appointment.Description.ToString();
-            DiagnosisText.Text = _appointment.Diagnosis.ToString();
+            if (_appointment.Description != null)
+                DescriptionText.Text = _appointment.Description.ToString();
+            if (_appointment.Diagnosis != null)
+                DiagnosisText.Text = _appointment.Diagnosis.ToString();
         }
     }
 }

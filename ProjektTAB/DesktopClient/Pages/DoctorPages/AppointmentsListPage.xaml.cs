@@ -54,13 +54,18 @@ namespace DesktopClient.Pages.DoctorPages
         private void Appointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             OpenAppointmentBtn.IsEnabled = true;
-            // SelectedAppointment.Text = ...;
+            AppointmentSimplified selected = (AppointmentSimplified)Appointments.SelectedItems[0];
+            SelectedAppointment.Text = string.Format("{0} {1}", selected.Patient.Name, selected.Patient.Surname);
         }
 
         private void OpenAppointmentBtn_Click(object sender, RoutedEventArgs e)
         {
             // pass appointment object
-            //this.NavigationService.Navigate(new AppointmentPage());
+            if (Appointments.SelectedItems[0] != null)
+            {
+                AppointmentSimplified selected = (AppointmentSimplified)Appointments.SelectedItems[0];
+                this.NavigationService.Navigate(new AppointmentPage(selected));
+            }
         }
         
     }
