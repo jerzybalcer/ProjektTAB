@@ -61,6 +61,10 @@ namespace DesktopClient.Authentication
             {
                 mainWindow.ShowMenuButtons("LabManager");
             }
+            else if (user.Role == Role.Admin)
+            {
+                mainWindow.ShowMenuButtons("Admin");
+            }
         }
 
         private async static void TryRefreshToken(object? sender, EventArgs e)

@@ -14,6 +14,9 @@
         {
             Email = email;
             Password = password;
+            IsActive = true;
+            RefreshToken = "token";
+            RefreshTokenExpiries = DateTime.MinValue;
         }
         private UserAccount()
         {

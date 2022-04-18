@@ -1,4 +1,5 @@
 ﻿using DesktopClient.Authentication;
+using DesktopClient.Pages.AdminPages;
 using DesktopClient.Pages.DoctorPages;
 using DesktopClient.Pages.LabWorkersPages;
 using DesktopClient.Pages.ReceptionistPages;
@@ -41,6 +42,12 @@ namespace DesktopClient
                 case "ExaminationsListPageBtn":
                     ContentFrame.Navigate(new ExaminationsToDoPage(CurrentAccount.CurrentUser));
                     break;
+                case "ManageWorkersPageBtn":
+                    ContentFrame.Navigate(new ManageWorkersPage(CurrentAccount.CurrentUser));
+                    break;
+                case "AddWorkersPageBtn":
+                    ContentFrame.Navigate(new AddWorkersPage());
+                    break;
             }
         }
 
@@ -49,6 +56,7 @@ namespace DesktopClient
             ReceptionistMenu.Visibility = Visibility.Collapsed;
             DoctorMenu.Visibility = Visibility.Collapsed;
             LabWorkerMenu.Visibility = Visibility.Collapsed;
+            AdminMenu.Visibility = Visibility.Collapsed;
         }
 
         public void ShowMenuButtons(string type)
@@ -66,6 +74,9 @@ namespace DesktopClient
                     break;
                 case "LabManager":
                     LabWorkerMenu.Visibility = Visibility.Visible;
+                    break;
+                case "Admin":
+                    AdminMenu.Visibility = Visibility.Visible;
                     break;
             }
         }

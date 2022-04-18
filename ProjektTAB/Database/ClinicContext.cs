@@ -16,6 +16,7 @@ namespace Database
         public DbSet<Receptionist> Receptionists { get; set; }
         public DbSet<LabAssistant> LabAssistants { get; set; }
         public DbSet<LabManager> LabManagers { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
 
@@ -39,6 +40,7 @@ namespace Database
             modelBuilder.Entity<Receptionist>().ToTable("Receptionists");
             modelBuilder.Entity<LabAssistant>().ToTable("LabAssistants");
             modelBuilder.Entity<LabManager>().ToTable("LabManagers");
+            modelBuilder.Entity<Admin>().ToTable("Admins");
         }
     }
 }
