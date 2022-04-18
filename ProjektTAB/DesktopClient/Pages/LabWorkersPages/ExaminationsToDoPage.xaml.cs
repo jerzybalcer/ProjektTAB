@@ -49,7 +49,7 @@ namespace DesktopClient.Pages.LabWorkersPages
             }
             else if(_labWorker.Role == Role.LabManager)
             {
-                HttpResponseMessage response = await ApiCaller.Get("/GetAllSuccessfullyExecutedLabExaminations");
+                HttpResponseMessage response = await ApiCaller.Get("/GetAllExecutedLabExaminations");
                 if (response.IsSuccessStatusCode)
                 {
                     var responseMessage = await response.Content.ReadAsStringAsync();
