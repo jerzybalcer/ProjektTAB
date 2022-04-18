@@ -51,10 +51,16 @@
                 <TextBlock Text="Wynik badania: " FontSize="20"
                            HorizontalAlignment="Center"/>
                 <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                           x:Name="ExaminationDescriptionText"
+                           x:Name="ExaminationResultText"
                            Text="wynik badania" FontSize="16"
                            Margin="10"/>
-
+                <TextBlock Text="Opis badania: " FontSize="20"
+                           HorizontalAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                           x:Name="ExaminationDescriptionText"
+                           Text="opis" FontSize="16"
+                           Margin="10"/>
+                
                 <TextBlock Text="Wykonał: " FontSize="20"
                            HorizontalAlignment="Center"/>
                 <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
@@ -77,9 +83,11 @@
                         Grid.ColumnSpan="2" HorizontalAlignment="Center">
                 <ComboBox x:Name="ManagerExaminationStatusComboBox" 
                       HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                      Margin="120,0,10,10">
-                    <ComboBoxItem Tag="Accepted" Content="Zaakceptowano" IsSelected="True"/>
-                    <ComboBoxItem Tag="Rejected" Content="Odrzucono"/>
+                      Margin="120,0,10,10"
+                      SelectionChanged="ManagerExaminationStatusComboBox_SelectionChanged"
+                      >
+                    <ComboBoxItem Tag="AcceptedByManager" Content="Zaakceptowano" IsSelected="True"/>
+                    <ComboBoxItem Tag="RejectedByManager" Content="Odrzucono"/>
                 </ComboBox>
                 <Button Content="Zapisz" HorizontalAlignment="Center"
                     VerticalAlignment="Bottom" FontSize="18" 
