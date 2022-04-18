@@ -1,16 +1,19 @@
 ﻿using Database;
+using Database.Appointments;
 using Database.Appointments.Simplified;
+using DesktopClient.Authentication;
+using DesktopClient.Helpers;
+using Newtonsoft.Json;
+using System;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace DesktopClient.Pages.DoctorPages
 {
-    /// <summary>
-    /// Interaction logic for AppointmentPage.xaml
-    /// </summary>
     public partial class AppointmentPage : Page
     {
-        private readonly AppointmentSimplified _appointment;
+        private  AppointmentSimplified _appointment;
 
         public AppointmentPage(AppointmentSimplified appointment)
         {
@@ -28,14 +31,46 @@ namespace DesktopClient.Pages.DoctorPages
             this.NavigationService.Navigate(new ExaminationResultsPage(_appointment));
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            HttpResponseMessage response = await ApiCaller.Get("GetSelectedAppointment/" + _appointment.AppointmentId);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                AppointmentSimplified appointment = JsonConvert.DeserializeObject<AppointmentSimplified>(responseString);
+
+                _appointment = appointment;
+            }
             PatientText.Text = _appointment.Patient.Name + " " + _appointment.Patient.Surname;
             StatusText.Text = _appointment.Status.ToString();
+
             if (_appointment.Description != null)
                 DescriptionText.Text = _appointment.Description.ToString();
+
             if (_appointment.Diagnosis != null)
                 DiagnosisText.Text = _appointment.Diagnosis.ToString();
+        }
+
+        private async void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var comboBoxItem = (ComboBoxItem)AppointmentStatusSelection.SelectedItem;
+            if (comboBoxItem != null)
+            { 
+                Enum.TryParse(comboBoxItem.Tag.ToString(), out AppointmentStatus status);
+                _appointment.Status = status;
+            }
+            if (DiagnosisText.Text.Length > 0)
+                _appointment.Diagnosis = DiagnosisText.Text;
+            if (DescriptionText.Text.Length > 0)
+                _appointment.Description = DescriptionText.Text;
+
+            HttpResponseMessage response = await ApiCaller.Post("/SaveAppointmentData", _appointment);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Pomyślnie zapisano informacje o wizycie");
+            }
+            else
+                MessageBox.Show(await response.Content.ReadAsStringAsync());
         }
     }
 }

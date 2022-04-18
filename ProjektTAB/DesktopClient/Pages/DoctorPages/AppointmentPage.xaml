@@ -87,7 +87,7 @@
                 <ComboBoxItem Tag="Finished" Content="Zakończona"/>
                 <ComboBoxItem Tag="Failed" Content="Niepowodzenie"/>
             </ComboBox>
-            <Button Content="Zapisz i wyjdź" Margin="15" FontSize="16" Padding="5"/>
+            <Button Content="Zapisz i wyjdź" Margin="15" FontSize="16" Padding="5" Click="SaveBtn_Click"/>
         </StackPanel>
     </Grid>
 </Page>
