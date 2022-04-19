@@ -39,15 +39,47 @@ namespace Backend.Controllers
             var appointment = _context.Appointments
                 .Include(d => d.Doctor)
                     .ThenInclude(ua => ua.UserAccount)
-                .Include(p => p.Patient)
-                    .ThenInclude(a => a.Address)
                 .Include(r => r.Receptionist)
                     .ThenInclude(ua => ua.UserAccount)
+                .Include(p => p.Patient)
+                    .ThenInclude(a => a.Address)
                 .Include(le => le.LabExaminations)
                 .Include(pe => pe.PhysicalExaminations)
-                .Where(id => id.AppointmentId == appointmentId)
+                .Where(p => p.AppointmentId == appointmentId)
                 .FirstOrDefault();
-            return Ok(appointment);
+
+            var doctor = _context.Doctors
+                .Include(ua => ua.UserAccount)
+                .Where(id => id.UserId == appointment.Doctor.UserId)
+                .Select(l => new UserSimplified(l.UserId, l.Name, l.Surname, l.UserAccount.Email, l.UserAccountId, Role.Doctor, l.UserAccount.IsActive, l.LicenseNumber))
+                .FirstOrDefault();
+
+
+            var receptionist = _context.Receptionists
+                .Include(ua => ua.UserAccount)
+                .Where(d => d.UserId == appointment.Receptionist.UserId)
+                .Select(l => new UserSimplified(l.UserId, l.Name, l.Surname, l.UserAccount.Email, l.UserAccountId, Role.Receptionist, l.UserAccount.IsActive, null))
+                .FirstOrDefault();
+
+
+
+            
+            var toSend = new AppointmentSimplified
+             {
+                 AppointmentId = appointment.AppointmentId,
+                 Description = appointment.Description,
+                 Diagnosis = appointment.Diagnosis,
+                 Status = appointment.Status,
+                 RegistrationDate = appointment.RegistrationDate,
+                 ClosingDate = appointment.ClosingDate,
+                 Patient = appointment.Patient,
+                 PhysicalExaminations = appointment.PhysicalExaminations,
+                 LabExaminations = appointment.LabExaminations,
+                 Doctor = doctor,
+                 Receptionist = receptionist
+             };
+
+            return Ok(toSend);
         }
 
         [Authorize]
