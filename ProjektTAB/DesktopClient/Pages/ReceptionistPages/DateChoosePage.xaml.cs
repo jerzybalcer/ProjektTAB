@@ -4,6 +4,7 @@ using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,7 +39,7 @@ namespace DesktopClient.Pages.ReceptionistPages
 
         private async void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            ChosenDate.Text = DatePicker.SelectedDate.ToString();
+            ChosenDate.Text = DatePicker.SelectedDate?.ToString("dddd, d MMMM yyyy", new CultureInfo("pl-PL"));
             _isDatePicked = true;
             FreeDates.IsEnabled = true;
 

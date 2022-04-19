@@ -26,8 +26,8 @@
                 <GridView>
                     <GridViewColumn Header="Imię" Width="140" DisplayMemberBinding="{Binding Patient.Name}" />
                     <GridViewColumn Header="Nazwisko" Width="140" DisplayMemberBinding="{Binding Patient.Surname}" />
-                    <GridViewColumn Header="Pesel" Width="120" DisplayMemberBinding="{Binding Patient.Pesel}" />
-                    <GridViewColumn Header="Data" Width="160" DisplayMemberBinding="{Binding RegistrationDate}" />
+                    <GridViewColumn Header="Pesel" Width="100" DisplayMemberBinding="{Binding Patient.Pesel}" />
+                    <GridViewColumn Header="Data" Width="170" DisplayMemberBinding="{Binding RegistrationDate, StringFormat=dd MMMM yyyy HH:mm, ConverterCulture=pl-PL}" />
                 </GridView>
             </ListView.View>
         </ListView>

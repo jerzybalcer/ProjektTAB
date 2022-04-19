@@ -17,7 +17,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Wybór terminu" 
@@ -28,13 +28,13 @@
             <TextBlock Text="Data wizyty" HorizontalAlignment="Center"
                        FontSize="16" Margin="10"/>
             <DatePicker HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                        Margin="60,0,60,20" x:Name="DatePicker"
+                        Margin="40,0,40,20" x:Name="DatePicker"
                         SelectedDateChanged="DatePicker_SelectedDateChanged"/>
 
             <TextBlock Text="Wolne godziny" HorizontalAlignment="Center"
                        FontSize="16" Margin="10"/>
             <Grid>
-                <ComboBox x:Name="FreeDates" Margin="60,0,60,0"
+                <ComboBox x:Name="FreeDates" Margin="40,0,40,0"
                       SelectionChanged="FreeDates_SelectionChanged"
                       IsEnabled="False"/>
             </Grid>
