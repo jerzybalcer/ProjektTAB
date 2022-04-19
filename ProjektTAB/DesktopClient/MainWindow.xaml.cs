@@ -43,7 +43,7 @@ namespace DesktopClient
                     ContentFrame.Navigate(new ExaminationsToDoPage(CurrentAccount.CurrentUser));
                     break;
                 case "ManageWorkersPageBtn":
-                    ContentFrame.Navigate(new ManageWorkersPage(CurrentAccount.CurrentUser));
+                    ContentFrame.Navigate(new ManageWorkersPage());
                     break;
                 case "AddWorkersPageBtn":
                     ContentFrame.Navigate(new AddWorkersPage());

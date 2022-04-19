@@ -70,7 +70,7 @@ namespace DesktopClient.Pages.AdminPages
                 newWorker.LicenseNumber = LicenseNumber.Text;
             }
 
-            var response = await ApiCaller.Post("AddWorker", newWorker);
+            var response = await ApiCaller.Post("/api/Users/AddWorker", newWorker);
 
             if (response.IsSuccessStatusCode)
             {

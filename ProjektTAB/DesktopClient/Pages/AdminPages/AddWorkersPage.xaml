@@ -32,7 +32,7 @@
             <Label Content="Nazwisko"/>
             <TextBox x:Name="LastName"/>
             <Label Content="Email"/>
-            <TextBox x:Name="Email" MaxLength="11"/>
+            <TextBox x:Name="Email"/>
 
             <Label Content="Nr licencji" Margin="0,0,0,0" />
             <TextBox x:Name="LicenseNumber" Width="50" HorizontalAlignment="Left" IsEnabled="False"/>

@@ -12,37 +12,29 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
         <TextBlock Text="Lista pracowników" 
                    Grid.Row="0"
                    Style="{StaticResource PageHeader}"/>
 
 
-        <ListView x:Name="Workers" Grid.Row="1" Margin="30,0,30,0"
-                  SelectionMode="Single">
+        <ListView x:Name="Workers" Grid.Row="1" Margin="30,0,10,30"
+                  SelectionMode="Single" SelectionChanged="Workers_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Imię" Width="140" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Nazwisko" Width="140" DisplayMemberBinding="{Binding Surname}" />
-                    <GridViewColumn Header="Email" Width="120" DisplayMemberBinding="{Binding Email}" />
-                    <GridViewColumn Header="Rola" Width="120">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Role}">
-                                    <ComboBoxItem Tag="Receptionist" Content="Recepcjonista"/>
-                                    <ComboBoxItem Tag="Doctor" Content="Lekarz"/>
-                                    <ComboBoxItem Tag="LabAssistant" Content="Laborant"/>
-                                    <ComboBoxItem Tag="LabManager" Content="Kierownik laboratorium"/>
-                                </ComboBox>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Header="Imię" Width="120" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Nazwisko" Width="130" DisplayMemberBinding="{Binding Surname}" />
+                    <GridViewColumn Header="Email" Width="130" DisplayMemberBinding="{Binding Email}" />
                     <GridViewColumn Header="Aktywny?" Width="60">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsActive}"/>
+                                <CheckBox IsChecked="{Binding IsActive}" IsEnabled="False"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -50,12 +42,14 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-
-            <Button x:Name="SaveWorkersListBtn" Click="SaveWorkersListBtn_Click"
-                    Padding="10" FontSize="20" HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Content="Zapisz"
-                    Margin="30,0,0,0" IsEnabled="False"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
+            <TextBlock Text="Wyświetlana rola:" Margin="0,0,0,10"/>
+            <ComboBox x:Name="RoleSelection" SelectionChanged="RoleSelection_SelectionChanged">
+                <ComboBoxItem Tag="Doctor" Content="Lekarze" IsSelected="True"/>
+                <ComboBoxItem Tag="Receptionist" Content="Recepcjoniści"/>
+                <ComboBoxItem Tag="LabAssistant" Content="Laboranci"/>
+                <ComboBoxItem Tag="LabManager" Content="Kierownicy laboratorium"/>
+            </ComboBox>
         </StackPanel>
 
     </Grid>
