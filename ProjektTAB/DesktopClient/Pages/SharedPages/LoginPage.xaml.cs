@@ -4,10 +4,12 @@ using Database.Users.Simplified;
 using DesktopClient.Authentication;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
 using System.Security;
-using System.Web;
 using System.Windows;
 using System.Windows.Controls;
+using System;
+using System.Text;
 
 namespace DesktopClient.Pages.SharedPages
 {
@@ -30,21 +32,22 @@ namespace DesktopClient.Pages.SharedPages
             email = email.Replace("@", "%40");
             SecureString securePassword = Password.SecurePassword;
             string password = new System.Net.NetworkCredential(string.Empty, securePassword).Password;
-            string encryptedPassword = password.Encrypt();
-            encryptedPassword = HttpUtility.HtmlEncode(encryptedPassword);
-            encryptedPassword = encryptedPassword.Replace("/", "%2F");
-            // call authentication api to get token
-            var tokenResponse = await ApiCaller.Post("Login", new UserLogin(email, encryptedPassword));
 
+            SHA512 sha512Hash = SHA512.Create();
+            byte[] sourceBytes = Encoding.UTF8.GetBytes(password);
+            byte[] hashBytes = sha512Hash.ComputeHash(sourceBytes);
+            string hashPassword = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+
+            // call authentication api to get token
+            var tokenResponse = await ApiCaller.Post("Login", new UserLogin(email, hashPassword.ToLower()));
             if (tokenResponse.IsSuccessStatusCode)
             {
                 var tokenStringRes = await tokenResponse.Content.ReadAsStringAsync();
                 var tokenObject = JsonConvert.DeserializeObject<TokensPair>(tokenStringRes);
-
                 CurrentAccount.TokensPair = tokenObject;
 
                 // use token to get logged user
-                var loginResponse = await ApiCaller.Get("GetUser/" + email + "/" + encryptedPassword);
+                var loginResponse = await ApiCaller.Get("GetUser/" + email + "/" + hashPassword.ToLower());
 
                 if (loginResponse.IsSuccessStatusCode)
                 {

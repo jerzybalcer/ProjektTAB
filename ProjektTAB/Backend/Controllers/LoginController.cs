@@ -25,11 +25,9 @@ namespace Backend.Controllers
         [HttpGet("/GetUser/{email}/{password}")]
         public async Task<ActionResult<UserSimplified>> GetUser(string email, string password)
         {
-            string decryptedPassword = password.Replace("%2F", "/");
-            decryptedPassword = decryptedPassword.Decrypt();
             var simpleUser = await _context.UserAccounts
                 .Include(u => u.User)
-                .Where(u => u.Email == email && u.Password == decryptedPassword)
+                .Where(u => u.Email == email && u.Password == password)
                 .Select(u => new UserSimplified()
                 {
                     UserId = u.User.UserId,
@@ -65,13 +63,11 @@ namespace Backend.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<TokensPair>> Login(UserLogin userLogin)
         {
-            string decryptedPassword = userLogin.Password.Replace("%2F", "/");
-            decryptedPassword = decryptedPassword.Decrypt();
 
             userLogin.Email = userLogin.Email.Replace("%40", "@");
 
             var matchingAccount = await _context.UserAccounts.Include(u => u.User)
-                .Where(acc => acc.Email == userLogin.Email && acc.Password == decryptedPassword)
+                .Where(acc => acc.Email == userLogin.Email && acc.Password == userLogin.Password)
                 .FirstOrDefaultAsync();
 
             if (matchingAccount == null || !matchingAccount.IsActive)
