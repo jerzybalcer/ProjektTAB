@@ -6,9 +6,47 @@
       xmlns:local="clr-namespace:DesktopClient.Pages.AdminPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="EditWorkerPage">
+      Title="EditWorkerPage" Loaded="Page_Loaded">
 
-    <Grid>
-        
+    <Grid HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Modyfikuj dane pracownika" Grid.Row="0"
+                   Style="{StaticResource PageHeader}"/>
+
+        <StackPanel Grid.Row="1" Margin="10,0,10,0" x:Name="InputPanel">
+
+            <Label Content="Typ pracownika"/>
+            <ComboBox x:Name="WorkerType" SelectionChanged="WorkerType_SelectionChanged">
+                <ComboBoxItem Tag="Doctor" Content="Lekarz"/>
+                <ComboBoxItem Tag="Receptionist" Content="Recepcjonista"/>
+                <ComboBoxItem Tag="LabAssistant" Content="Laborant"/>
+                <ComboBoxItem Tag="LabManager" Content="Kierownik laboratorium"/>
+            </ComboBox>
+
+            <Label Content="Imię"/>
+            <TextBox x:Name="FirstName"/>
+            <Label Content="Nazwisko"/>
+            <TextBox x:Name="LastName"/>
+            <Label Content="Email"/>
+            <TextBox x:Name="Email"/>
+            <CheckBox x:Name="IsActive" Content="Konto aktywne" Margin="0,10,0,5"/>
+
+
+            <Label Content="Nr licencji" Margin="0,0,0,0" />
+            <TextBox x:Name="LicenseNumber" Width="50" HorizontalAlignment="Left" IsEnabled="False"/>
+        </StackPanel>
+
+        <Button Content="Zapisz" FontSize="18" x:Name="UpdateWorkerBtn"
+                    Click="UpdateWorkerBtn_Click" HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom" Grid.Row="1"
+                    Padding="10" Margin="0,0,0,30" IsEnabled="True"/>
+        <Button Content="Powrót" FontSize="18" x:Name="BackBtn"
+                    Click="BackBtn_Click" HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom" Grid.Row="1"
+                    Padding="10" Margin="0,0,130,30" IsEnabled="True"/>
     </Grid>
 </Page>

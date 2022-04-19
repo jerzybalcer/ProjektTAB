@@ -1,4 +1,5 @@
 ﻿using Database.Users.Simplified;
+using DesktopClient.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,74 @@ namespace DesktopClient.Pages.AdminPages
         {
             InitializeComponent();
             _worker = worker;
+        }
+
+        private void WorkerType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = (ComboBoxItem)WorkerType.SelectedItem;
+
+            if(selected.Tag.ToString() == "Doctor")
+            {
+                LicenseNumber.IsEnabled = true;
+            }
+            else
+            {
+                LicenseNumber.IsEnabled = false;
+                LicenseNumber.Text = string.Empty;
+            }
+        }
+
+        private async void UpdateWorkerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedType = ((ComboBoxItem)WorkerType.SelectedItem).Tag.ToString();
+
+            Enum.TryParse(selectedType, out Role role);
+
+            var updatedWorker = new UserSimplified
+            {
+                UserId = _worker.UserId,
+                Name = FirstName.Text,
+                Surname = LastName.Text,
+                Email = Email.Text,
+                IsActive = (bool)IsActive.IsChecked,
+                AccountId = _worker.AccountId,
+                Role = role,
+                LicenseNumber = role == Role.Doctor ? LicenseNumber.Text : null
+            };
+
+            var response = await ApiCaller.Post("/api/Users/UpdateWorker", updatedWorker);
+
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Poprawnie zaktualizowano pracownika!");
+                NavigationService.Navigate(new AddWorkersPage());
+            }
+            else
+            {
+                MessageBox.Show("Wystąpił błąd podczas aktualizacji pracownika!");
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            foreach(ComboBoxItem item in WorkerType.Items)
+            {
+                if(item.Tag.ToString() == _worker.Role.ToString())
+                {
+                    item.IsSelected = true;
+                }
+            }
+
+            FirstName.Text = _worker.Name;
+            LastName.Text = _worker.Surname;
+            Email.Text = _worker.Email;
+            LicenseNumber.Text = _worker.LicenseNumber;
+            IsActive.IsChecked = _worker.IsActive;
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new ManageWorkersPage());
         }
     }
 }
