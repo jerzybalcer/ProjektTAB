@@ -41,6 +41,7 @@ namespace DesktopClient.Pages.DoctorPages
 
                 _appointment = appointment;
             }
+
             PatientText.Text = _appointment.Patient.Name + " " + _appointment.Patient.Surname;
             StatusText.Text = _appointment.Status.ToString();
 
