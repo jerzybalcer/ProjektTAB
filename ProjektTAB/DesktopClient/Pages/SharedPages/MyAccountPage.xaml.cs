@@ -1,9 +1,12 @@
-﻿using DesktopClient.Authentication;
+﻿using Database;
+using Database.Users.Simplified;
+using DesktopClient.Authentication;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,12 +38,36 @@ namespace DesktopClient.Pages.SharedPages
             Email.Text = CurrentAccount.CurrentUser.Email;
         }
 
-        private void SaveAccountDetailsBtn_Click(object sender, RoutedEventArgs e)
+        private async void SaveAccountDetailsBtn_Click(object sender, RoutedEventArgs e)
         {
             if(FirstName.Text.TrimEnd().Length == 0 || LastName.Text.TrimEnd().Length == 0 || Email.Text.TrimEnd().Length == 0)
             {
                 MessageBox.Show("Uzupełnij wszystkie dane!");
                 return;
+            }
+
+            var modifiedWorker = new UserSimplified 
+            {
+                UserId = CurrentAccount.CurrentUser.UserId,
+                Name = FirstName.Text,
+                Surname = LastName.Text,
+                Email = Email.Text,
+            };
+
+    
+            var tokenResponse = await ApiCaller.Post("api/Users/ChangeUserDetails", modifiedWorker);
+
+            if (tokenResponse.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Poprawnie zmieniono dane konta");
+
+                CurrentAccount.CurrentUser.Name = modifiedWorker.Name;
+                CurrentAccount.CurrentUser.Surname = modifiedWorker.Surname;
+                CurrentAccount.CurrentUser.Email = modifiedWorker.Email;
+            }
+            else
+            {
+                MessageBox.Show("Błąd podczas zmiany danych! Skontaktuj się z administratorem");
             }
         }
 
@@ -58,7 +85,16 @@ namespace DesktopClient.Pages.SharedPages
                 return;
             }
 
-            var tokenResponse = await ApiCaller.Post("ChangePassword", NewPassword.Password);
+            SHA512 sha512Hash = SHA512.Create();
+            byte[] oldPassSourceBytes = Encoding.UTF8.GetBytes(OldPassword.Password);
+            byte[] oldPassHashBytes = sha512Hash.ComputeHash(oldPassSourceBytes);
+            string oldHashPassword = BitConverter.ToString(oldPassHashBytes).Replace("-", String.Empty);
+
+            byte[] newPassSourceBytes = Encoding.UTF8.GetBytes(NewPassword.Password);
+            byte[] newPassHashBytes = sha512Hash.ComputeHash(newPassSourceBytes);
+            string newHashPassword = BitConverter.ToString(newPassHashBytes).Replace("-", String.Empty);
+
+            var tokenResponse = await ApiCaller.Post("ChangePassword", new PasswordChangeRequest(oldHashPassword, newHashPassword));
 
             if (tokenResponse.IsSuccessStatusCode)
             {
@@ -66,7 +102,7 @@ namespace DesktopClient.Pages.SharedPages
             }
             else
             {
-                MessageBox.Show("Nieprawidłowe dane logowania!");
+                MessageBox.Show("Nieudana próba zmiany hasła! Upewnij się, że wpisujesz poprawne hasło.");
             }
 
         }

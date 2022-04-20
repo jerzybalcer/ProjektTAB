@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Backend.Controllers
 {
@@ -58,7 +61,12 @@ namespace Backend.Controllers
         [HttpPost("AddWorker")]
         public async Task<IActionResult> AddWorker(UserSimplified userSimplified)
         {
-            var account = new UserAccount(userSimplified.Email, userSimplified.Name + "" + userSimplified.Surname);
+            SHA512 sha512Hash = SHA512.Create();
+            byte[] sourceBytes = Encoding.UTF8.GetBytes(userSimplified.Name + "" + userSimplified.Surname);
+            byte[] hashBytes = sha512Hash.ComputeHash(sourceBytes);
+            string hashPassword = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+
+            var account = new UserAccount(userSimplified.Email, hashPassword);
             User? user = null;
 
             if(userSimplified.Role == Role.Doctor)
@@ -162,6 +170,22 @@ namespace Backend.Controllers
         [HttpPost("ChangeUserDetails")]
         public async Task<IActionResult> ChangeUserDetails(UserSimplified userSimplified)
         {
+            var userEmail = User.Claims.First(x => x.Type == ClaimTypes.Email)?.Value;
+
+            var userAccount = await _context.UserAccounts.Include(u => u.User)
+                .Where(u => u.Email == userEmail && u.User.UserId == userSimplified.UserId).FirstOrDefaultAsync();
+
+            if (userAccount == null)
+            {
+                return NotFound("Could not find account");
+            }
+
+            userAccount.Email = userSimplified.Email;
+            userAccount.User.Name = userSimplified.Name;
+            userAccount.User.Surname = userSimplified.Surname;
+
+            await _context.SaveChangesAsync();
+
             return Ok();
         }
     }

@@ -5,6 +5,7 @@ using Database.Users.Simplified;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using System.Security.Claims;
 
 namespace Backend.Controllers
@@ -129,27 +130,25 @@ namespace Backend.Controllers
             });
         }
 
-        //[Authorize]
-        //[HttpPost("ChangePassword")]
-        //public async Task<IActionResult> ChangePassword(string newPassword)
-        //{
-        //    var principal = _tokenService.GetPrincipalFromExpiredToken(Request.Headers.Authorization);
+        [Authorize]
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(PasswordChangeRequest passwords)
+        {
+            var userEmail = User.Claims.First(x => x.Type == ClaimTypes.Email)?.Value;
 
-        //    var userEmail = principal.FindFirst(x => x.Type == ClaimTypes.Email)?.Value;
+            var userAccount = await _context.UserAccounts.Include(u => u.User)
+                .Where(u => u.Email == userEmail && u.Password == passwords.OldPassword).FirstOrDefaultAsync();
 
-        //    var userAccount = await _context.UserAccounts.Include(u => u.User)
-        //        .Where(u => u.Email == userEmail).FirstOrDefaultAsync();
+            if (userAccount == null)
+            {
+                return NotFound("Could not find account");
+            }
 
-        //    if (userAccount == null)
-        //    {
-        //        return NotFound("Could not find account");
-        //    }
+            userAccount.Password = passwords.NewPassword;
 
-        //    userAccount.Password = newPassword;
+            await _context.SaveChangesAsync();
 
-        //    await _context.SaveChangesAsync();
-
-        //    return Ok();
-        //}
+            return Ok();
+        }
     }
 }
