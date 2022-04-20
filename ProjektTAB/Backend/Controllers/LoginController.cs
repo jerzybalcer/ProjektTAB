@@ -132,5 +132,28 @@ namespace Backend.Controllers
                 RefreshToken = userAccount.RefreshToken
             });
         }
+
+        //[Authorize]
+        //[HttpPost("ChangePassword")]
+        //public async Task<IActionResult> ChangePassword(string newPassword)
+        //{
+        //    var principal = _tokenService.GetPrincipalFromExpiredToken(Request.Headers.Authorization);
+
+        //    var userEmail = principal.FindFirst(x => x.Type == ClaimTypes.Email)?.Value;
+
+        //    var userAccount = await _context.UserAccounts.Include(u => u.User)
+        //        .Where(u => u.Email == userEmail).FirstOrDefaultAsync();
+
+        //    if (userAccount == null)
+        //    {
+        //        return NotFound("Could not find account");
+        //    }
+
+        //    userAccount.Password = newPassword;
+
+        //    await _context.SaveChangesAsync();
+
+        //    return Ok();
+        //}
     }
 }

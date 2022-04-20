@@ -1,6 +1,7 @@
 ﻿using Database;
 using Database.Users;
 using Database.Users.Simplified;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace Backend.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = nameof(Role.Admin))]
         [HttpGet("GetWorkers")]
         public async Task<IActionResult> GetWorkers()
         {
@@ -52,6 +54,7 @@ namespace Backend.Controllers
             return Ok(simplifiedWorkers);
         }
 
+        [Authorize(Roles = nameof(Role.Admin))]
         [HttpPost("AddWorker")]
         public async Task<IActionResult> AddWorker(UserSimplified userSimplified)
         {
@@ -90,6 +93,7 @@ namespace Backend.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = nameof(Role.Admin))]
         [HttpPost("UpdateWorker")]
         public async Task<IActionResult> UpdateWorker(UserSimplified userSimplified)
         {
@@ -151,6 +155,13 @@ namespace Backend.Controllers
 
             await _context.SaveChangesAsync();
 
+            return Ok();
+        }
+        
+        [Authorize]
+        [HttpPost("ChangeUserDetails")]
+        public async Task<IActionResult> ChangeUserDetails(UserSimplified userSimplified)
+        {
             return Ok();
         }
     }

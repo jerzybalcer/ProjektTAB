@@ -56,6 +56,10 @@
                     Click="MenuButton_Click" x:Name="AddWorkersPageBtn"
                     FontSize="13" Margin="5,2,5,2"/>
             </StackPanel>
+
+            <Button Content="Moje konto" 
+                    Click="MenuButton_Click" x:Name="MyAccountPageBtn"
+                    FontSize="13" Margin="5,2,5,2" Visibility="Collapsed"/>
         </StackPanel>
 
         <Grid Grid.Row="1" Grid.Column="0" Background="#b5b2ac">

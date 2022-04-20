@@ -48,6 +48,9 @@ namespace DesktopClient
                 case "AddWorkersPageBtn":
                     ContentFrame.Navigate(new AddWorkersPage());
                     break;
+                case "MyAccountPageBtn":
+                    ContentFrame.Navigate(new MyAccountPage());
+                    break;
             }
         }
 
@@ -57,6 +60,7 @@ namespace DesktopClient
             DoctorMenu.Visibility = Visibility.Collapsed;
             LabWorkerMenu.Visibility = Visibility.Collapsed;
             AdminMenu.Visibility = Visibility.Collapsed;
+            MyAccountPageBtn.Visibility = Visibility.Collapsed;
         }
 
         public void ShowMenuButtons(string type)
@@ -79,6 +83,8 @@ namespace DesktopClient
                     AdminMenu.Visibility = Visibility.Visible;
                     break;
             }
+
+            MyAccountPageBtn.Visibility=Visibility.Visible;
         }
 
         private void UserLoggedIn_Click(object sender, RoutedEventArgs e)
