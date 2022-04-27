@@ -54,14 +54,14 @@
                         Grid.Row="2" Grid.Column="0"/>
             <TextBox x:Name="DescriptionText" FontSize="14"
                       Margin="0,0,10,10"
-                      Grid.Row="2" Grid.Column="1"/>
+                      Grid.Row="2" Grid.Column="1" TextWrapping="Wrap"/>
 
             <TextBlock Text="Diagnoza: " FontSize="14"
                        HorizontalAlignment="Center"
                         Grid.Row="3" Grid.Column="0"/>
             <TextBox x:Name="DiagnosisText" FontSize="14"
                       Margin="0,0,10,10"
-                      Grid.Row="3" Grid.Column="1"/>
+                      Grid.Row="3" Grid.Column="1" TextWrapping="Wrap"/>
 
             <TextBlock Text="Badania: " FontSize="14"
                        HorizontalAlignment="Center"

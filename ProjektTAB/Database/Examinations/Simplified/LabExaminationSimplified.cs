@@ -9,6 +9,7 @@ namespace Database.Examinations.Simplified
         public DateTime? OrderDate { get; set; }
         public DateTime? ExecutionDate { get; set; }
         public string? LabManagerComment { get; set; }
+        public string? DoctorComment { get; set; }
         public DateTime? ClosingDate { get; set; }
         public LabExaminationStatus Status { get; set; }
         public ExaminationTemplate? ExaminationTemplate { get; set; }
@@ -31,6 +32,8 @@ namespace Database.Examinations.Simplified
                 LabManager = labManager;
                 LabManagerComment = exam.LabManagerComment;
             }
+
+            DoctorComment = exam.DoctorComment;
         }
         public LabExaminationSimplified()
         {

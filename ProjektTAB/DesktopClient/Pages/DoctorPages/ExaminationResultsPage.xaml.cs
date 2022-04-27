@@ -57,19 +57,17 @@ namespace DesktopClient.Pages.DoctorPages
 
                 LabExaminationName.Text = selected.ExaminationTemplate.Name;
                 LabExaminationStatusText.Text = StatusDic.getStatusLabel(selected.Status.ToString());
-                LabExaminationDoctorName.Text = "doktor";
-                LabExaminationLabAssistantName.Text = selected.LabAssistant == null ? "Nie przypisano" : selected.LabAssistant.Name;
-                LabExaminationManagerName.Text = selected.LabManager == null ? "Nie przypisano" : selected.LabManager.Name;
+                LabExaminationDoctorName.Text = _appointment.Doctor.Name + " " + _appointment.Doctor.Surname;
+                LabExaminationLabAssistantName.Text = selected.LabAssistant == null ? "Nie przypisano" : selected.LabAssistant.Name + " " + selected.LabAssistant.Surname;
+                LabExaminationManagerName.Text = selected.LabManager == null ? "Nie przypisano" : selected.LabManager.Name + " " + selected.LabManager.Surname;
                 LabExaminationOrderDate.Text = selected.OrderDate == null ? "Nie przypisano" : selected.OrderDate.ToString();
                 LabExaminationExecutionDate.Text = selected.ExecutionDate == null ? "Nie przypisano" : selected?.ExecutionDate.ToString();
                 LabExaminationClosingDate.Text = selected.ClosingDate == null ? "Nie przypisano" :  selected?.ClosingDate.ToString();
                 LabExaminationResult.Text = selected.Result == null ? "Nie przypisano" :  selected?.Result;
                 LabExaminationManagerComment.Text = selected.LabManagerComment == null ? "Nie przypisano" :  selected?.LabManagerComment;
-                //LabExaminationDoctorComment.Text = selected?.DoctorComment;
+                LabExaminationDoctorComment.Text = selected.DoctorComment;
                 
             }
-
-            // show examination details
         }
 
         private void PhysicalExaminationsBtn_Checked(object sender, System.Windows.RoutedEventArgs e)

@@ -21,7 +21,7 @@
         <Grid x:Name="LabAssistantPanel" Visibility="Collapsed" Grid.Row="1">
             <TextBlock Text="Wynik badania: " FontSize="18" Margin="20,0,0,0"/>
             <TextBox Margin="20,30,20,50" x:Name="ExaminationDescriptionTextBox"
-                         TextChanged="ExaminationDescriptionTextBox_TextChanged"/>
+                         TextChanged="ExaminationDescriptionTextBox_TextChanged" TextWrapping="Wrap"/>
             <Button Content="Zapisz" HorizontalAlignment="Center"
                     VerticalAlignment="Bottom" FontSize="18" 
                     Padding="10" x:Name="SaveExaminationBtn"
@@ -75,7 +75,7 @@
                            HorizontalAlignment="Center"/>
                 <TextBox x:Name="ExaminationManagerCommentTextBox"
                           Margin="10" Height="200"
-                         TextChanged="ExaminationManagerCommentTextBox_TextChanged"/>
+                         TextChanged="ExaminationManagerCommentTextBox_TextChanged" TextWrapping="Wrap"/>
 
             </StackPanel>
 
