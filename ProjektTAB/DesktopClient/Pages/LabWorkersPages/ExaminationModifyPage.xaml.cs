@@ -34,9 +34,13 @@ namespace DesktopClient.Pages.LabWorkersPages
             {
                 LabAssistantPanel.Visibility = Visibility.Visible;
                 LabManagerPanel.Visibility = Visibility.Collapsed;
+
+                ExaminationStatusComboBox_SelectionChanged(null, null);
             }
             else if(_labWorker.Role == Role.LabManager)
             {
+                ManagerExaminationStatusComboBox_SelectionChanged(null, null);
+
                 LabAssistantPanel.Visibility = Visibility.Collapsed;
                 LabManagerPanel.Visibility = Visibility.Visible;
                 ExaminationAssistantName.Text = _examination.LabAssistant.Name +" "+ _examination.LabAssistant.Surname;
