@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:DesktopClient.Pages.DoctorPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ExaminationOrderPage">
+      Title="ExaminationOrderPage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>

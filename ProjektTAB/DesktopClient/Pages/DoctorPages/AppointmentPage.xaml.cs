@@ -43,7 +43,7 @@ namespace DesktopClient.Pages.DoctorPages
             }
 
             PatientText.Text = _appointment.Patient.Name + " " + _appointment.Patient.Surname;
-            StatusText.Text = _appointment.Status.ToString();
+            StatusText.Text = StatusDic.getStatusLabel(_appointment.Status.ToString());
 
             if (_appointment.Description != null)
                 DescriptionText.Text = _appointment.Description.ToString();

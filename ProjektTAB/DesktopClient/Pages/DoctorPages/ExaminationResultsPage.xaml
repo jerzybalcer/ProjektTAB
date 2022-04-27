@@ -37,8 +37,18 @@
                              x:Name="LabExaminationsBtn" Checked="LabExaminationsBtn_Checked"/>
             </StackPanel>
 
-            <ListView x:Name="Examinations" ScrollViewer.CanContentScroll="True"
-                  SelectionMode="Single" SelectionChanged="Examinations_SelectionChanged">
+            <ListView x:Name="PhisicalExaminationsList" ScrollViewer.CanContentScroll="True"
+                  SelectionMode="Single" SelectionChanged="Examinations_SelectionChanged" Visibility="Visible">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Kod" Width="50" DisplayMemberBinding="{Binding ExaminationTemplate.ExaminationCode}" />
+                        <GridViewColumn Header="Badanie" Width="180" DisplayMemberBinding="{Binding ExaminationTemplate.Name}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            
+            <ListView x:Name="LabExaminationsList" ScrollViewer.CanContentScroll="True"
+                  SelectionMode="Single" SelectionChanged="Examinations_SelectionChanged" Visibility="Collapsed">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Kod" Width="50" DisplayMemberBinding="{Binding ExaminationTemplate.ExaminationCode}" />
@@ -97,7 +107,7 @@
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                        FontSize="16" Grid.Row="0" Grid.Column="1" x:Name="LabExaminationName"/>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                       FontSize="16" Grid.Row="1" Grid.Column="1" x:Name="LabExaminationStatus"/>
+                       FontSize="16" Grid.Row="1" Grid.Column="1" x:Name="LabExaminationStatusText"/>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                        FontSize="16" Grid.Row="2" Grid.Column="1" x:Name="LabExaminationDoctorName"/>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
