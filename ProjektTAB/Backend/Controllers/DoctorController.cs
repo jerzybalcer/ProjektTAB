@@ -88,13 +88,14 @@ namespace Backend.Controllers
         [HttpPost("/SaveAppointmentData")]
         public async Task<ActionResult> SaveAppointmentData(AppointmentSimplified appointment)
         {
-            Appointment _appointment = _context.Appointments
+            var _appointment = await _context.Appointments
                 .Include(d => d.Doctor)
                 .Include(p => p.Patient)
                 .ThenInclude(a => a.Address)
                 .Include(r => r.Receptionist)
                 .Where(a => a.AppointmentId == appointment.AppointmentId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
+
             if (_appointment == null)
                 return NotFound();
             else
@@ -102,6 +103,7 @@ namespace Backend.Controllers
                 _appointment.Status = appointment.Status;
                 _appointment.Description = appointment.Description;
                 _appointment.Diagnosis = appointment.Diagnosis;
+                _appointment.ClosingDate = appointment.ClosingDate;
                 await _context.SaveChangesAsync();
                 return Ok();
             }

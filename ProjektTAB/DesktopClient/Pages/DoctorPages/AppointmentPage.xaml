@@ -83,11 +83,13 @@
                 HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <TextBlock Text="Nowy status:" HorizontalAlignment="Center" 
                        FontSize="14" Margin="5"/>
-            <ComboBox x:Name="AppointmentStatusSelection">
+            <ComboBox x:Name="AppointmentStatusSelection" SelectionChanged="AppointmentStatusSelection_SelectionChanged">
+                <ComboBoxItem Tag="Started" Content="Rozpoczęta"/>
                 <ComboBoxItem Tag="Finished" Content="Zakończona"/>
                 <ComboBoxItem Tag="Failed" Content="Niepowodzenie"/>
+                <ComboBoxItem Tag="Unattended" Content="Nieodbyta"/>
             </ComboBox>
-            <Button Content="Zapisz i wyjdź" Margin="15" FontSize="16" Padding="5" Click="SaveBtn_Click"/>
+            <Button x:Name="SaveBtn" Content="Zapisz i wyjdź" Margin="15" FontSize="16" Padding="5" Click="SaveBtn_Click" IsEnabled="False"/>
         </StackPanel>
     </Grid>
 </Page>

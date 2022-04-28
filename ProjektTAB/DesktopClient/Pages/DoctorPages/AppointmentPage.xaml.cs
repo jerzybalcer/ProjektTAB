@@ -1,10 +1,12 @@
 ﻿using Database;
 using Database.Appointments;
 using Database.Appointments.Simplified;
+using Database.Examinations;
 using DesktopClient.Authentication;
 using DesktopClient.Helpers;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,11 +61,19 @@ namespace DesktopClient.Pages.DoctorPages
             { 
                 Enum.TryParse(comboBoxItem.Tag.ToString(), out AppointmentStatus status);
                 _appointment.Status = status;
+
+                if(status == AppointmentStatus.Unattended || status == AppointmentStatus.Finished || status == AppointmentStatus.Failed)
+                {
+                    _appointment.ClosingDate = DateTime.Now;
+                }
             }
             if (DiagnosisText.Text.Length > 0)
                 _appointment.Diagnosis = DiagnosisText.Text;
             if (DescriptionText.Text.Length > 0)
                 _appointment.Description = DescriptionText.Text;
+
+            _appointment.LabExaminations = new List<LabExamination>();
+            _appointment.PhysicalExaminations = new List<PhysicalExamination>();
 
             HttpResponseMessage response = await ApiCaller.Post("/SaveAppointmentData", _appointment);
             if (response.IsSuccessStatusCode)
@@ -72,6 +82,11 @@ namespace DesktopClient.Pages.DoctorPages
             }
             else
                 MessageBox.Show(await response.Content.ReadAsStringAsync());
+        }
+
+        private void AppointmentStatusSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveBtn.IsEnabled = true;
         }
     }
 }
