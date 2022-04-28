@@ -107,25 +107,27 @@ namespace Backend.Controllers
             }
         }
         [Authorize]
-        [HttpGet("/GetExaminations/{id}")]
-        public async Task<ActionResult<Tuple<List<PhysicalExaminationSimplified>, List<LabExaminationSimplified>>>> GetExaminations(int id)
+        [HttpGet("/GetExaminations/{patientId}")]
+        public async Task<ActionResult<Tuple<List<PhysicalExaminationSimplified>, List<LabExaminationSimplified>>>> GetExaminations(int patientId)
         {
 
             var PhysicalExaminations = await _context.PhysicalExaminations
-                .Include(app => app.Appointment)
+                .Include(app => app.Appointment).ThenInclude(a => a.Patient)
                 .Include(ex => ex.ExaminationTemplate)
-                .Where(a => a.Appointment.AppointmentId == id)
-                .Select(phy => new PhysicalExaminationSimplified(phy.PhysicalExaminationId, id, phy.ExaminationTemplate, phy.Result))
+                .Where(a => a.Appointment.Patient.PatientId == patientId)
+                .OrderByDescending(ex => ex.Appointment.RegistrationDate)
+                .Select(phy => new PhysicalExaminationSimplified(phy.PhysicalExaminationId, phy.Appointment.AppointmentId, phy.ExaminationTemplate, phy.Result, phy.Appointment.RegistrationDate))
                 .ToListAsync();
 
             var LabExaminations = await _context.LabExaminations
-                .Include(app => app.Appointment)
+                .Include(app => app.Appointment).ThenInclude(a => a.Patient)
                 .Include(temp => temp.ExaminationTemplate)
                 .Include(ass => ass.LabAssistant)
                     .ThenInclude(acc => acc.UserAccount)
                 .Include(men => men.LabManager)
                     .ThenInclude(acc => acc.UserAccount)
-                .Where(a => a.Appointment.AppointmentId == id)
+                .Where(a => a.Appointment.Patient.PatientId == patientId)
+                .OrderByDescending(ex => ex.OrderDate)
                 .Select(l => new LabExaminationSimplified {
                     ClosingDate = l.ClosingDate,
                     ExaminationTemplate = l.ExaminationTemplate,

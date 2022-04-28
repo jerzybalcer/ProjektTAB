@@ -13,13 +13,15 @@ namespace Database.Examinations.Simplified
         public int AppointmentId { get; set; }
         public ExaminationTemplate ExaminationTemplate { get; set; }
         public string Result { get; set; }
+        public DateTime ExecutionDate { get; set; }
 
-        public PhysicalExaminationSimplified(int id, int appointment, ExaminationTemplate examinationTemplate, string result)
+        public PhysicalExaminationSimplified(int id, int appointment, ExaminationTemplate examinationTemplate, string result, DateTime executionDate)
         {
             PhysicalExaminationId = id; 
             AppointmentId = appointment;
             ExaminationTemplate = examinationTemplate;
             Result = result;
+            ExecutionDate = executionDate;
         }
         public PhysicalExaminationSimplified()
         {

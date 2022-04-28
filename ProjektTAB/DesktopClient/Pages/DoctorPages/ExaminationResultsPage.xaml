@@ -75,58 +75,53 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
                        FontSize="14" Text="Nazwa badania:" Grid.Row="0" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
                        FontSize="14" Text="Status:" Grid.Row="1" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Zlecił:" Grid.Row="2" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Wykonał:" Grid.Row="3" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Zatwierdził:" Grid.Row="4" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Data zlecenia:" Grid.Row="5" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Data wykonania:" Grid.Row="6" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Data zatwierdzenia:" Grid.Row="7" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Wynik:" Grid.Row="8" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Komentarz kierownika lab.:" Grid.Row="9" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Text="Komentarz lekarza:" Grid.Row="10" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Text="Wykonał:" Grid.Row="2" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Text="Zatwierdził:" Grid.Row="3" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Text="Data zlecenia:" Grid.Row="4" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Text="Data wykonania:" Grid.Row="5" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Text="Data zatwierdzenia:" Grid.Row="6" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Text="Wynik:" Grid.Row="7" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Text="Komentarz kierownika lab.:" Grid.Row="8" Grid.Column="0"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Text="Komentarz lekarza:" Grid.Row="9" Grid.Column="0"/>
 
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
                        FontSize="14" Grid.Row="0" Grid.Column="1" x:Name="LabExaminationName" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
                        FontSize="14" Grid.Row="1" Grid.Column="1" x:Name="LabExaminationStatusText" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Grid.Row="2" Grid.Column="1" x:Name="LabExaminationDoctorName" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Grid.Row="3" Grid.Column="1" x:Name="LabExaminationLabAssistantName" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Grid.Row="4" Grid.Column="1" x:Name="LabExaminationManagerName" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Grid.Row="5" Grid.Column="1" x:Name="LabExaminationOrderDate" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Grid.Row="6" Grid.Column="1" x:Name="LabExaminationExecutionDate" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Grid.Row="7" Grid.Column="1" x:Name="LabExaminationClosingDate" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Grid.Row="8" Grid.Column="1" x:Name="LabExaminationResult" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="14" Grid.Row="9" Grid.Column="1" x:Name="LabExaminationManagerComment" TextWrapping="Wrap"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Grid.Row="2" Grid.Column="1" x:Name="LabExaminationLabAssistantName" TextWrapping="Wrap"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Grid.Row="3" Grid.Column="1" x:Name="LabExaminationManagerName" TextWrapping="Wrap"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Grid.Row="4" Grid.Column="1" x:Name="LabExaminationOrderDate" TextWrapping="Wrap"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Grid.Row="5" Grid.Column="1" x:Name="LabExaminationExecutionDate" TextWrapping="Wrap"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Grid.Row="6" Grid.Column="1" x:Name="LabExaminationClosingDate" TextWrapping="Wrap"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Grid.Row="7" Grid.Column="1" x:Name="LabExaminationResult" TextWrapping="Wrap"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="14" Grid.Row="8" Grid.Column="1" x:Name="LabExaminationManagerComment" TextWrapping="Wrap"/>
                     <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                              VerticalContentAlignment="Center" x:Name="LabExaminationDoctorComment"
-                       FontSize="14" Grid.Row="10" Grid.Column="1" TextWrapping="Wrap"/>
+                       FontSize="14" Grid.Row="9" Grid.Column="1" TextWrapping="Wrap" Margin="2"/>
                 </Grid>
 
                 <Grid x:Name="PhysicalExaminationDetails" Visibility="Collapsed">
@@ -139,26 +134,21 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
                        FontSize="16" Text="Nazwa badania:" Grid.Row="0" Grid.Column="0"/>
                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="16" Text="Wykonał:" Grid.Row="1" Grid.Column="0"/>
+                       FontSize="16" Text="Data wykonania:" Grid.Row="1" Grid.Column="0"/>
                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="16" Text="Data wykonania:" Grid.Row="2" Grid.Column="0"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="16" Text="Wynik:" Grid.Row="3" Grid.Column="0"/>
+                       FontSize="16" Text="Wynik:" Grid.Row="2" Grid.Column="0"/>
 
                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
                        FontSize="16" Grid.Row="0" Grid.Column="1" x:Name="PhysicalExaminationName" TextWrapping="Wrap"/>
                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="16" Grid.Row="1" Grid.Column="1" x:Name="PhysicalExaminationDoctorName" TextWrapping="Wrap"/>
+                       FontSize="16" Grid.Row="1" Grid.Column="1" x:Name="PhysicalExaminationDate" TextWrapping="Wrap"/>
                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="16" Grid.Row="2" Grid.Column="1" x:Name="PhysicalExaminationDate" TextWrapping="Wrap"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                       FontSize="16" Grid.Row="3" Grid.Column="1" x:Name="PhysicalExaminationResult" TextWrapping="Wrap"/>
+                       FontSize="16" Grid.Row="2" Grid.Column="1" x:Name="PhysicalExaminationResult" TextWrapping="Wrap"/>
                 </Grid>
             </Grid>
         </ScrollViewer>

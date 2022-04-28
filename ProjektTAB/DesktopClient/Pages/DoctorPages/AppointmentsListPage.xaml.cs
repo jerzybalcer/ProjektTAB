@@ -45,10 +45,6 @@ namespace DesktopClient.Pages.DoctorPages
             {
                 MessageBox.Show("Brak dostępnych pacjentów w bazie");
             }
-            // 1. load all appointments registered for this doctor +
-            // (include started)
-            // 2. sort by date - sooner first
-            // 3. Appointments.ItemsSource = appointmentsFromApi;
         }
 
         private void Appointments_SelectionChanged(object sender, SelectionChangedEventArgs e)

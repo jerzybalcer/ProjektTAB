@@ -44,8 +44,7 @@ namespace DesktopClient.Pages.DoctorPages
                 PhysicalExaminationSimplified selected = _phisicalExaminations[PhisicalExaminationsList.SelectedIndex];
 
                 PhysicalExaminationName.Text = selected.ExaminationTemplate.Name;
-                PhysicalExaminationDoctorName.Text = _appointment.Doctor.Name + " " + _appointment.Doctor.Surname;
-                PhysicalExaminationDate.Text = _appointment.RegistrationDate.ToString();
+                PhysicalExaminationDate.Text = selected.ExecutionDate.ToString();
                 PhysicalExaminationResult.Text = selected.Result;
             }
             else if(LabExaminationsBtn.IsChecked == true)
@@ -57,7 +56,6 @@ namespace DesktopClient.Pages.DoctorPages
 
                 LabExaminationName.Text = selected.ExaminationTemplate.Name;
                 LabExaminationStatusText.Text = StatusDic.getStatusLabel(selected.Status.ToString());
-                LabExaminationDoctorName.Text = _appointment.Doctor.Name + " " + _appointment.Doctor.Surname;
                 LabExaminationLabAssistantName.Text = selected.LabAssistant == null ? "Nie przypisano" : selected.LabAssistant.Name + " " + selected.LabAssistant.Surname;
                 LabExaminationManagerName.Text = selected.LabManager == null ? "Nie przypisano" : selected.LabManager.Name + " " + selected.LabManager.Surname;
                 LabExaminationOrderDate.Text = selected.OrderDate == null ? "Nie przypisano" : selected.OrderDate.ToString();
@@ -89,7 +87,7 @@ namespace DesktopClient.Pages.DoctorPages
 
         private async void LoadExaminationsList()
         {
-                HttpResponseMessage response = await ApiCaller.Get("/GetExaminations/"+ _appointment.AppointmentId);
+                HttpResponseMessage response = await ApiCaller.Get("/GetExaminations/"+ _appointment.Patient.PatientId);
                 if (response.IsSuccessStatusCode)
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
@@ -118,8 +116,6 @@ namespace DesktopClient.Pages.DoctorPages
                 {
                     MessageBox.Show(await response.Content.ReadAsStringAsync());
                 }
-
-            //Examinations.ItemsSource = examinationsFromApi;
         }
 
         private void BackBtn_Click(object sender, System.Windows.RoutedEventArgs e)
