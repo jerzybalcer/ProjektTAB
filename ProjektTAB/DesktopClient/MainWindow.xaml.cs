@@ -51,6 +51,9 @@ namespace DesktopClient
                 case "MyAccountPageBtn":
                     ContentFrame.Navigate(new MyAccountPage());
                     break;
+                case "CancelAppointmentPageBtn":
+                    ContentFrame.Navigate(new AppointmentCancelPage());
+                    break;
             }
         }
 

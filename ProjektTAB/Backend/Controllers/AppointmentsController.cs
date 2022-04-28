@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Database.Users.Simplified;
 using Database.Appointments.Simplified;
 using Microsoft.AspNetCore.Authorization;
+using Database.Appointments;
 
 namespace Backend.Controllers
 {
@@ -16,6 +17,39 @@ namespace Backend.Controllers
         public AppointmentsController(ClinicContext context)
         {
             _context = context;
+        }
+
+        [Authorize(Roles = nameof(Role.Receptionist))]
+        [HttpGet("/GetAllAppointments")]
+        public async Task<ActionResult<List<AppointmentSimplified>>> GetAllAppointments()
+        {
+            var appointments = await _context.Appointments
+                .Include(p => p.Patient)
+                .Where(a => (a.Status == AppointmentStatus.Registered || a.Status == AppointmentStatus.Started) && a.RegistrationDate >= DateTime.Now)
+                .OrderBy(d => d.RegistrationDate)
+                .ToListAsync();
+
+                return Ok(appointments);
+        }
+
+        [Authorize(Roles = nameof(Role.Receptionist))]
+        [HttpPost("/CancelAppointment")]
+        public async Task<IActionResult> CancelAppointment([FromBody] int appointmentId)
+        {
+            var appointment = await _context.Appointments
+                .Where(a => a.AppointmentId == appointmentId)
+                .FirstOrDefaultAsync();
+
+            if(appointment == null)
+            {
+                return BadRequest("Appointment not found");
+            }
+
+            appointment.Status = AppointmentStatus.Cancelled;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
         [Authorize(Roles = nameof(Role.Receptionist))]
@@ -41,37 +75,37 @@ namespace Backend.Controllers
 
         [Authorize(Roles = nameof(Role.Receptionist))]
         [HttpGet("/GetAllAvailablesDates/{idDoctor}/{day}/{month}/{year}")]
-        public async Task<ActionResult<List<string>>> GetAllAvailableDates(int idDoctor, int day,int month, int year)
+        public async Task<ActionResult<List<string>>> GetAllAvailableDates(int idDoctor, int day, int month, int year)
         {
             List<string> availableDatesString = new List<string>();
-            DateTime simple = new DateTime(year,month,day,8,0,0);
+            DateTime simple = new DateTime(year, month, day, 8, 0, 0);
             if (simple.DayOfWeek == DayOfWeek.Sunday || simple.DayOfWeek == DayOfWeek.Saturday)
                 return NotFound();
             if (DateTime.Compare(simple, DateTime.Now) < 0)
                 return NotFound();
             List<DateTime> availableDates = new List<DateTime>();
             for (int i = 0; i < 16; i++)
-                availableDates.Add(simple.AddMinutes(i*30));
+                availableDates.Add(simple.AddMinutes(i * 30));
             List<Appointment> allAppointments = _context.Appointments
-           .Where(p => p.Doctor.UserId == idDoctor 
-            && p.RegistrationDate.Day == day 
-            && p.RegistrationDate.Month == month 
+           .Where(p => p.Doctor.UserId == idDoctor
+            && p.RegistrationDate.Day == day
+            && p.RegistrationDate.Month == month
             && p.RegistrationDate.Year == year)
             .ToList();
-           foreach(var appointment in allAppointments)
-           {
+            foreach (var appointment in allAppointments)
+            {
                 var itemToRemove = availableDates.Single
                 (p =>
                 p.Hour == appointment.RegistrationDate.Hour &&
                 p.Minute == appointment.RegistrationDate.Minute
                 );
-                DateTime dateToRemove = new DateTime(year, month, day, itemToRemove.Hour,itemToRemove.Minute, 0);
+                DateTime dateToRemove = new DateTime(year, month, day, itemToRemove.Hour, itemToRemove.Minute, 0);
                 availableDates.Remove(dateToRemove);
-           }
+            }
             availableDates.ForEach(p =>
             {
-                if(p.Minute ==0)
-                    availableDatesString.Add(p.Hour + ":" + p.Minute+"0");
+                if (p.Minute == 0)
+                    availableDatesString.Add(p.Hour + ":" + p.Minute + "0");
                 else
                     availableDatesString.Add(p.Hour + ":" + p.Minute);
             });
@@ -85,8 +119,8 @@ namespace Backend.Controllers
         public async Task<ActionResult<List<Patient>>> GetPatients(string data)
         {
             var patients = _context.Patients.Where(p =>
-            EF.Functions.Like(p.Pesel, "%" + data+"%")||
-            EF.Functions.Like(p.Surname, "%" + data + "%")||
+            EF.Functions.Like(p.Pesel, "%" + data + "%") ||
+            EF.Functions.Like(p.Surname, "%" + data + "%") ||
             EF.Functions.Like(p.Name, "%" + data + "%")
             ).Include(p => p.Address).ToList();
 
@@ -122,7 +156,7 @@ namespace Backend.Controllers
         }
 
         [Authorize(Roles = nameof(Role.Receptionist))]
-        [HttpGet("/GetAppointmentById/{id}",Name ="GetByAppointmentId")]
+        [HttpGet("/GetAppointmentById/{id}", Name = "GetByAppointmentId")]
         public async Task<ActionResult<Appointment>> GetByAppointmentId(int id)
         {
             var appointment = await _context.Appointments.Where(p => p.AppointmentId == id).FirstOrDefaultAsync();

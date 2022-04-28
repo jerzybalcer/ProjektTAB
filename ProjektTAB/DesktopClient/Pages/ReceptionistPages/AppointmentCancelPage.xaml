@@ -1,0 +1,49 @@
+﻿<Page x:Class="DesktopClient.Pages.ReceptionistPages.AppointmentCancelPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DesktopClient.Pages.ReceptionistPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AppointmentCancelPage" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Anuluj wybraną wizytę" 
+                   Grid.Row="0"
+                   Style="{StaticResource PageHeader}"/>
+
+
+        <ListView x:Name="Appointments" Grid.Row="1" Margin="30,0,30,0"
+                  SelectionMode="Single" SelectionChanged="Appointments_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Imię" Width="140" DisplayMemberBinding="{Binding Patient.Name}" />
+                    <GridViewColumn Header="Nazwisko" Width="140" DisplayMemberBinding="{Binding Patient.Surname}" />
+                    <GridViewColumn Header="Pesel" Width="100" DisplayMemberBinding="{Binding Patient.Pesel}" />
+                    <GridViewColumn Header="Data" Width="170" DisplayMemberBinding="{Binding RegistrationDate, StringFormat=dd MMMM yyyy HH:mm, ConverterCulture=pl-PL}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Wybrana wizyta: "/>
+                <TextBlock x:Name="SelectedAppointment" Text="nie wybrano"/>
+            </StackPanel>
+
+            <Button x:Name="CancelAppointmentBtn" Click="CancelAppointmentBtn_Click"
+                    Padding="5" FontSize="16" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Content="Anuluj"
+                    Margin="30,0,0,0" IsEnabled="False"/>
+        </StackPanel>
+
+    </Grid>
+</Page>
